@@ -1,0 +1,10 @@
+version: '3'
+
+tasks:
+  create-symlinks:
+    desc: Create symlinks for dotfiles with automatic backup of existing files
+    sources:
+      - home/**
+    cmds:
+      - for: sources
+        cmd: ln -fs "{{ joinPath .TASKFILE_DIR .ITEM }}" "{{ joinPath .HOME (trimPrefix "home" .ITEM) }}"

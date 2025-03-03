@@ -1,0 +1,9 @@
+[user]
+	name = Alex Ramsay
+	email = acramsay@proton.me
+[credential]
+	helper = store
+[push]
+	autoSetupRemote = true
+[include]
+	path = ~/.gitconfig.local

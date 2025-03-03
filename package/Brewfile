@@ -1,0 +1,15 @@
+brew "zellij"
+brew "helix"
+
+cask "rancher"
+brew "kustomize"
+brew "k3d"
+brew "k9s"
+brew "tilt"
+
+brew "go"
+
+cask "slack"
+
+brew "pre-commit"
+brew "go-task"
