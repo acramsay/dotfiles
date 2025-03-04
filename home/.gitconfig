@@ -3,6 +3,8 @@
 	email = acramsay@proton.me
 [credential]
 	helper = store
+[init]
+	defaultBranch = main
 [push]
 	autoSetupRemote = true
 [include]

@@ -1,0 +1,51 @@
+[[language]]
+name = "go"
+formatter = { command = "gofumpt" }
+
+[[language]]
+name = "markdown"
+formatter = { command = "dprint", args = ["fmt", "--stdin", "md"]}
+rulers = [80, 120]
+
+[[language]]
+name = "tilt"
+file-types = [ "Tilefile" ]
+language-servers = [ "tilt-lsp" ]
+scope = "source.tilt"
+
+[[language]]
+name = "yaml"
+auto-format = true
+file-types = [ "yaml", "yml" ]
+formatter = { command = "yamlfmt", args = ["-"] }
+
+[language-server.tilt-lsp]
+command = "tilt lsp start"
+
+[language-server.yaml-language-server.config.yaml]
+completion = true
+validation = true
+hover = true
+
+[language-server.yaml-language-server.config.yaml.schemas]
+"https://taskfile.dev/schema.json" = [ "[Tt]askfile.yaml",  "[Tt]askfile.*.yaml", "[Tt]askfile.yml", "[Tt]askfile.*.yml" ]
+
+kubernetes = [
+  "*deployment*.yaml",
+  "*service*.yaml",
+  "*configmap*.yaml",
+  "*secret*.yaml",
+  "*pod*.yaml",
+  "*namespace*.yaml",
+  "*ingress*.yaml" 
+]
+
+"https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/kustomization.json" = [
+  "*kustomization.yaml",
+  "*kustomize.yaml"
+]
+
+"https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json" = [
+  "*workflow*.yaml",
+  "*template*.yaml"
+]

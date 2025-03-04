@@ -1,0 +1,32 @@
+theme = "catppuccin_macchiato"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.file-picker]
+hidden = false
+
+[editor.lsp]
+display-inlay-hints = true
+display-messages = true
+
+[editor.soft-wrap]
+enable = true
+wrap-indicator = "↩ "
+
+[editor.statusline]
+left = [ "mode", "spinner", "diagnostics" ]
+center = [ "version-control", "spacer", "file-name" ]
+right = [ "workspace-diagnostics", "position", "total-line-numbers", "file-type" ]
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
+[keys.normal]
+D = "delete_char_backward"
+A-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]
+A-j = ["extend_to_line_bounds", "delete_selection", "paste_after"]
+space."." = "file_picker_in_current_buffer_directory"
+space.c = "toggle_comments"
