@@ -20,7 +20,8 @@ file-types = [ "yaml", "yml" ]
 formatter = { command = "yamlfmt", args = ["-"] }
 
 [language-server.tilt-lsp]
-command = "tilt lsp start"
+command = "tilt"
+args = ["lsp start"]
 
 [language-server.yaml-language-server.config.yaml]
 completion = true

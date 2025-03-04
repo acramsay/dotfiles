@@ -9,6 +9,11 @@ brew "tilt"
 
 brew "go"
 
+brew "yaml-language-server"
+brew "yamlfmt"
+
+brew "lazygit"
+
 cask "slack"
 
 brew "pre-commit"

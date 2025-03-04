@@ -16,6 +16,8 @@ if [[ -f /etc/os-release ]]; then
 fi
 
 if [[ "$OSTYPE" =~ ^darwin ]]; then
+	ln -sf $(dirname $(realpath $0))/package/Brewfile ~/Brewfile
+
 	if ! type "bash" >/dev/null 2>&1; then
 		# Install hombrew
 		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
