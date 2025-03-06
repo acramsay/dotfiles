@@ -10,6 +10,10 @@ brew "go-task"
 brew "lazygit"
 brew "pre-commit"
 
+# terraform
+tap "hashicorp/tap"
+brew "hashicorp/tap/terraform"
+
 # k8s
 cask "rancher"
 brew "kustomize"
