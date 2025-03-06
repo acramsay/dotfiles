@@ -1,20 +1,24 @@
 brew "zellij"
-brew "helix"
 
+brew "helix"
+brew "yaml-language-server"
+brew "yamlfmt"
+brew "go"
+
+# dev tools
+brew "go-task"
+brew "lazygit"
+brew "pre-commit"
+
+# k8s
 cask "rancher"
 brew "kustomize"
 brew "k3d"
 brew "k9s"
 brew "tilt"
 
-brew "go"
-
-brew "yaml-language-server"
-brew "yamlfmt"
-
-brew "lazygit"
-
-cask "slack"
-
-brew "pre-commit"
-brew "go-task"
+if OS.mac?
+  cask "slack"
+  tap "satrik/togglemute", "https://github.com/satrik/homebrew-togglemute.git"
+  cask "togglemute", args: { no_quarantine: true }
+end
