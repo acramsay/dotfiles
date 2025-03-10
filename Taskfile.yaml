@@ -1,10 +1,39 @@
 version: '3'
 
+includes:
+  local:
+    taskfile: ~/Taskfile.local
+    optional: true
+
 tasks:
+  default:
+    cmds:
+      - task --list
+
   create-symlinks:
     desc: Create symlinks for dotfiles with automatic backup of existing files
+    aliases:
+      - cs
+    vars:
+      REALPATH:
+        sh: dirname $(realpath ./Taskfile.yaml)
+    dir: '{{ .REALPATH }}'
     sources:
-      - home/**/*
+      - ./**/*
+      - exclude: .git/**/*
+      - exclude: .gitignore
+      - exclude: bootstrap.sh
     cmds:
       - for: sources
-        cmd: mkdir -p "{{ dir (joinPath .HOME .ITEM) }}"; ln -fs "{{ joinPath .TASKFILE_DIR .ITEM }}" "{{ joinPath .HOME (trimPrefix "home" .ITEM) }}"
+        # cmd: echo "{{ .ITEM }}"
+        cmd: mkdir -p "{{ dir (joinPath .HOME .ITEM) }}"; ln -fs "{{ joinPath .REALPATH .ITEM }}" "{{ joinPath .HOME .ITEM }}"
+
+  test:
+    vars:
+      REALPATH:
+        sh: dirname $(realpath ./Taskfile.yaml)
+    dir: '{{ .REALPATH }}'
+    cmds:
+      - pwd
+      - realpath ./Taskfile.yaml
+      - ls -la .
