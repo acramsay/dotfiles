@@ -25,15 +25,12 @@ tasks:
       - exclude: bootstrap.sh
     cmds:
       - for: sources
-        # cmd: echo "{{ .ITEM }}"
         cmd: mkdir -p "{{ dir (joinPath .HOME .ITEM) }}"; ln -fs "{{ joinPath .REALPATH .ITEM }}" "{{ joinPath .HOME .ITEM }}"
 
-  test:
-    vars:
-      REALPATH:
-        sh: dirname $(realpath ./Taskfile.yaml)
-    dir: '{{ .REALPATH }}'
+  upgrade:
+    desc: Upgrade homebrew and all installed packages
+    aliases:
+      - up
     cmds:
-      - pwd
-      - realpath ./Taskfile.yaml
-      - ls -la .
+      - brew update
+      - brew upgrade
