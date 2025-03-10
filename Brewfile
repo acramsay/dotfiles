@@ -9,6 +9,7 @@ brew "delve"
 brew "gofumpt"
 brew "gopls"
 brew "dprint"
+brew "marksman"
 
 # dev tools
 brew "git"
