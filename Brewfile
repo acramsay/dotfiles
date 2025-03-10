@@ -39,4 +39,5 @@ if OS.mac?
   cask "slack"
   tap "satrik/togglemute", "https://github.com/satrik/homebrew-togglemute.git"
   cask "togglemute", args: { no_quarantine: true }
+  brew "meetingbar"
 end
