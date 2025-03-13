@@ -23,6 +23,20 @@ tasks:
       - exclude: .git/**/*
       - exclude: .gitignore
       - exclude: bootstrap.sh
+      - exclude: darwin/**/*
+    cmds:
+      - for: sources
+        cmd: mkdir -p "{{ dir (joinPath .HOME .ITEM) }}"; ln -fs "{{ joinPath .REALPATH .ITEM }}" "{{ joinPath .HOME .ITEM }}"
+      - task: create-symlinks-darwin
+
+  create-symlinks-darwin:
+    internal: true
+    vars:
+      REALPATH:
+        sh: echo -n "$(dirname $(realpath ./Taskfile.yaml))/darwin"
+    dir: '{{ .REALPATH }}'
+    sources:
+      - ./**/*
     cmds:
       - for: sources
         cmd: mkdir -p "{{ dir (joinPath .HOME .ITEM) }}"; ln -fs "{{ joinPath .REALPATH .ITEM }}" "{{ joinPath .HOME .ITEM }}"
