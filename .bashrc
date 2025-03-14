@@ -21,6 +21,7 @@ export PATH="$DPRINT_INSTALL/bin:$PATH"
 export PATH="$HOME/.rd/bin:$PATH"
 
 alias lg='lazygit'
+alias ll='ls -la'
 alias k="kubectl"
 
 # override with local settings
