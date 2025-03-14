@@ -28,6 +28,8 @@ tasks:
       - for: sources
         cmd: mkdir -p "{{ dir (joinPath .HOME .ITEM) }}"; ln -fs "{{ joinPath .REALPATH .ITEM }}" "{{ joinPath .HOME .ITEM }}"
       - task: create-symlinks-darwin
+        platforms:
+          - darwin
 
   create-symlinks-darwin:
     internal: true
