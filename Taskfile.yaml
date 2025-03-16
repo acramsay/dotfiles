@@ -15,6 +15,7 @@ tasks:
     aliases:
       - cs
     vars:
+      # This is needed because this taskfile is symlinked to ~
       REALPATH:
         sh: dirname $(realpath ./Taskfile.yaml)
     dir: '{{ .REALPATH }}'
@@ -22,17 +23,20 @@ tasks:
       - ./**/*
       - exclude: .git/**/*
       - exclude: .gitignore
+      - exclude: .task/**/*
       - exclude: bootstrap.sh
       - exclude: darwin/**/*
     cmds:
       - for: sources
-        cmd: mkdir -p "{{ dir (joinPath .HOME .ITEM) }}"; ln -fs "{{ joinPath .REALPATH .ITEM }}" "{{ joinPath .HOME .ITEM }}"
+        vars:
+          SOURCE: '{{ joinPath .REALPATH .ITEM }}'
+          DESTINATION: '{{ joinPath .HOME .ITEM }}'
+        task: create-symlink
       - task: create-symlinks-darwin
-        platforms:
-          - darwin
 
   create-symlinks-darwin:
-    internal: true
+    aliases: [csd]
+    platforms: [darwin]
     vars:
       REALPATH:
         sh: echo -n "$(dirname $(realpath ./Taskfile.yaml))/darwin"
@@ -41,13 +45,26 @@ tasks:
       - ./**/*
     cmds:
       - for: sources
-        cmd: mkdir -p "{{ dir (joinPath .HOME .ITEM) }}"; ln -fs "{{ joinPath .REALPATH .ITEM }}" "{{ joinPath .HOME .ITEM }}"
+        vars:
+          SOURCE: '{{ joinPath .REALPATH .ITEM }}'
+          DESTINATION: '{{ joinPath .HOME .ITEM }}'
+        task: create-symlink
 
-  upgrade:
+  brew:
     desc: Upgrade homebrew and all installed packages
-    aliases:
-      - up
+    aliases: [b]
     cmds:
       - brew update
       - brew upgrade
+      - brew bundle
       - brew cleanup
+
+  create-symlink:
+    internal: true
+    requires:
+      vars:
+        - SOURCE
+        - DESTINATION
+    cmds:
+      - mkdir -p {{ dir .DESTINATION }}
+      - ln -fs {{ .SOURCE }} {{ .DESTINATION }}
