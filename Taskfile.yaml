@@ -59,6 +59,12 @@ tasks:
       - brew bundle
       - brew cleanup
 
+  ollama-build:
+    desc: Builds my personal ai model to run with ollama
+    aliases: [ob]
+    cmds:
+      - ollama create personal -f ~/.ollama/personal.Modelfile
+
   create-symlink:
     internal: true
     requires:

@@ -15,6 +15,7 @@ brew "marksman"
 brew "git"
 brew "go-task"
 brew "lazygit"
+brew "ollama"
 brew "pre-commit"
 
 # terraform
