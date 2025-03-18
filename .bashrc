@@ -8,10 +8,13 @@ else
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+# cargo
+export PATH="$HOME/.cargo/bin:$PATH"
+
 # zellij
-if [[ ${TERM_PROGRAM} != "vscode" ]]; then
-  eval "$(zellij setup --generate-auto-start $(basename $SHELL))"
-fi
+# if [[ ${TERM_PROGRAM} != "vscode" ]]; then
+#   eval "$(zellij setup --generate-auto-start $(basename $SHELL))"
+# fi
 
 # dprint
 export DPRINT_INSTALL="/home/alex/.dprint"

@@ -2,7 +2,7 @@ version: '3'
 
 includes:
   local:
-    taskfile: ~/Taskfile.local
+    taskfile: ~/Taskfile.local.yaml
     optional: true
 
 tasks:
@@ -50,8 +50,17 @@ tasks:
           DESTINATION: '{{ joinPath .HOME .ITEM }}'
         task: create-symlink
 
+  # Package Management
+
+  update:
+    desc: Update everything
+    aliases: [u]
+    cmds:
+      - task: brew
+      - task: cargo
+
   brew:
-    desc: Upgrade homebrew and all installed packages
+    desc: Upgrade homebrew, all packages, and install missing
     aliases: [b]
     cmds:
       - brew update
@@ -59,11 +68,21 @@ tasks:
       - brew bundle
       - brew cleanup
 
+  cargo:
+    desc: Install and update rust packages install via cargo
+    aliases: [c]
+    cmds:
+      - source cargo.sh
+
+  # Ollama
+
   ollama-build:
     desc: Builds my personal ai model to run with ollama
     aliases: [ob]
     cmds:
       - ollama create personal -f ~/.ollama/personal.Modelfile
+
+  # Internals
 
   create-symlink:
     internal: true

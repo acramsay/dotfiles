@@ -10,6 +10,8 @@ brew "gofumpt"
 brew "gopls"
 brew "dprint"
 brew "marksman"
+brew "rust"
+brew "rustup"
 
 # dev tools
 brew "git"
