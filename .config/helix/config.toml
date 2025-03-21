@@ -1,5 +1,9 @@
 theme = "catppuccin_macchiato"
 
+[editor]
+bufferline = "always"
+end-of-line-diagnostics = "hint"
+
 [editor.cursor-shape]
 insert = "bar"
 normal = "block"
@@ -8,9 +12,17 @@ select = "underline"
 [editor.file-picker]
 hidden = false
 
+[editor.indent-guides]
+render = true
+character = "┊"
+skip-levels = 1
+
+[editor.inline-diagnostics]
+cursor-line = "warning"
+
 [editor.lsp]
 display-inlay-hints = true
-display-messages = true
+display-progress-messages = true
 
 [editor.soft-wrap]
 enable = true
@@ -30,3 +42,13 @@ A-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_befor
 A-j = ["extend_to_line_bounds", "delete_selection", "paste_after"]
 space."." = "file_picker_in_current_buffer_directory"
 space.c = "toggle_comments"
+C-g = [
+    ":write-all", 
+    ":new", 
+    ":insert-output lazygit", 
+    ":set mouse false",
+    ":set mouse true",
+    ":buffer-close!", 
+    ":redraw", 
+    ":reload-all"
+]
