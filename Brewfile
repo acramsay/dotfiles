@@ -1,3 +1,10 @@
+tap "wezterm/wezterm-linuxbrew" if OS.linux?
+brew "wezterm"
+cask "font-comic-mono"
+cask "font-comic-neue"
+cask "font-comic-relief"
+cask "font-comic-shanns-mono-nerd-font"
+
 brew "zellij"
 brew "ranger"
 
