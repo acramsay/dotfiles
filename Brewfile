@@ -1,9 +1,18 @@
-tap "wezterm/wezterm-linuxbrew" if OS.linux?
-brew "wezterm"
-cask "font-comic-mono"
-cask "font-comic-neue"
-cask "font-comic-relief"
-cask "font-comic-shanns-mono-nerd-font"
+if OS.linux?
+  tap "wezterm/wezterm-linuxbrew" if OS.linux?
+  brew "wezterm"
+end
+
+if OS.mac?
+  cask "wezterm"
+  cask "slack"
+  tap "satrik/togglemute", "https://github.com/satrik/homebrew-togglemute.git"
+  cask "togglemute", args: { no_quarantine: true }
+  cask "meetingbar"
+  cask "finicky"
+end
+
+cask "font-recursive-code"
 
 brew "zellij"
 brew "ranger"
@@ -45,10 +54,3 @@ brew "tilt"
   # cask "steam" # not available on linux
 # end
 
-if OS.mac?
-  cask "slack"
-  tap "satrik/togglemute", "https://github.com/satrik/homebrew-togglemute.git"
-  cask "togglemute", args: { no_quarantine: true }
-  cask "meetingbar"
-  cask "finicky"
-end
