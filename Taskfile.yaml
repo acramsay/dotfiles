@@ -50,6 +50,12 @@ tasks:
           DESTINATION: '{{ joinPath .HOME .ITEM }}'
         task: create-symlink
 
+  clean-symlinks:
+    desc: Find and delete broken symlinks from $HOME
+    aliases: [clean]
+    cmds:
+      - find {{ .HOME }} -type l ! -exec test -e {} \; -print -delete
+
   # Package Management
 
   update:
