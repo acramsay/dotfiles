@@ -10,7 +10,7 @@ config.font = wezterm.font("Rec Mono Casual", {weight="Regular", stretch="Normal
 config.font_size = 14
 config.line_height = 1.2
 
-config.window_background_image = 'fire.jpg'
+config.window_background_image = os.getenv('HOME') .. '/fire.jpg'
 config.window_background_image_hsb = {
   brightness = 0.2,
 }
