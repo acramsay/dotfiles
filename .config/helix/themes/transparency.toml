@@ -1,3 +1,10 @@
 inherits = "catppuccin_macchiato"
 
-"ui.background" = { fg = "foreground" }
+"ui.background" = { fg = "text" }
+
+"ui.statusline" = { fg = "green" }
+"ui.statusline.inactive" = { fg = "surface2" }
+
+"ui.bufferline" = { fg = "subtext0" }
+"ui.bufferline.active" = { fg = "mauve" }
+"ui.bufferline.background" = {}
