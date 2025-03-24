@@ -41,7 +41,7 @@ wezterm.on(
       add(basename(process_name))
     end
 
-    if #cells > 0 then
+    if #cells > 1 then
       window:set_right_status(wezterm.format(cells))
     end
   end
