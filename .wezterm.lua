@@ -1,6 +1,8 @@
 local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
+-- window:effective_config()
+
 config.color_scheme = 'Catppuccin Macchiato'
 
 -- config.font = wezterm.font("Rec Mono Casual", {weight="Regular", stretch="Normal", style="Normal"})
@@ -13,7 +15,7 @@ config.window_background_image_hsb = {
   brightness = 0.2,
 }
 
--- Tab Bar
+-- Tab/Status Bar
 config.tab_bar_at_bottom = true
 config.window_frame = {
   font = config.font
@@ -21,11 +23,27 @@ config.window_frame = {
 wezterm.on(
   'update-status',
   function(window, pane)
-    content = basename(pane:get_foreground_process_name())
-    content = content .. "  " .. pane:get_current_working_dir().path
-    window:set_right_status(wezterm.format {
-      { Text = content },
-    })
+    local cells = {}
+
+    table.insert(cells, { Background = { Color = window:effective_config().window_frame.inactive_titlebar_bg } })
+
+    function add(text)
+      table.insert(cells, { Text = ' ' .. text .. ' ' })
+    end
+
+    local cwd_uri = pane:get_current_working_dir()
+    if cwd_uri then
+      add(cwd_uri.file_path)
+    end
+
+    local process_name =  pane:get_foreground_process_name()
+    if process_name then
+      add(basename(process_name))
+    end
+
+    if #cells > 0 then
+      window:set_right_status(wezterm.format(cells))
+    end
   end
 )
 
