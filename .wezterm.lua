@@ -6,7 +6,7 @@ local config = wezterm.config_builder()
 config.color_scheme = 'Catppuccin Macchiato'
 
 -- config.font = wezterm.font("Rec Mono Casual", {weight="Regular", stretch="Normal", style="Normal"})
-config.font = wezterm.font("Rec Mono Casual", {weight="Regular", stretch="Normal", style="Italic"})
+config.font = wezterm.font("Rec Mono Casual", { weight = "Regular", stretch = "Normal", style = "Italic" })
 config.font_size = 14
 config.line_height = 1.2
 
@@ -27,7 +27,7 @@ wezterm.on(
 
     table.insert(cells, { Background = { Color = window:effective_config().window_frame.inactive_titlebar_bg } })
 
-    function add(text)
+    local function add(text)
       table.insert(cells, { Text = ' ' .. text .. ' ' })
     end
 
@@ -36,7 +36,7 @@ wezterm.on(
       add(cwd_uri.file_path)
     end
 
-    local process_name =  pane:get_foreground_process_name()
+    local process_name = pane:get_foreground_process_name()
     if process_name then
       add(basename(process_name))
     end
@@ -47,7 +47,7 @@ wezterm.on(
   end
 )
 
-function basename(s)
+local function basename(s)
   return string.gsub(s, '(.*[/\\])(.*)', '%2')
 end
 

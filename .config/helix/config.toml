@@ -30,7 +30,7 @@ wrap-indicator = "↩ "
 
 [editor.statusline]
 left = [ "mode", "spinner", "diagnostics" ]
-center = [ "version-control", "spacer", "file-name" ]
+center = [ "version-control", "spacer", "file-name", "read-only-indicator" ]
 right = [ "workspace-diagnostics", "position", "total-line-numbers", "file-type" ]
 mode.normal = "NORMAL"
 mode.insert = "INSERT"
