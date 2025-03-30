@@ -1,5 +1,5 @@
 if OS.linux?
-  tap "wezterm/wezterm-linuxbrew" if OS.linux?
+  tap "wezterm/wezterm-linuxbrew"
   brew "wezterm"
 end
 
@@ -14,8 +14,7 @@ end
 
 cask "font-recursive-code"
 
-brew "zellij"
-brew "ranger"
+brew "yazi"
 
 brew "helix"
 brew "yaml-language-server"

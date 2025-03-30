@@ -3,7 +3,13 @@ local config = wezterm.config_builder()
 
 -- window:effective_config()
 
-config.color_scheme = 'Catppuccin Macchiato'
+-- config.color_scheme = 'Catppuccin Macchiato'
+local transparency = wezterm.color.get_builtin_schemes()['Catppuccin Macchiato']
+-- transparency.foreground = transparency.brights[3]
+-- transparency.foreground = '#C4FFDB'
+
+config.color_schemes = { ['Transparency'] = transparency }
+config.color_scheme = 'Transparency'
 
 -- config.font = wezterm.font("Rec Mono Casual", {weight="Regular", stretch="Normal", style="Normal"})
 config.font = wezterm.font("Rec Mono Casual", { weight = "Regular", stretch = "Normal", style = "Italic" })
@@ -38,7 +44,7 @@ wezterm.on(
 
     local process_name = pane:get_foreground_process_name()
     if process_name then
-      add(basename(process_name))
+      add(Basename(process_name))
     end
 
     if #cells > 1 then
@@ -47,7 +53,7 @@ wezterm.on(
   end
 )
 
-local function basename(s)
+function Basename(s)
   return string.gsub(s, '(.*[/\\])(.*)', '%2')
 end
 
