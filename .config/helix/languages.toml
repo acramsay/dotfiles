@@ -19,6 +19,10 @@ auto-format = true
 file-types = [ "yaml", "yml" ]
 formatter = { command = "yamlfmt", args = ["-"] }
 
+# TODO: remove this after the next helix release. Or after installing hx nightly
+[language-server.golangci-lint-lsp.config]
+command = ["golangci-lint", "run", "--output.json.path=stdout", "--show-stats=false", "--issues-exit-code=1"]
+
 [language-server.tilt-lsp]
 command = "tilt"
 args = ["lsp start"]

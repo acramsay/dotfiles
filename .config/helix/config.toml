@@ -38,14 +38,10 @@ mode.select = "SELECT"
 
 [keys.normal]
 D = "delete_char_backward"
+A-h = "goto_previous_buffer"
 A-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]
 A-j = ["extend_to_line_bounds", "delete_selection", "paste_after"]
-
-[keys.normal.space]
-"o" = """:sh wezterm cli split-pane sh -c "yazi --chooser-file=/dev/stdout | while read -r; do wezterm cli send-text --pane-id ${WEZTERM_PANE} --no-paste \\":o \\${REPLY}\r\\"; done" > /dev/null"""
-"." = "file_picker_in_current_buffer_directory"
-c = "toggle_comments"
-
+A-l = "goto_next_buffer"
 C-g = [
     ":write-all", 
     ":new", 
@@ -56,3 +52,8 @@ C-g = [
     ":redraw", 
     ":reload-all"
 ]
+
+[keys.normal.space]
+"o" = """:sh wezterm cli split-pane sh -c "yazi --chooser-file=/dev/stdout | while read -r; do wezterm cli send-text --pane-id ${WEZTERM_PANE} --no-paste \\":o \\${REPLY}\r\\"; done" > /dev/null"""
+"." = "file_picker_in_current_buffer_directory"
+c = "toggle_comments"
