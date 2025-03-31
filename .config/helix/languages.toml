@@ -3,6 +3,10 @@ name = "go"
 formatter = { command = "gofumpt" }
 
 [[language]]
+name = "json"
+file-types = [ "json", "bru" ]
+
+[[language]]
 name = "markdown"
 formatter = { command = "dprint", args = ["fmt", "--stdin", "md"]}
 rulers = [80, 120]
@@ -42,7 +46,7 @@ kubernetes = [
   "*secret*.yaml",
   "*pod*.yaml",
   "*namespace*.yaml",
-  "*ingress*.yaml" 
+  "*ingress*.yaml"
 ]
 
 "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/kustomization.json" = [

@@ -10,7 +10,9 @@ normal = "block"
 select = "underline"
 
 [editor.file-picker]
+git-ignore = false
 hidden = false
+ignore = false
 
 [editor.indent-guides]
 render = true
