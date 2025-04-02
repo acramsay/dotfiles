@@ -16,7 +16,7 @@ cask "font-recursive-code"
 
 brew "yazi"
 
-brew "helix"
+brew "helix", args: ["HEAD"]
 brew "yaml-language-server"
 brew "yamlfmt"
 brew "go"
