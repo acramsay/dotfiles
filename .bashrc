@@ -27,6 +27,6 @@ alias k='kubectl'
 
 # override with local settings
 # this must be at the end of the file
-if [[ -x "$HOME/$(basename $SHELL)rc.local" ]]; then
-  source "$HOME/$(basename $SHELL)rc.local"
+if [[ -x "$HOME/.$(basename $SHELL)rc.local" ]]; then
+  source "$HOME/.$(basename $SHELL)rc.local"
 fi
