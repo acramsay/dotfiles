@@ -64,7 +64,8 @@ tasks:
     cmds:
       - task: brew
       - task: cargo
-      - ya pack -a yazi-rs/flavors:catppuccin-macchiato
+      - cmd: ya pack -a yazi-rs/flavors:catppuccin-macchiato
+        ignore_error: true
 
   brew:
     desc: Upgrade homebrew, all packages, and install missing

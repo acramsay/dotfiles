@@ -1,6 +1,9 @@
 if OS.linux?
   tap "wezterm/wezterm-linuxbrew"
   brew "wezterm"
+  brew "docker"
+  brew "kubectl"
+  brew "kubernetes-cli"
 end
 
 if OS.mac?
@@ -10,6 +13,7 @@ if OS.mac?
   cask "togglemute", args: { no_quarantine: true }
   cask "meetingbar"
   cask "finicky"
+  cask "rancher"
 end
 
 cask "font-recursive-code"
@@ -44,7 +48,6 @@ brew "hashicorp/tap/terraform"
 brew "terragrunt"
 
 # k8s tools
-cask "rancher" # not available on linux
 brew "kustomize"
 brew "k3d"
 brew "k9s"
