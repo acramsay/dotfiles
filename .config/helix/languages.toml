@@ -1,3 +1,6 @@
+# The default language settings are defined here
+# https://github.com/helix-editor/helix/blob/master/languages.toml
+
 [[language]]
 name = "go"
 formatter = { command = "gofumpt" }
@@ -22,6 +25,14 @@ name = "yaml"
 auto-format = true
 file-types = [ "yaml", "yml" ]
 formatter = { command = "yamlfmt", args = ["-"] }
+
+[language-server.gopls.config.hints]
+assignVariableTypes = false
+compositeLiteralFields = true
+constantValues = true
+functionTypeParameters = true
+parameterNames = false
+rangeVariableTypes = true
 
 [language-server.tilt-lsp]
 command = "tilt"
