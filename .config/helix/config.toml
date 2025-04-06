@@ -40,10 +40,10 @@ mode.select = "SELECT"
 
 [keys.normal]
 D = "delete_char_backward"
-A-h = "goto_previous_buffer"
-A-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]
-A-j = ["extend_to_line_bounds", "delete_selection", "paste_after"]
-A-l = "goto_next_buffer"
+C-h = "goto_previous_buffer"
+C-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]
+C-j = ["extend_to_line_bounds", "delete_selection", "paste_after"]
+C-l = "goto_next_buffer"
 C-g = [
     ":write-all", 
     ":new", 

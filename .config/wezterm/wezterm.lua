@@ -1,8 +1,8 @@
 local wezterm = require 'wezterm'
+local keybinds = require 'keybinds'
 local config = wezterm.config_builder()
 
 -- window:effective_config()
-
 -- config.color_scheme = 'Catppuccin Macchiato'
 local transparency = wezterm.color.get_builtin_schemes()['Catppuccin Macchiato']
 -- transparency.foreground = transparency.brights[3]
@@ -20,6 +20,9 @@ config.window_background_image = os.getenv('HOME') .. '/fire.jpg'
 config.window_background_image_hsb = {
   brightness = 0.2,
 }
+
+config.key_tables = keybinds.key_tables()
+config.keys = keybinds.keys()
 
 -- Tab/Status Bar
 config.tab_bar_at_bottom = true
