@@ -1,6 +1,6 @@
 if OS.linux?
   tap "wezterm/wezterm-linuxbrew"
-  brew "wezterm"
+  brew "wezterm@nightly"
   brew "docker"
   brew "kubectl"
   brew "kubernetes-cli"
