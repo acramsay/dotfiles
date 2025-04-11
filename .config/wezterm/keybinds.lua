@@ -41,32 +41,32 @@ local keys_normal = {
   -- Navigation
   {
     key = 'h',
-    mods = 'OPT',
+    mods = 'OPT|SHIFT',
     action = wezterm.action.ActivateTabRelative(-1),
   },
   {
     key = 'l',
-    mods = 'OPT',
+    mods = 'OPT|SHIFT',
     action = wezterm.action.ActivateTabRelative(1),
   },
   {
     key = 'h',
-    mods = 'OPT|SHIFT',
+    mods = 'OPT',
     action = wezterm.action.ActivatePaneDirection("Left"),
   },
   {
     key = 'j',
-    mods = 'OPT|SHIFT',
+    mods = 'OPT',
     action = wezterm.action.ActivatePaneDirection("Down"),
   },
   {
     key = 'k',
-    mods = 'OPT|SHIFT',
+    mods = 'OPT',
     action = wezterm.action.ActivatePaneDirection("Up"),
   },
   {
     key = 'l',
-    mods = 'OPT|SHIFT',
+    mods = 'OPT',
     action = wezterm.action.ActivatePaneDirection("Right"),
   },
 

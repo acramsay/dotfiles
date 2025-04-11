@@ -28,7 +28,7 @@ formatter = { command = "yamlfmt", args = ["-"] }
 
 [language-server.gopls.config.hints]
 assignVariableTypes = false
-compositeLiteralFields = true
+compositeLiteralFields = false
 constantValues = true
 functionTypeParameters = true
 parameterNames = false
