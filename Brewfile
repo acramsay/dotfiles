@@ -41,7 +41,6 @@ brew "go-task"
 brew "lazygit"
 brew "ollama"
 brew "pre-commit"
-brew "httpie"
 
 # terraform
 tap "hashicorp/tap"
