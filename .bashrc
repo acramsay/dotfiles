@@ -24,6 +24,7 @@ export VISUAL='hx'
 alias lg='lazygit'
 alias ll='ls -la'
 alias k='kubectl'
+alias kc='kubectx'
 
 # override with local settings
 # this must be at the end of the file

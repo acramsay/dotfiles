@@ -48,9 +48,11 @@ brew "hashicorp/tap/terraform"
 brew "terragrunt"
 
 # k8s tools
-brew "kustomize"
+brew "fzf"
 brew "k3d"
 brew "k9s"
+brew "kubectx"
+brew "kustomize"
 brew "tilt"
 
 # if OS.linux?
