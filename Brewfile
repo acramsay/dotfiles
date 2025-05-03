@@ -1,13 +1,13 @@
 if OS.linux?
   tap "wezterm/wezterm-linuxbrew"
-  brew "wezterm@nightly"
+  brew "wezterm", args: ["HEAD"]
   brew "docker"
   brew "kubectl"
   brew "kubernetes-cli"
 end
 
 if OS.mac?
-  cask "wezterm"
+  cask "wezterm@nightly"
   cask "slack"
   tap "satrik/togglemute", "https://github.com/satrik/homebrew-togglemute.git"
   cask "togglemute", args: { no_quarantine: true }

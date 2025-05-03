@@ -117,7 +117,7 @@ LookAndFeelPackage=Nordic-bluish
 [KFileDialog Settings]
 Allow Expansion=false
 Automatically select filename extension=true
-Breadcrumb Navigation=true
+Breadcrumb Navigation=false
 Decoration position=2
 LocationCombo Completionmode=5
 PathCombo Completionmode=5
@@ -133,6 +133,9 @@ Sort hidden files last=false
 Sort reversed=false
 Speedbar Width=138
 View Style=DetailTree
+
+[QtQuickRendererSettings]
+SceneGraphBackend=software
 
 [Shortcuts]
 Copy=Meta+C
