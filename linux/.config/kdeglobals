@@ -135,7 +135,7 @@ Speedbar Width=138
 View Style=DetailTree
 
 [QtQuickRendererSettings]
-SceneGraphBackend=software
+SceneGraphBackend=vulkan
 
 [Shortcuts]
 Copy=Meta+C
