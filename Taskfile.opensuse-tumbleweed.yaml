@@ -1,0 +1,13 @@
+version: '3'
+
+tasks:
+  restart-kde:
+    desc: Restart the KDE Plasma desktop environment
+    cmds:
+      - systemctl restart --user plasma-plasmashell
+
+  update:
+    desc: Update OpenSuse via Zypper
+    cmds:
+      - sudo zypper up -ly
+      - sudo zypper dup -ly

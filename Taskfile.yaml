@@ -1,9 +1,15 @@
 version: '3'
 
+# vars:
+#   DISTRO:
+#     sh: cat /etc/os-release
+
+dotenv: ['/etc/os-release']
+
 includes:
-  local:
-    taskfile: ~/Taskfile.local.yaml
-    optional: true
+  opensuse-tumbleweed:
+    aliases: ['ot']
+    taskfile: ~/Taskfile.opensuse-tumbleweed.yaml
 
 tasks:
   default:
@@ -84,6 +90,7 @@ tasks:
       - task: cargo
       - cmd: ya pack -a yazi-rs/flavors:catppuccin-macchiato
         ignore_error: true
+      - task: "{{ .ID }}:update"
 
   brew:
     desc: Upgrade homebrew, all packages, and install missing
