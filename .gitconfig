@@ -1,11 +1,36 @@
 [user]
-	name = Alex Ramsay
 	email = acramsay@proton.me
+	name = Alex Ramsay
 [credential]
 	helper = store
+[branch]
+	sort = -committerdate
+[diff]
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
+[fetch]
+	all = true
+	prune = true
+	pruneTags = true
+[help]
+	autocorrect = prompt
 [init]
 	defaultBranch = main
+[merge]
+	conflictstyle = diff3
 [push]
 	autoSetupRemote = true
+	default = simple
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
+[rerere]
+	enabled = true
+	autoupdate = true
+[tag]
+	sort = version:refname
 [include]
 	path = ~/.gitconfig.local
