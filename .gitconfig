@@ -1,6 +1,10 @@
 [user]
 	email = acramsay@proton.me
 	name = Alex Ramsay
+[column]
+	ui = auto column dense
+[core]
+	editor = hx
 [credential]
 	helper = store
 [branch]
