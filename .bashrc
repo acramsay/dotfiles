@@ -20,6 +20,7 @@ export PATH="$HOME/.rd/bin:$PATH"
 
 export EDITOR='hx'
 export VISUAL='hx'
+export LESS='-FIMRX'
 
 alias lg='lazygit'
 alias ll='ls -la'

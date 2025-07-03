@@ -3,7 +3,7 @@ local wezterm = require 'wezterm'
 local module = {}
 
 local pop = {
-  key = 'b',
+  key = 'p',
   action = wezterm.action.PopKeyTable
 }
 
