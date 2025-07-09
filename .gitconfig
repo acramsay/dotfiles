@@ -1,6 +1,8 @@
 [user]
 	email = acramsay@proton.me
 	name = Alex Ramsay
+[alias]
+	l = log --graph --pretty=format:'%C(05)%>|(26)%h  %C(04)%<(13)%cr %C(green)%<(20,trunc)%an %C(bold 1)%d %C(bold 0)%>|(1)%s'
 [column]
 	ui = auto column dense
 [core]
