@@ -56,9 +56,3 @@ brew "kubectx"
 brew "kustomize"
 brew "tilt"
 
-# if OS.linux?
-  # cask "discord" # not available on linux
-  # cask "librewolf" # not available on linux
-  # cask "steam" # not available on linux
-# end
-
