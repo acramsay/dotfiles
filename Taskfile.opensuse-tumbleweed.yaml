@@ -1,6 +1,8 @@
 version: '3'
 
 tasks:
+  aliases:
+    - rk
   restart-kde:
     desc: Restart the KDE Plasma desktop environment
     cmds:

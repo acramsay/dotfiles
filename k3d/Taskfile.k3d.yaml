@@ -1,0 +1,40 @@
+version: "3"
+
+vars:
+  K3D_DATA_PATH: '{{ joinPath ( env "HOME" ) "k3d" }}'
+  K3D_REGISTRY_PATH: '{{ joinPath .K3D_DATA_PATH  "registry" }}'
+  K3D_PERSISTENT_VOLUMES_PATH: '{{ joinPath .K3D_DATA_PATH  "persistent-volumes" }}'
+
+tasks:
+  setup:
+    aliases: [s]
+    desc: Create directories for k3d persistent data
+    cmds:
+      - cmd: mkdir -p {{ .K3D_REGISTRY_PATH }} {{ .K3D_PERSISTENT_VOLUMES_PATH }}
+        platforms: ["darwin", "linux"]
+
+  create-cluster:
+    aliases: [create, c]
+    desc: Create k3d cluster based on the local config file
+    cmds:
+      - k3d cluster create --config {{ joinPath .K3D_DATA_PATH "k3d-local.yaml" }}
+    env:
+      K3D_REGISTRY_PATH: '{{ .K3D_REGISTRY_PATH }}'
+      K3D_PERSISTENT_VOLUMES_PATH: '{{ .K3D_PERSISTENT_VOLUMES_PATH }}'
+
+  delete-cluster:
+    aliases: [delete, d]
+    desc: Delete k3d cluster based on the local config file
+    cmds:
+      - k3d cluster delete --config {{ joinPath .K3D_DATA_PATH "k3d-local.yaml" }}
+
+  rebuild-cluster:
+    aliases: [rebuild, recreate, r]
+    desc: Delete and create the k3d cluster based on the local config file
+    cmds:
+      - task: delete-cluster
+      - task: create-cluster
+
+  default:
+    cmds:
+      - task --list

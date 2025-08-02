@@ -1,0 +1,46 @@
+apiVersion: k3d.io/v1alpha5
+kind: Simple
+metadata:
+  name: local
+servers: 1
+agents: 0
+
+registries:
+  create:
+    name: registry.localhost
+    host: 0.0.0.0
+    hostPort: "5578"
+    volumes:
+      - $K3D_REGISTRY_PATH:/var/lib/registry
+  config: |
+    mirrors:
+      "*":
+        endpoint:
+          - http://registry.localhost:5578
+    tls:
+      "*":
+        insecure_skip_verify: true
+
+hostAliases:
+  - ip: 0.0.0.0
+    hostnames:
+      - k3d.local
+
+ports:
+  - port: 0.0.0.0:8080:80
+    nodeFilters:
+      - loadbalancer
+
+options:
+  k3d:
+    wait: true
+  k3s:
+    extraArgs:
+      - arg: --disable=traefik
+        nodeFilters:
+          - server:*
+
+volumes:
+  - volume: $K3D_PERSISTENT_VOLUMES_PATH:/data
+    nodeFilters:
+      - server:*
