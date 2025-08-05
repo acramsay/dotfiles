@@ -38,7 +38,7 @@ tasks:
           -o -path "./.task"
           -o -path "./darwin"
           -o -path "./linux"
-          \) -prune -o -type f -print
+          \) -prune -o \( -type f -o -type l \) -print
     dir: '{{ .REALPATH }}'
     cmds:
       - for:
@@ -58,7 +58,7 @@ tasks:
         sh: echo -n $(dirname $(realpath ./Taskfile.yaml))/darwin
       FILES:
         sh: >-
-          cd $(dirname $(realpath ./Taskfile.yaml))/darwin; find . -type f -print
+          cd $(dirname $(realpath ./Taskfile.yaml))/darwin; find . -type f -o -type f -print
     dir: '{{ .REALPATH }}'
     cmds:
       - for:
@@ -76,7 +76,7 @@ tasks:
         sh: echo -n "$(dirname $(realpath ./Taskfile.yaml))/linux"
       FILES:
         sh: >-
-          cd $(dirname $(realpath ./Taskfile.yaml))/linux; find . -type f -print
+          cd $(dirname $(realpath ./Taskfile.yaml))/linux; find . -type f -o -type f -print
     dir: '{{ .REALPATH }}'
     cmds:
       - for:
