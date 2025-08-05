@@ -54,6 +54,8 @@ C-g = [
     ":redraw", 
     ":reload-all"
 ]
+# Select the current word
+W = "@miw"
 
 [keys.normal.space]
 "o" = """:sh wezterm cli split-pane sh -c "yazi --chooser-file=/dev/stdout | while read -r; do wezterm cli send-text --pane-id ${WEZTERM_PANE} --no-paste \\":o \\${REPLY}\r\\"; done" > /dev/null"""
