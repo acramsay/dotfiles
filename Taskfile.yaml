@@ -29,17 +29,20 @@ tasks:
       # This is needed because this taskfile is symlinked to ~
       REALPATH:
         sh: dirname $(realpath ./Taskfile.yaml)
+      FILES:
+        sh: >-
+          cd $(dirname $(realpath ./Taskfile.yaml)); find . \(
+          -name ".gitignore"
+          -o -name "bootstrap.sh"
+          -o -path "./.git"
+          -o -path "./.task"
+          -o -path "./darwin"
+          -o -path "./linux"
+          \) -prune -o -type f -print
     dir: '{{ .REALPATH }}'
-    sources:
-      - ./**/*
-      - exclude: .git/**/*
-      - exclude: .gitignore
-      - exclude: .task/**/*
-      - exclude: bootstrap.sh
-      - exclude: darwin/**/*
-      - exclude: linux/**/*
     cmds:
-      - for: sources
+      - for:
+          var: FILES
         vars:
           SOURCE: '{{ joinPath .REALPATH .ITEM }}'
           DESTINATION: '{{ joinPath .HOME .ITEM }}'
@@ -52,12 +55,14 @@ tasks:
     platforms: [darwin]
     vars:
       REALPATH:
-        sh: echo -n "$(dirname $(realpath ./Taskfile.yaml))/darwin"
+        sh: echo -n $(dirname $(realpath ./Taskfile.yaml))/darwin
+      FILES:
+        sh: >-
+          cd $(dirname $(realpath ./Taskfile.yaml))/darwin; find . -type f -print
     dir: '{{ .REALPATH }}'
-    sources:
-      - ./**/*
     cmds:
-      - for: sources
+      - for:
+          var: FILES
         vars:
           SOURCE: '{{ joinPath .REALPATH .ITEM }}'
           DESTINATION: '{{ joinPath .HOME .ITEM }}'
@@ -69,11 +74,13 @@ tasks:
     vars:
       REALPATH:
         sh: echo -n "$(dirname $(realpath ./Taskfile.yaml))/linux"
+      FILES:
+        sh: >-
+          cd $(dirname $(realpath ./Taskfile.yaml))/linux; find . -type f -print
     dir: '{{ .REALPATH }}'
-    sources:
-      - ./**/*
     cmds:
-      - for: sources
+      - for:
+          var: FILES
         vars:
           SOURCE: '{{ joinPath .REALPATH .ITEM }}'
           DESTINATION: '{{ joinPath .HOME .ITEM }}'
