@@ -141,7 +141,7 @@ History Items[$e]=file:///media/steam/steam,file:///media/steam2,file:///media/s
 
 [General]
 AccentColor=78,137,130
-ColorSchemeHash=a6aeb2c7d22e33b7dc024f40f0daed0f793a1dac
+ColorSchemeHash=8ff306d9a93379c74540e00506966df24df1798b
 LastUsedCustomAccentColor=78,137,130
 TerminalApplication=/home/linuxbrew/.linuxbrew/bin/wezterm
 TerminalService=/home/alex/.local/share/applications/wezterm.desktop

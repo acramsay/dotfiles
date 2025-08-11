@@ -1,0 +1,24 @@
+[3e5b2d38-9e40-4dd2-b288-3664830af2d9]
+Description=Desktop 3
+desktops=7bff7121-62b8-454b-9372-caaa2fa98220
+desktopsrule=3
+wmclass=WezTerm
+wmclassmatch=1
+
+[8cd4798d-8b64-4e0e-b358-9c406ea0c112]
+Description=Desktop 1
+desktops=63dde296-b62b-47fd-9464-8aac598c1761
+desktopsrule=3
+wmclass=Discord|Notesnook|Signal|Steam
+wmclassmatch=3
+
+[General]
+count=3
+rules=8cd4798d-8b64-4e0e-b358-9c406ea0c112,ff7aae54-5bc6-426a-baa7-02e02e861c1c,3e5b2d38-9e40-4dd2-b288-3664830af2d9
+
+[ff7aae54-5bc6-426a-baa7-02e02e861c1c]
+Description=Desktop 2
+desktops=4bea8b1c-b625-47bb-8468-e182985189a8
+desktopsrule=3
+wmclass=LibreWolf
+wmclassmatch=1
