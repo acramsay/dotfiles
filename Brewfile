@@ -21,6 +21,8 @@ cask "font-recursive-code"
 brew "yazi"
 
 brew "helix", args: ["HEAD"]
+tap "sst/tap"
+brew "sst/tap/opencode"
 brew "yaml-language-server"
 brew "yamlfmt"
 brew "go"
