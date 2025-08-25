@@ -1,0 +1,5 @@
+(require (prefix-in helix. "helix/commands.scm"))
+(require (prefix-in helix.static. "helix/static.scm"))
+(require "helix/ext.scm")
+(require "helix/misc.scm")
+(require "steel-pty/term.scm")

@@ -99,7 +99,7 @@ tasks:
     aliases: [u]
     cmds:
       - task: brew
-      - task: cargo
+      - task: helix
       - cmd: ya pkg add yazi-rs/flavors:catppuccin-macchiato
         ignore_error: true
       - task: "{{ .ID }}:update"
@@ -113,11 +113,31 @@ tasks:
       - brew bundle
       - brew cleanup
 
-  cargo:
-    desc: Install and update rust packages install via cargo
-    aliases: [c]
+  helix:
+    desc: Install and update packages for a helix fork that enable plugins via steel/scheme
+    aliases: [h]
     cmds:
-      - source cargo.sh
+      - cargo install --git https://github.com/mattwparas/steel.git steel-forge
+      - forge pkg install --git https://github.com/mattwparas/helix-config.git
+      - mkdir -p ~/git
+      - task: helix-clone
+      - task: helix-build
+
+  helix-clone:
+    internal: true
+    status:
+      - test -d ~/git/helix
+    dir: ~/git
+    cmds:
+      - git clone https://github.com/mattwparas/helix.git
+
+  helix-build:
+    internal: true
+    dir: ~/git/helix
+    cmds:
+      - git switch steel-event-system
+      - git pull
+      - cargo xtask steel
 
   # Ollama
 
