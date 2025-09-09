@@ -1,6 +1,6 @@
 // Learn more about configuration options: https://github.com/johnste/finicky/wiki/Configuration
 
-module.exports = {
+export default {
   defaultBrowser: "Firefox",
   handlers: [
     {
@@ -12,7 +12,7 @@ module.exports = {
       // make zoom links open in zoom 
       match: [
         "zoom.us/*",
-        finicky.matchDomains(/.*\zoom.us/),
+        (url) => finicky.matchHostnames(/.*\zoom.us/) && !url.pathname.startsWith("/rec/share/"),
         /zoom.us\/j\//,
       ],
      browser: "/Applications/zoom.us.app",
