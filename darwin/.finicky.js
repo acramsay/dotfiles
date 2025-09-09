@@ -5,14 +5,18 @@ export default {
   handlers: [
     {
       // Open Zoom SSO links in a typical browser
-      match: ({opener, url }) => opener.bundleId == "us.zoom.xos" && url.host.includes("zoom.us"),
+      // match: ({opener, url }) => opener.bundleId == "us.zoom.xos" && url.host.includes("zoom.us"),
+      match: [
+        (url, options) => options.opener.bundleId == "us.zoom.xos" && url.host.includes("zoom.us"),
+        (url, options) => url.host.endsWith("zoom.us") && url.pathname.startsWith("/rec/share/"),
+      ],
       browser: "Firefox",
     },
     {
       // make zoom links open in zoom 
       match: [
         "zoom.us/*",
-        (url) => finicky.matchHostnames(/.*\zoom.us/) && !url.pathname.startsWith("/rec/share/"),
+        finicky.matchHostnames(/.*\.zoom.us/),
         /zoom.us\/j\//,
       ],
      browser: "/Applications/zoom.us.app",
@@ -25,7 +29,7 @@ export default {
     },
     {
       // Slack protocol
-      match: ({ url }) => url.protocol === "slack",
+      match: (url, options) => url.protocol === "slack",
       browser: "/Applications/Slack.app"
     },
   ],
