@@ -17,6 +17,9 @@ export PATH="$DPRINT_INSTALL/bin:$PATH"
 
 # rancher desktop
 export PATH="$HOME/.rd/bin:$PATH"
+if [[ $OSTYPE != 'linux' ]]; then
+  export DOCKER_HOST=unix://$HOME/.rd/docker.sock
+fi
 
 export EDITOR='hx'
 export VISUAL='hx'
