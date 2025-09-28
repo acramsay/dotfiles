@@ -3,6 +3,7 @@ theme = "transparency"
 [editor]
 bufferline = "always"
 end-of-line-diagnostics = "hint"
+scrolloff = 15
 
 [editor.cursor-shape]
 insert = "bar"
