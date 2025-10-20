@@ -40,9 +40,10 @@ brew "rustup"
 # dev tools
 brew "git"
 brew "go-task"
+brew "httpie"
 brew "lazygit"
-brew "ollama"
 brew "pre-commit"
+brew "syncthing"
 
 # terraform
 tap "hashicorp/tap"
