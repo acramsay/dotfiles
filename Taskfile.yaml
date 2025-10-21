@@ -76,7 +76,7 @@ tasks:
         sh: echo -n "$(dirname $(realpath ./Taskfile.yaml))/linux"
       FILES:
         sh: >-
-          cd $(dirname $(realpath ./Taskfile.yaml))/linux; find . -type f -o -type f -print
+          cd $(dirname $(realpath ./Taskfile.yaml))/linux; find . -type f -print
     dir: '{{ .REALPATH }}'
     cmds:
       - for:
