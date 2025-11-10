@@ -122,6 +122,7 @@ tasks:
       - mkdir -p ~/git
       - task: helix-clone
       - task: helix-build
+    ignore_error: true
 
   helix-clone:
     internal: true
@@ -138,6 +139,7 @@ tasks:
       - git switch steel-event-system
       - git pull
       - cargo xtask steel
+    ignore_error: true
 
   # Internals
 
