@@ -11,6 +11,7 @@ normal = "block"
 select = "underline"
 
 [editor.file-picker]
+follow-symlinks = false
 git-ignore = false
 hidden = false
 ignore = false
