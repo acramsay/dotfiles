@@ -11,5 +11,5 @@ tasks:
   update:
     desc: Update OpenSuse via Zypper
     cmds:
-      - sudo zypper up -ly
-      - sudo zypper dup -ly
+      - sudo zypper up -ly --allow-vendor-change
+      - sudo zypper dup -ly --allow-vendor-change
