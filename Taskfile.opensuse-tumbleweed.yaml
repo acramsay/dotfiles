@@ -3,6 +3,15 @@ version: '3'
 tasks:
   aliases:
     - rk
+
+  init:
+    cmds:
+      - |
+        sudo touch /etc/sudoers.d/$USER
+        sudo dd of=/etc/sudoers.d/$USER <<- EOF
+        $USER ALL=(ALL) NOPASSWD: /usr/bin/zypper up -ly --allow-vendor-change, /usr/bin/zypper dup -ly --allow-vendor-change
+        EOF
+
   restart-kde:
     desc: Restart the KDE Plasma desktop environment
     cmds:

@@ -21,6 +21,10 @@ tasks:
     cmds:
       - task --list
 
+  init:
+    cmds:
+      - task: "{{ .ID }}:init"
+
   create-symlinks:
     desc: Create symlinks for dotfiles with automatic backup of existing files
     aliases:
