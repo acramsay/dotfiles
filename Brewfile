@@ -36,6 +36,7 @@ brew "lua-language-server"
 brew "marksman"
 brew "rust"
 brew "rustup"
+brew "typescript-language-server"
 
 # dev tools
 brew "git"
