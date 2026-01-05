@@ -9,7 +9,7 @@ tasks:
       - |
         sudo touch /etc/sudoers.d/$USER
         sudo dd of=/etc/sudoers.d/$USER <<- EOF
-        $USER ALL=(ALL) NOPASSWD: /usr/bin/zypper up -ly --allow-vendor-change, /usr/bin/zypper dup -ly --allow-vendor-change
+        $USER ALL=(ALL) NOPASSWD: /usr/bin/zypper dup -ly --allow-vendor-change --replacefiles
         EOF
 
   restart-kde:
