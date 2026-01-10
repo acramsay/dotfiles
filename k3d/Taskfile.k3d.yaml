@@ -28,8 +28,8 @@ tasks:
     cmds:
       - k3d cluster delete --config {{ joinPath .K3D_DATA_PATH "k3d-local.yaml" }}
 
-  rebuild-cluster:
-    aliases: [rebuild, recreate, r]
+  recreate-cluster:
+    aliases: [recreate, r]
     desc: Delete and create the k3d cluster based on the local config file
     cmds:
       - task: delete-cluster

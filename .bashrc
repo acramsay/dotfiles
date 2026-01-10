@@ -33,6 +33,7 @@ alias y='cd $(yazi --cwd-file=/dev/stdout 2> /dev/null)'
 
 # completions
 source <(k3d completion bash)
+source <(task completion bash)
 
 # override with local settings
 # this must be at the end of the file
