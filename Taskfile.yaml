@@ -123,6 +123,7 @@ tasks:
     cmds:
       - cargo install --git https://github.com/mattwparas/steel.git steel-forge
       - forge pkg install --git https://github.com/mattwparas/helix-config.git
+      - forge pkg install --git https://github.com/mattwparas/helix-file-watcher.git
       - mkdir -p ~/git
       - task: helix-clone
       - task: helix-build
