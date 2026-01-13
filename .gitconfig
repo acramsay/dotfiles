@@ -7,10 +7,10 @@
 	ui = auto column dense
 [core]
 	editor = hx
-[credential]
-	helper = store
 [branch]
 	sort = -committerdate
+[credential "https://github.com"]
+	username = acramsay
 [diff]
 	algorithm = histogram
 	colorMoved = plain
@@ -38,5 +38,7 @@
 	autoupdate = true
 [tag]
 	sort = version:refname
+[include]
+	path = ~/.gitconfig.os
 [include]
 	path = ~/.gitconfig.local

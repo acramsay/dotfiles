@@ -62,7 +62,7 @@ tasks:
         sh: echo -n $(dirname $(realpath ./Taskfile.yaml))/darwin
       FILES:
         sh: >-
-          cd $(dirname $(realpath ./Taskfile.yaml))/darwin; find . -type f -o -type f -print
+          cd $(dirname $(realpath ./Taskfile.yaml))/darwin; find . -type f -o -type f
     dir: '{{ .REALPATH }}'
     cmds:
       - for:
