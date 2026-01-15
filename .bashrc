@@ -1,6 +1,8 @@
 # this file is symlinked to/from .bashrc and .zshrc
 # all content must be viable for both shells
 
+export SHELL_NAME=${SHELL##*/}
+
 # homebrew
 if [[ $OSTYPE == 'linux' ]]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
@@ -32,11 +34,11 @@ alias ll='ls -la'
 alias y='cd $(yazi --cwd-file=/dev/stdout 2> /dev/null)'
 
 # completions
-source <(k3d completion bash)
-source <(task --completion bash)
+eval $(k3d completion $SHELL_NAME)
+eval $(task --completion $SHELL_NAME)
 
 # override with local settings
 # this must be at the end of the file
-if [[ -x "$HOME/.$(basename $SHELL)rc.local" ]]; then
-  source "$HOME/.$(basename $SHELL)rc.local"
+if [[ -x "$HOME/.$SHELL_NAMErc.local" ]]; then
+  source "$HOME/.$SHELL_NAMErc.local"
 fi
