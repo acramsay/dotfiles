@@ -1,0 +1,46 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "enabled_providers": ["openrouter"],
+  "model": "xiaomi/mimo-v2-flash",
+  "permission": {
+    "bash": "ask",
+    "edit": "deny",
+    "glob": "allow",
+    "grep": "allow",
+    "list": "allow",
+    "lsp": "allow",
+    "question": "allow",
+    "todoread": "allow",
+    "todowrite": "allow",
+    "webfetch": "allow",
+  },
+  "provider": {
+    "openrouter": {
+      "models": {
+        "xiaomi/mimo-v2-flash": {
+          "attachment": true,
+          "cost": {
+            "input": 0.1,
+            "output": 0.3,
+          },
+          "interleaved": true,
+          "limit": {
+            "context": 262100,
+            "output": 65500,
+          },
+          "modalities": {
+            "input": ["text"],
+            "output": ["text"],
+          },
+          "reasoning": true,
+          "release_date": "Dec 14, 2025",
+          "tool_call": true,
+        },
+      },
+    },
+  },
+  "theme": "catppuccin-macchiato",
+  "tui": {
+    "scroll_speed": 5,
+  },
+}
