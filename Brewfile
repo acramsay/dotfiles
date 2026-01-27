@@ -4,6 +4,7 @@ if OS.linux?
   brew "docker"
   brew "kubectl"
   brew "kubernetes-cli"
+  brew "git-credential-libsecret"
 end
 
 if OS.mac?
