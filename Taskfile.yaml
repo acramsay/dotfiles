@@ -39,7 +39,6 @@ tasks:
           -name ".gitignore"
           -o -name "bootstrap.sh"
           -o -path "./.git"
-          -o -path "./.task"
           -o -path "./darwin"
           -o -path "./linux"
           \) -prune -o \( -type f -o -type l \) -print
