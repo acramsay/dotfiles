@@ -2,6 +2,19 @@
   "$schema": "https://opencode.ai/config.json",
   "autoupdate": false,
   "enabled_providers": ["openrouter"],
+  "formatter": {
+    "dprint": {
+      "command": ["dprint", "fmt", "--stdin", "md"],
+      "extensions": [".md"],
+    },
+    "gopls": {
+      "disabled": true,
+    },
+    "gofumpt": {
+      "command": ["gofumpt", "$FILE"],
+      "extensions": [".go"],
+    }
+  },
   "model": "mimo-v2-flash",
   "permission": {
     "bash": {
