@@ -4,3 +4,5 @@ if ! type "brew" >/dev/null 2>&1; then
 fi
 
 brew bundle --file $(dirname $(realpath $0))/Brewfile
+
+task cs

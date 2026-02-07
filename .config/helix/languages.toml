@@ -2,6 +2,11 @@
 # https://github.com/helix-editor/helix/blob/master/languages.toml
 
 [[language]]
+name = "go"
+auto-format = true
+formatter = { command = "gofumpt" }
+
+[[language]]
 name = "javascript"
 formatter = { command = "dprint", args = ["fmt", "--stdin", "javascript"]}
 
@@ -32,7 +37,61 @@ file-types = [ "yaml", "yml" ]
 formatter = { command = "yamlfmt", args = ["-"] }
 
 [language-server.gopls.config]
+"completion.usePlaceholders" = true
 "formatting.gofumpt" = true
+
+[language-server.gopls.config.diagnostic]
+staticcheck = true
+vulncheck = "Imports"
+
+[language-server.gopls.config.diagnostic.analyses]
+QF1001 = true
+QF1005 = true
+QF1006 = true
+QF1007 = true
+QF1011 = true
+S1002 = true
+S1005 = true
+S1006 = true
+S1008 = true
+S1011 = true
+S1016 = true
+S1021 = true
+S1025 = true
+S1029 = true
+SA1000 = true
+SA1002 = true
+SA1010 = true
+SA1011 = true
+SA1014 = true
+SA1015 = true
+SA1018 = true
+SA1026 = true
+SA1027 = true
+SA1028 = true
+SA1029 = true
+SA1032 = true
+SA2003 = true
+SA4005 = true
+SA4006 = true
+SA4009 = true
+SA4017 = true
+SA4018 = true
+SA5000 = true
+SA5007 = true
+SA5010 = true
+SA5011 = true
+SA6000 = true
+SA6003 = true
+SA9005 = true
+SA9007 = true
+ST1003 = true
+ST1008 = true
+ST1013 = true
+ST1018 = true
+appendclipped = true
+shadow = true
+slicesdelete = true
 
 [language-server.gopls.config.hints]
 assignVariableTypes = false
