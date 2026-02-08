@@ -15,6 +15,7 @@ if OS.mac?
   cask "meetingbar"
   cask "finicky"
   cask "rancher"
+  cask "rio"
 end
 
 cask "font-recursive-code"

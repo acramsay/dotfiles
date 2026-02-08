@@ -11,6 +11,7 @@ tasks:
         sudo dd of=/etc/sudoers.d/$USER <<- EOF
         $USER ALL=(ALL) NOPASSWD: /usr/bin/zypper dup -ly --allow-vendor-change --replacefiles
         EOF
+        sudo zypper install rioterm
 
   restart-kde:
     desc: Restart the KDE Plasma desktop environment
