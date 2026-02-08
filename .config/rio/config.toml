@@ -31,7 +31,7 @@ mode = "Maximized"
 
 [window.background-image]
 # opacity = 0.2 # broken for the last year or so
-path = "fire2.jpg"
+path = "fire.jpg"
 
 [bindings]
 keys = [
@@ -58,7 +58,6 @@ keys = [
 
   # VI Mode
   { key = "esc", mode = "vi", action = "ToggleVIMode" },
-  { key = "esc", mode = "~vi", action = "ToggleVIMode" },
   
   # Copy/paste (common defaults)
   { key = "c", with = "super", action = "Copy" },
