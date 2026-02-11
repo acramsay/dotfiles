@@ -15,7 +15,7 @@ family = "Rec Mono Casual"
 style = "Italic"
 
 [navigation]
-current-working-directory = true
+current-working-directory = false
 mode = "BottomTab"
 
 [renderer]
