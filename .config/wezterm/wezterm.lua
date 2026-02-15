@@ -5,11 +5,12 @@ local config = wezterm.config_builder()
 -- window:effective_config()
 -- config.color_scheme = 'Catppuccin Macchiato'
 local transparency = wezterm.color.get_builtin_schemes()['Catppuccin Macchiato']
--- transparency.foreground = transparency.brights[3]
--- transparency.foreground = '#C4FFDB'
 
 config.color_schemes = { ['Transparency'] = transparency }
 config.color_scheme = 'Transparency'
+config.inactive_pane_hsb = {
+  brightness = 0.4,
+}
 
 -- config.font = wezterm.font("Rec Mono Casual", {weight="Regular", stretch="Normal", style="Normal"})
 config.font = wezterm.font("Rec Mono Casual", { weight = "Regular", stretch = "Normal", style = "Italic" })
@@ -21,7 +22,6 @@ config.window_background_image_hsb = {
   brightness = 0.2,
 }
 
-config.key_tables = keybinds.key_tables()
 config.keys = keybinds.keys()
 
 -- Tab/Status Bar
