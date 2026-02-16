@@ -2,6 +2,16 @@ local wezterm = require 'wezterm'
 local keybinds = require 'keybinds'
 local config = wezterm.config_builder()
 
+-- Maximize windows on startup
+wezterm.on('gui-attached', function(domain)
+  local workspace = wezterm.mux.get_active_workspace()
+  for _, window in ipairs(wezterm.mux.all_windows()) do
+    if window:get_workspace() == workspace then
+      window:gui_window():maximize()
+    end
+  end
+end)
+
 -- window:effective_config()
 -- config.color_scheme = 'Catppuccin Macchiato'
 local transparency = wezterm.color.get_builtin_schemes()['Catppuccin Macchiato']
