@@ -27,9 +27,27 @@ config.font = wezterm.font("Rec Mono Casual", { weight = "Regular", stretch = "N
 config.font_size = 14
 config.line_height = 1.2
 
-config.window_background_image = os.getenv('HOME') .. '/fire.jpg'
-config.window_background_image_hsb = {
-  brightness = 0.2,
+wezterm.on('toggle-background', function(window)
+  local overrides = window:get_config_overrides() or {}
+  if overrides.background then
+    overrides.background = nil
+  else
+    overrides.background = {
+      {
+        source = { Color = "black" },
+        height = "100%",
+        width = "100%",
+      }
+    }
+  end
+  window:set_config_overrides(overrides)
+end)
+
+config.background = {
+  {
+    source = { File = os.getenv('HOME') .. '/fire.jpg' },
+    hsb = { brightness = 0.2 },
+  }
 }
 
 config.keys = keybinds.keys()

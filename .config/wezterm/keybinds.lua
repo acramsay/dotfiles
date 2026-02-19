@@ -89,6 +89,12 @@ local keys_normal = {
     mods = 'OPT|SHIFT',
     action = wezterm.action.ScrollToBottom,
   },
+  -- Other
+  {
+    key = 'b',
+    mods = 'OPT|SHIFT',
+    action = wezterm.action.EmitEvent 'toggle-background',
+  },
 }
 
 function module.keys()
