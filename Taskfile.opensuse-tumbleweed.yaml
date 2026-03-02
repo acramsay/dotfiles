@@ -1,9 +1,6 @@
 version: '3'
 
 tasks:
-  aliases:
-    - rk
-
   init:
     cmds:
       - |
@@ -14,6 +11,8 @@ tasks:
 
   restart-kde:
     desc: Restart the KDE Plasma desktop environment
+    aliases:
+      - rk
     cmds:
       - systemctl restart --user plasma-plasmashell
 
