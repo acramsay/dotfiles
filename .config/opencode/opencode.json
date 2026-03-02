@@ -79,8 +79,4 @@
       },
     },
   },
-  "theme": "catppuccin-macchiato",
-  "tui": {
-    "scroll_speed": 5,
-  },
 }
