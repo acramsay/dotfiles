@@ -1,0 +1,10 @@
+[Unit]
+Description=Clear lingering gpg pubring.db.lock file on login
+Before=display-manager.service
+
+[Service]
+Type=oneshot
+ExecStart=%h/.config/systemd/user/clear-gpg-lock.sh
+
+[Install]
+WantedBy=default.target
