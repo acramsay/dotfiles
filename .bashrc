@@ -39,6 +39,6 @@ eval $(task --completion $SHELL_NAME)
 
 # override with local settings
 # this must be at the end of the file
-if [[ -x "$HOME/.$SHELL_NAMErc.local" ]]; then
-  source "$HOME/.$SHELL_NAMErc.local"
+if [[ -x "$HOME/.${SHELL_NAME}rc.local" ]]; then
+  source "$HOME/.${SHELL_NAME}rc.local"
 fi
