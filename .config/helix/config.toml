@@ -56,16 +56,14 @@ C-g = [
     ":redraw", 
     ":reload-all"
 ]
-# Select the current word
-W = "@miw"
-
-[keys.normal.space]
-# o = """:sh wezterm cli split-pane sh -c "yazi --chooser-file=/dev/stdout | while read -r; do wezterm cli send-text --pane-id ${WEZTERM_PANE} --no-paste \\":o \\${REPLY}\r\\"; done" > /dev/null"""
-o = [
-    ':open "%sh{echo $(yazi --chooser-file /dev/stdout 2> /dev/null)}"',
+W = "@miw" # Select the current word
+space."." = "file_picker_in_current_buffer_directory"
+space.B = ":echo %sh{git blame -L %{cursor_line},+1 %{buffer_name}}"
+space.c = "toggle_comments"
+space.l = ":config-reload"
+space.o = [
+    ":open %sh{echo $(yazi --chooser-file /dev/stdout 2> /dev/null)}",
     ":set mouse false",
     ":set mouse true",
-    ':redraw'
+    ":redraw"
 ]
-"." = "file_picker_in_current_buffer_directory"
-c = "toggle_comments"
