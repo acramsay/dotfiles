@@ -49,5 +49,11 @@
     "todoread": "allow",
     "todowrite": "allow",
     "webfetch": "allow",
+    "skill": {
+      "*": "allow"
+    }
   },
+  "plugin": [
+    "@tarquinen/opencode-dcp@latest",
+  ],
 }
