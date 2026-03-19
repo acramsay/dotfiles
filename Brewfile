@@ -41,6 +41,7 @@ brew "rustup"
 brew "typescript-language-server"
 
 # dev tools
+brew "gh"
 brew "git"
 brew "go-task"
 brew "httpie"
