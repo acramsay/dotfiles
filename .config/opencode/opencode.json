@@ -15,7 +15,7 @@
       "extensions": [".go"],
     }
   },
-  "model": "mimo-v2-flash",
+  "model": "xiaomi/mimo-v2-flash",
   "permission": {
     "bash": {
       "*": "ask",
@@ -44,39 +44,5 @@
     "todoread": "allow",
     "todowrite": "allow",
     "webfetch": "allow",
-  },
-  "provider": {
-    "openrouter": {
-      "models": {
-        "mimo-v2-flash": {
-          "id": "xiaomi/mimo-v2-flash",
-          "name": "MiMo-V2-Flash",
-          "family": "mimo",
-          "attachment": false,
-          "reasoning": true,
-          "tool_call": true,
-          "interleaved": {
-            "field": "reasoning_content"
-          },
-      		"temperature": true,
-      		"knowledge": "2024-12-01",
-      		"release_date": "2025-12-17",
-      		"last_updated": "2025-12-17",
-      		"modalities": {
-      			"input": ["text"],
-      			"output": ["text"]
-      		},
-      		"open_weights": true,
-      		"cost": {
-      			"input": 0.1,
-      			"output": 0.3
-      		},
-      		"limit": {
-      			"context": 256000,
-      			"output": 32000
-      		}
-      	},
-      },
-    },
   },
 }
