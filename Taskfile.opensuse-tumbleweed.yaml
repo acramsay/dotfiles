@@ -16,6 +16,13 @@ tasks:
     cmds:
       - systemctl restart --user plasma-plasmashell
 
+  restart-kde-lockscreen:
+    desc: Restart the KDE Plasma desktop environment
+    aliases:
+      - rl
+    cmds:
+      - pkill -9 kscreenlocker*
+
   update:
     desc: Update OpenSuse via Zypper
     cmds:
