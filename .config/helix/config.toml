@@ -61,6 +61,12 @@ space."." = "file_picker_in_current_buffer_directory"
 space.B = ":echo %sh{git blame -L %{cursor_line},+1 %{buffer_name}}"
 space.c = "toggle_comments"
 space.l = ":config-reload"
+space.n = [
+    ":open %sh{echo $(yazi --chooser-file /dev/stdout ~/notes 2> /dev/null)}",
+    ":set mouse false",
+    ":set mouse true",
+    ":redraw"
+]
 space.o = [
     ":open %sh{echo $(yazi --chooser-file /dev/stdout 2> /dev/null)}",
     ":set mouse false",
