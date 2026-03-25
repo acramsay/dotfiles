@@ -73,3 +73,9 @@ space.o = [
     ":set mouse true",
     ":redraw"
 ]
+space.O = [
+    ":open %sh{echo $(yazi %{buffer_name} --chooser-file /dev/stdout 2> /dev/null)}",
+    ":set mouse false",
+    ":set mouse true",
+    ":redraw"
+]

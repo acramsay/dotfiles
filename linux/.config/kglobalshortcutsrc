@@ -271,6 +271,8 @@ switch to previous activity=none,,Switch to Previous Activity
 toggle do not disturb=none,,Toggle do not disturb
 
 [services][org.kde.spectacle.desktop]
+CurrentMonitorScreenShot=
+OpenWithoutScreenshot=
 RectangularRegionScreenShot=Meta+Shift+Print\tMeta+$
 
 [services][org.kde.touchpadshortcuts.desktop]
