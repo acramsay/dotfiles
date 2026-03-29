@@ -30,7 +30,8 @@ export LESS='-FIMRX'
 alias k='kubectl'
 alias kc='kubectx'
 alias lg='lazygit'
-alias ll='ls -la'
+alias ll='ls -alh'
+alias llr='ls -alhrt'
 alias y='cd $(yazi --cwd-file=/dev/stdout 2> /dev/null)'
 
 # completions
