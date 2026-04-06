@@ -2,6 +2,15 @@ local wezterm = require 'wezterm'
 local keybinds = require 'keybinds'
 local config = wezterm.config_builder()
 
+-- Plugins
+local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
+
+-- Resurrect setup
+-- Autosave every 15 minutes (optional, can be disabled if you prefer manual save only)
+resurrect.state_manager.periodic_save()
+-- Restore last session on startup
+wezterm.on("gui-startup", resurrect.state_manager.resurrect_on_gui_startup)
+
 -- Maximize windows on startup
 wezterm.on('gui-attached', function(domain)
   local workspace = wezterm.mux.get_active_workspace()

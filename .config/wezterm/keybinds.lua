@@ -1,4 +1,5 @@
 local wezterm = require 'wezterm'
+local resurrect_impl = require 'resurrect_impl'
 
 local module = {}
 
@@ -94,6 +95,22 @@ local keys_normal = {
     key = 'b',
     mods = 'OPT|SHIFT',
     action = wezterm.action.EmitEvent 'toggle-background',
+  },
+  -- Resurrect Load (Tab only, spawns new tab)
+  {
+    key = 'r',
+    mods = 'OPT',
+    action = wezterm.action_callback(function(window)
+      resurrect_impl.load_tab_layout(window)
+    end),
+  },
+  -- Save current tab layout (with name prompt)
+  {
+    key = 'w',
+    mods = 'OPT',
+    action = wezterm.action_callback(function(window)
+      resurrect_impl.save_tab_layout(window)
+    end),
   },
 }
 
