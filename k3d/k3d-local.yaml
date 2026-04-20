@@ -34,11 +34,6 @@ ports:
 options:
   k3d:
     wait: true
-  k3s:
-    extraArgs:
-      - arg: --disable=traefik
-        nodeFilters:
-          - server:*
 
 volumes:
   - volume: $K3D_PERSISTENT_VOLUMES_PATH:/data

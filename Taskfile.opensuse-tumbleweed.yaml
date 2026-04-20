@@ -26,4 +26,18 @@ tasks:
   update:
     desc: Update OpenSuse via Zypper
     cmds:
+      - task: update-legcord
       - sudo zypper dup -ly --allow-vendor-change --replacefiles
+
+  update-legcord:
+    desc: Update Legcord if newer version is available
+    vars:
+      LEGCORD_LATEST_TAG:
+        sh: "curl -s https://api.github.com/repos/Legcord/Legcord/releases/latest | jq -r '.tag_name'"
+      LEGCORD_LATEST_VERSION:
+        sh: "echo '{{.LEGCORD_LATEST_TAG}}' | sed 's/^v//'"
+      INSTALLED_VERSION:
+        sh: "rpm -q legcord --queryformat '%{VERSION}' 2>/dev/null || echo '0'"
+    cmds:
+      - cmd: sudo zypper install --allow-vendor-change -y "https://github.com/Legcord/Legcord/releases/download/{{.LEGCORD_LATEST_TAG}}/Legcord-{{.LEGCORD_LATEST_VERSION}}-linux-x86_64.rpm"
+        if: '{{ne .INSTALLED_VERSION .LEGCORD_LATEST_VERSION}}'
