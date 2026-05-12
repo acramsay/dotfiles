@@ -107,6 +107,7 @@ tasks:
         ignore_error: true
       - cmd: ya pkg upgrade
         ignore_error: true
+      - cmd: dprint config update
       - task: "{{ .ID }}:update"
 
   brew:
