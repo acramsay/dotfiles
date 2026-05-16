@@ -37,9 +37,5 @@ beats "I'll do X." This applies to subagents too: when a subagent hits a fork in
 the road, it should return the options to the parent rather than picking
 unilaterally.
 
-Use the structured question tool when one is available — `AskUserQuestion` in
-Claude Code, `question` in opencode — rather than burying the ask in prose. It
-surfaces options cleanly and makes the choice easy to act on.
-
 Reserve autonomous choices for low-stakes, clearly reversible work. When in doubt,
 ask.
