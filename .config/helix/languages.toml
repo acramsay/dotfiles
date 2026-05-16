@@ -7,6 +7,11 @@ auto-format = true
 formatter = { command = "gofumpt" }
 
 [[language]]
+name = "html"
+auto-format = true
+formatter = { command = "dprint", args = ["fmt", "--stdin", "markup_fmt"]}
+
+[[language]]
 name = "javascript"
 formatter = { command = "dprint", args = ["fmt", "--stdin", "javascript"]}
 

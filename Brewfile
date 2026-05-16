@@ -38,8 +38,10 @@ brew "dprint"
 brew "lua-language-server"
 brew "markdownlint-cli"
 brew "marksman"
+brew "resvg"
 brew "rust"
 brew "rustup"
+brew "superhtml"
 brew "typescript-language-server"
 
 # dev tools
