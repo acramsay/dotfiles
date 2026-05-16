@@ -158,4 +158,4 @@ tasks:
         - DESTINATION
     cmds:
       - mkdir -p {{ dir .DESTINATION }}
-      - ln -fs {{ .SOURCE }} {{ .DESTINATION }}
+      - ln -fns {{ .SOURCE }} {{ .DESTINATION }}
