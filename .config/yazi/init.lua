@@ -11,3 +11,8 @@ Status:children_add(function()
     " ",
     }
 end, 500, Status.RIGHT)
+
+require("git"):setup {
+    -- Order of status signs showing in the linemode
+    order = 1500,
+}

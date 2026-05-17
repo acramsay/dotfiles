@@ -1,2 +1,11 @@
 [flavor]
 dark = "catppuccin-macchiato"
+
+[git]
+unknown_sign  = "?"
+added_sign = "A"
+ignored_sign = "I"
+deleted_sign  = "D"
+modified_sign = "M"
+updated_sign = "U"
+untracked_sign = ""

@@ -105,6 +105,8 @@ tasks:
       - task: helix
       - cmd: ya pkg add yazi-rs/flavors:catppuccin-macchiato
         ignore_error: true
+      - cmd: ya pkg add yazi-rs/plugins:git
+        ignore_error: true
       - cmd: ya pkg upgrade
         ignore_error: true
       - cmd: dprint config update

@@ -4,3 +4,8 @@ show_hidden = true
 
 [preview]
 wrap = "yes"
+
+[[plugin.prepend_fetchers]]
+url   = "*"
+run   = "git"
+group = "git"
