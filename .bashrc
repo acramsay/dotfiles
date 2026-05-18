@@ -2,6 +2,7 @@
 # all content must be viable for both shells
 
 export SHELL_NAME=${SHELL##*/}
+export XDG_CONFIG_HOME="$HOME/.config"
 
 # homebrew
 if [[ $OSTYPE == 'linux' ]]; then
