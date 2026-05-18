@@ -21,6 +21,7 @@ file-types = [ "json", "bru" ]
 
 [[language]]
 name = "markdown"
+auto-format = true
 comment-tokens = ["-", "+", "*", "- [ ]", ">"]
 formatter = { command = "dprint", args = ["fmt", "--stdin", "md"]}
 rulers = [80, 120]
