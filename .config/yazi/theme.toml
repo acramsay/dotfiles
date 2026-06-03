@@ -2,7 +2,6 @@
 dark = "catppuccin-macchiato"
 
 [git]
-unknown_sign  = "?"
 added_sign = "A"
 ignored_sign = "I"
 deleted_sign  = "D"

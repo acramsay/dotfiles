@@ -20,7 +20,7 @@ end
 cask "font-recursive-code"
 
 brew "yazi"
-brew "zoxide"
+# brew "zoxide"
 
 # brew "helix", args: ["HEAD"]
 tap "sst/tap"

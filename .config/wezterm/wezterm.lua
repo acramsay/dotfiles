@@ -35,6 +35,7 @@ config.inactive_pane_hsb = {
 config.font = wezterm.font("Rec Mono Casual", { weight = "Regular", stretch = "Normal", style = "Italic" })
 config.font_size = 14
 config.line_height = 1.2
+config.warn_about_missing_glyphs = false
 
 wezterm.on('toggle-background', function(window)
   local overrides = window:get_config_overrides() or {}
