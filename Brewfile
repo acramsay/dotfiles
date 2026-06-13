@@ -1,6 +1,6 @@
 if OS.linux?
-  tap "wezterm/wezterm-linuxbrew"
-  brew "wezterm", args: ["HEAD"]
+  tap "wez/wezterm-linuxbrew", trusted: true
+  brew "wez/wezterm-linuxbrew/wezterm", trusted: true, args: ["HEAD"]
   brew "docker"
   brew "kubectl"
   brew "kubernetes-cli"
@@ -22,8 +22,8 @@ cask "font-recursive-code"
 brew "yazi"
 
 # brew "helix", args: ["HEAD"]
-tap "sst/tap"
-brew "sst/tap/opencode"
+tap "sst/tap", trusted: true
+brew "sst/tap/opencode", trusted: true
 brew "ctx7"
 brew "yaml-language-server"
 brew "yamlfmt"
@@ -53,8 +53,8 @@ brew "pre-commit"
 brew "syncthing"
 
 # terraform
-tap "hashicorp/tap"
-brew "hashicorp/tap/terraform"
+tap "hashicorp/tap", trusted: true
+brew "hashicorp/tap/terraform", trusted: true
 brew "terragrunt"
 
 # k8s tools

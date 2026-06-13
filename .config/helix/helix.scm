@@ -4,7 +4,12 @@
 (require "helix/editor.scm")
 (require "helix-file-watcher/file-watcher.scm")
 
-(provide languages-open)
+(provide languages-open W)
+
+;;@doc
+;;Write without formatting (:w --no-format)
+(define (W)
+  (helix.write "--no-format"))
 
 ;;@doc
 ;;Open the languages.toml file
