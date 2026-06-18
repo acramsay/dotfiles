@@ -11,7 +11,7 @@ if OS.mac?
   cask "wezterm@nightly"
   cask "slack"
   tap "satrik/togglemute", "https://github.com/satrik/homebrew-togglemute.git"
-  cask "togglemute", args: { no_quarantine: true }
+  cask "togglemute", trusted: true, args: { no_quarantine: true }
   cask "meetingbar"
   cask "finicky"
   cask "rancher"
@@ -35,8 +35,7 @@ brew "gofumpt"
 brew "gopls"
 brew "dprint"
 brew "lua-language-server"
-brew "markdownlint-cli"
-brew "marksman"
+brew "rumdl"
 brew "resvg"
 brew "rust"
 brew "rustup"

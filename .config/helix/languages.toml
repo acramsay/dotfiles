@@ -23,7 +23,7 @@ file-types = [ "json", "bru" ]
 name = "markdown"
 auto-format = true
 comment-tokens = ["-", "+", "*", "- [ ]", ">"]
-formatter = { command = "dprint", args = ["fmt", "--stdin", "md"]}
+formatter = { command = "rumdl", args = ["check", "--fix", "--stdin"] }
 rulers = [80, 120]
 
 [[language]]
