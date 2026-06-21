@@ -18,7 +18,10 @@
   "lsp": {
     "golangci-lint": {
       "command": ["golangci-lint-langserver"],
-      "extensions": [".go"]
+      "extensions": [".go"],
+      "initialization": {
+        "command": ["golangci-lint", "run", "--output.json.path", "stdout", "--show-stats=false", "--issues-exit-code=1"]
+      }
     }
   },
   "model": "xiaomi/mimo-v2-flash",
@@ -51,17 +54,10 @@
       "gh pr comment *": "ask",
       "gh pr review *": "ask",
     },
-    "edit": "allow",
-    "glob": "allow",
-    "grep": "allow",
-    "list": "allow",
-    "lsp": "allow",
-    "question": "allow",
-    "todoread": "allow",
-    "todowrite": "allow",
-    "webfetch": "allow",
-    "skill": {
-      "*": "allow"
+    "external_directory": {
+      "~/git/dotfiles/**": "allow",
+      "~/.config/helix/**": "allow",
+      "~/.config/opencode/**": "allow"
     }
   },
   "plugin": [
