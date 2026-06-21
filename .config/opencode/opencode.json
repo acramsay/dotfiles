@@ -15,6 +15,12 @@
       "extensions": [".go"],
     }
   },
+  "lsp": {
+    "golangci-lint": {
+      "command": ["golangci-lint-langserver"],
+      "extensions": [".go"]
+    }
+  },
   "model": "xiaomi/mimo-v2-flash",
   "permission": {
     "bash": {
