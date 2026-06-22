@@ -1,18 +1,18 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "autoupdate": false,
-  "enabled_providers": ["anthropic", "github-copilot", "openrouter"],
+  "enabled_providers": ["openrouter"],
   "formatter": {
     "dprint": {
       "command": ["dprint", "fmt", "--stdin", "md"],
-      "extensions": [".md"],
+      "extensions": [".md"]
     },
     "gopls": {
-      "disabled": true,
+      "disabled": true
     },
     "gofumpt": {
       "command": ["gofumpt", "$FILE"],
-      "extensions": [".go"],
+      "extensions": [".go"]
     }
   },
   "lsp": {
@@ -28,10 +28,6 @@
   "permission": {
     "bash": {
       "*": "ask",
-      "az boards show *": "allow",
-      "az boards query *": "allow",
-      "az boards work-item query *": "allow",
-      "az boards work-item show *": "allow",
       "git *": "deny",
       "find *": "allow",
       "ls *": "allow",
@@ -62,5 +58,6 @@
   },
   "plugin": [
     "@tarquinen/opencode-dcp@latest",
-  ],
+    "opencode-mem"
+  ]
 }
