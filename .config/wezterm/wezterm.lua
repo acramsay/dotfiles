@@ -55,7 +55,8 @@ end)
 
 config.background = {
   {
-    source = { File = os.getenv('HOME') .. '/fire.jpg' },
+    -- https://unsplash.com/photos/photography-of-forest-1L71sPT5XKc
+    source = { File = os.getenv('HOME') .. '/background.jpg' },
     hsb = { brightness = 0.2 },
   }
 }
