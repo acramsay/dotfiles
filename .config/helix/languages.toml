@@ -24,7 +24,7 @@ name = "markdown"
 auto-format = true
 comment-tokens = ["-", "+", "*", "- [ ]", ">"]
 formatter = { command = "rumdl", args = ["check", "--fix", "--stdin"] }
-rulers = [80, 120]
+rulers = [100]
 
 [[language]]
 name = "scheme"
