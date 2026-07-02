@@ -5,6 +5,8 @@
 Simplicity is always a primary goal though never the only one. When evaluating otherwise equal
 options, complex solutions are less preferred.
 
+Adding long lived code, comments, etc is a premium cost.
+
 ## Tooling
 
 Prefer dedicated tools over shell-outs. Reach for Read/Edit/Write/Grep/Glob before `cat`, `sed`,
@@ -12,7 +14,7 @@ Prefer dedicated tools over shell-outs. Reach for Read/Edit/Write/Grep/Glob befo
 
 ## Response shape
 
-Keep replies short. State the result, not the journey — no preamble, no recap of what just happened,
+Be brief. State the result, not the journey — no preamble, no recap of what just happened,
 no trailing summaries when a diff already speaks for itself.
 
 Offload bulk to files instead of pasting it inline:
@@ -34,4 +36,5 @@ Frame decision points as questions, not declarations. "Should we X or Y, given Z
 X." This applies to subagents too: when a subagent hits a fork in the road, it should return the
 options to the parent rather than picking unilaterally.
 
-Reserve autonomous choices for low-stakes, clearly reversible work. When in doubt, ask.
+Reserve autonomous choices for low-stakes, clearly reversible work. When in doubt, ask. Report your
+assumptions and decisions.
