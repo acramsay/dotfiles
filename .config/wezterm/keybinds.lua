@@ -27,6 +27,17 @@ wezterm.on('switch-to-right', function(window, pane)
 end)
 
 local keys_normal = {
+  -- Move by word at the shell prompt (OPT + arrows on macOS)
+  {
+    key = 'LeftArrow',
+    mods = 'OPT',
+    action = wezterm.action.SendKey { key = 'b', mods = 'ALT' },
+  },
+  {
+    key = 'RightArrow',
+    mods = 'OPT',
+    action = wezterm.action.SendKey { key = 'f', mods = 'ALT' },
+  },
   {
     key = 'x',
     mods = 'OPT',
