@@ -97,5 +97,18 @@
     "@ex-machina/opencode-anthropic-auth",
     "@tarquinen/opencode-dcp@latest",
     "opencode-mem@2.13.0"
-  ]
+  ],
+  "provider": {
+    "openrouter": {
+      "models": {
+        "xiaomi/mimo-v2.5": {
+          "name": "Xiaomi MiMo v2.5",
+          "limit": {
+            "context": 1048576,
+            "output": 131072
+          }
+        }
+      }
+    }
+  }
 }
