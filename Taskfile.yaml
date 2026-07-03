@@ -117,7 +117,7 @@ tasks:
     aliases: [b]
     cmds:
       - brew update
-      - brew upgrade
+      - brew upgrade --yes
       - brew bundle
       - brew cleanup
 
