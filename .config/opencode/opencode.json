@@ -73,6 +73,7 @@
       "rg *": "allow",
       "head *": "allow",
       "jq *": "allow",
+      "man *": "allow",
       "tail *": "allow",
       "tree *": "allow",
       "sort *": "allow",

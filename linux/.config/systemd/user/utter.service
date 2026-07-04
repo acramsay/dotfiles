@@ -1,0 +1,15 @@
+[Unit]
+Description=Utter push-to-talk voice dictation
+After=graphical-session.target
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/home/alex/git/utter/target/release/utter
+Restart=on-failure
+RestartSec=2
+Environment=RUST_LOG=info
+Environment=WAYLAND_DISPLAY=wayland-0
+
+[Install]
+WantedBy=default.target
