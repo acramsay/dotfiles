@@ -1,24 +1,81 @@
-[3e5b2d38-9e40-4dd2-b288-3664830af2d9]
-Description=Desktop 3
-desktops=7bff7121-62b8-454b-9372-caaa2fa98220
+[120e9c1f-09b2-4a16-b3e3-cf67572f03bb]
+Description=Window settings for org.wezfurlong.wezterm
+desktops=c617fd6f-2c07-42fa-8218-308a6c02aecf
 desktopsrule=3
-wmclass=WezTerm
+maximizehoriz=true
+maximizehorizrule=3
+maximizevert=true
+maximizevertrule=3
+title=[1/2] OpenCode
+types=1
+wmclass=wezterm-gui org.wezfurlong.wezterm
+wmclasscomplete=true
 wmclassmatch=1
 
-[8cd4798d-8b64-4e0e-b358-9c406ea0c112]
-Description=Desktop 1
-desktops=63dde296-b62b-47fd-9464-8aac598c1761
+[22936693-b501-4186-9e22-d47e696a949e]
+Description=Settings for steamwebhelper steam
+desktops=d7c985fd-5fb4-4452-969f-b05b43e64095
 desktopsrule=3
-wmclass=Discord|Notesnook|Signal|Steam
-wmclassmatch=3
+position=0,697
+positionrule=3
+size=1280,697
+sizerule=3
+wmclass=steamwebhelper steam
+wmclasscomplete=true
+wmclassmatch=1
+
+[42aaf3e6-e067-4421-80c8-cbb616fdce2c]
+Description=Window settings for librewolf
+desktops=2c76fc37-1912-4cbe-a8b9-cc8869c3b403
+desktopsrule=3
+maximizehoriz=true
+maximizehorizrule=3
+maximizevert=true
+maximizevertrule=3
+types=1
+wmclass=librewolf
+wmclassmatch=1
 
 [General]
-count=3
-rules=8cd4798d-8b64-4e0e-b358-9c406ea0c112,ff7aae54-5bc6-426a-baa7-02e02e861c1c,3e5b2d38-9e40-4dd2-b288-3664830af2d9
+count=6
+rules=db0a49fc-1261-4d79-9d82-f6bc91a14b8e,be6a763a-edcb-422e-94b9-ca30184b95c3,cfa265a6-c40d-47c9-9f99-31a69e69f162,42aaf3e6-e067-4421-80c8-cbb616fdce2c,120e9c1f-09b2-4a16-b3e3-cf67572f03bb,22936693-b501-4186-9e22-d47e696a949e
 
-[ff7aae54-5bc6-426a-baa7-02e02e861c1c]
-Description=Desktop 2
-desktops=4bea8b1c-b625-47bb-8468-e182985189a8
+[be6a763a-edcb-422e-94b9-ca30184b95c3]
+Description=Window settings for org.signal.Signal
+desktops=d7c985fd-5fb4-4452-969f-b05b43e64095
 desktopsrule=3
-wmclass=LibreWolf
+position=1280,0
+positionrule=3
+size=1280,697
+sizerule=3
+title=Signal
+types=1
+wmclass=\sorg.signal.Signal
+wmclasscomplete=true
+wmclassmatch=1
+
+[cfa265a6-c40d-47c9-9f99-31a69e69f162]
+Description=Window settings for Legcord
+desktops=d7c985fd-5fb4-4452-969f-b05b43e64095
+desktopsrule=3
+position=0,0
+positionrule=3
+size=1280,697
+sizerule=3
+types=1
+wmclass=Legcord
+wmclassmatch=1
+
+[db0a49fc-1261-4d79-9d82-f6bc91a14b8e]
+Description=Window settings for Notesnook
+desktops=d7c985fd-5fb4-4452-969f-b05b43e64095
+desktopsrule=3
+position=1280,697
+positionrule=3
+size=1280,697
+sizerule=3
+title=Quick Notes - Notesnook
+types=1
+wmclass=\sNotesnook
+wmclasscomplete=true
 wmclassmatch=1
