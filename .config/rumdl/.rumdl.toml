@@ -2,11 +2,12 @@
 cache = false
 
 # Opt-in rules
- extend-enable = [
-     "MD060", # table formatting
-     "MD072", # frontmatter key sort
- ]
+extend-enable = [
+    "MD060", # table formatting
+    "MD072", # frontmatter key sort
+]
 
- [MD013]
- line-length = 100
- reflow = true
+[MD013]
+line-length = 100
+reflow = true
+code-blocks = false
