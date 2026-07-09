@@ -30,6 +30,7 @@ fi
 export EDITOR='hx'
 export VISUAL='hx'
 export LESS='-FIMRX'
+export OPENCODE_DISABLE_TERMINAL_TITLE=1
 
 alias ?='echo $?'
 alias k='kubectl'
