@@ -4,9 +4,12 @@
 export SHELL_NAME=${SHELL##*/}
 export XDG_CONFIG_HOME="$HOME/.config"
 
-# homebrew
+# bash-completion
+[[ "$SHELL_NAME" == "bash" ]] && source /usr/share/bash-completion/bash_completion
+
 if [[ $OSTYPE == 'linux' ]]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  export PKG_CONFIG_PATH="/usr/lib64/pkgconfig:/usr/share/pkgconfig:${PKG_CONFIG_PATH}"
 else
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
@@ -15,7 +18,7 @@ fi
 export PATH="$HOME/.cargo/bin:$PATH"
 
 # dprint
-export DPRINT_INSTALL="/home/alex/.dprint"
+export DPRINT_INSTALL="$HOME/.dprint"
 export PATH="$DPRINT_INSTALL/bin:$PATH"
 
 # rancher desktop
@@ -28,6 +31,7 @@ export EDITOR='hx'
 export VISUAL='hx'
 export LESS='-FIMRX'
 
+alias ?='echo $?'
 alias k='kubectl'
 alias kc='kubectx'
 alias lg='lazygit'
@@ -37,8 +41,8 @@ alias oc='opencode'
 alias y='cd $(yazi --cwd-file=/dev/stdout 2> /dev/null)'
 
 # completions
-eval $(k3d completion $SHELL_NAME)
-eval $(task --completion $SHELL_NAME)
+eval "$(k3d completion $SHELL_NAME)"
+eval "$(task --completion $SHELL_NAME)"
 
 # override with local settings
 # this must be at the end of the file

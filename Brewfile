@@ -49,6 +49,8 @@ brew "go-task"
 brew "httpie"
 brew "lazygit"
 brew "pre-commit"
+
+# other
 brew "syncthing"
 
 # terraform
