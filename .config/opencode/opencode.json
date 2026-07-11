@@ -62,6 +62,7 @@
       "go env *": "allow",
       "go version *": "allow",
       "go list *": "allow",
+      "go vet *": "allow",
       "cargo --version": "allow",
       "cargo -V": "allow",
       "cargo doc *": "allow",
