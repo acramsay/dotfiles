@@ -32,7 +32,8 @@ language-servers = [ "steel-language-server" ]
 
 [[language]]
 name = "tilt"
-file-types = [ "Tilefile" ]
+file-types = [{ glob = "Tiltfile" }, "tiltfile", "tilt"]
+language-id = "tiltfile"
 language-servers = [ "tilt-lsp" ]
 scope = "source.tilt"
 

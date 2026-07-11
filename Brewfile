@@ -27,6 +27,7 @@ brew "sst/tap/opencode", trusted: true
 brew "ctx7"
 brew "yaml-language-server"
 brew "yamlfmt"
+brew "buildifier"
 brew "go"
 brew "golangci-lint"
 brew "golangci-lint-langserver"
