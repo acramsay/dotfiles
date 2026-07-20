@@ -162,4 +162,6 @@ tasks:
       - cmd: 'mkdir -p {{ dir .DESTINATION }}'
       - cmd: 'ln -fns {{ .SOURCE }} {{ .DESTINATION }}'
       - cmd: 'systemctl --user daemon-reload && systemctl --user enable --now $(basename {{ .DESTINATION }})'
-        if: '[[ {{ .DESTINATION }} == *.service ]]'
+        if: '{{ and (eq OS "linux") (hasSuffix ".service" .DESTINATION) }}'
+      - cmd: 'launchctl bootout gui/$(id -u) {{ .DESTINATION }} 2>/dev/null || true; launchctl bootstrap gui/$(id -u) {{ .DESTINATION }}'
+        if: '{{ and (eq OS "darwin") (hasSuffix ".plist" .DESTINATION) }}'

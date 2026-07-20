@@ -35,13 +35,13 @@ export VISUAL='hx'
 export LESS='-FIMRX'
 export OPENCODE_DISABLE_TERMINAL_TITLE=1
 
-alias ?='echo $?'
+# alias ?='echo $?'
 alias k='kubectl'
 alias kc='kubectx'
 alias lg='lazygit'
 alias ll='ls -alh'
 alias llr='ls -alhrt'
-alias oc='opencode attach'
+alias oc='opencode attach http://localhost:4096'
 alias y='cd $(yazi --cwd-file=/dev/stdout 2> /dev/null)'
 
 # completions
