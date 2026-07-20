@@ -76,10 +76,10 @@ tasks:
     platforms: [linux]
     vars:
       REALPATH:
-        sh: echo -n "$(dirname $(realpath ./Taskfile.yaml))/linux"
+        sh: echo -n "$(dirname $(realpath ./Taskfile.yaml))/linux/home"
       FILES:
         sh: >-
-          cd $(dirname $(realpath ./Taskfile.yaml))/linux; find . -type f -print
+          cd $REALPATH; find . -type f -print
     dir: '{{ .REALPATH }}'
     cmds:
       - for:
@@ -159,5 +159,7 @@ tasks:
         - SOURCE
         - DESTINATION
     cmds:
-      - mkdir -p {{ dir .DESTINATION }}
-      - ln -fns {{ .SOURCE }} {{ .DESTINATION }}
+      - cmd: 'mkdir -p {{ dir .DESTINATION }}'
+      - cmd: 'ln -fns {{ .SOURCE }} {{ .DESTINATION }}'
+      - cmd: 'systemctl --user daemon-reload && systemctl --user enable --now $(basename {{ .DESTINATION }})'
+        if: '[[ {{ .DESTINATION }} == *.service ]]'

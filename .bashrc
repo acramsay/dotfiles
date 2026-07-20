@@ -21,6 +21,9 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export DPRINT_INSTALL="$HOME/.dprint"
 export PATH="$DPRINT_INSTALL/bin:$PATH"
 
+# go
+export PATH="$HOME/go/bin:$PATH"
+
 # rancher desktop
 export PATH="$HOME/.rd/bin:$PATH"
 if [[ $OSTYPE != 'linux' ]]; then
@@ -38,7 +41,7 @@ alias kc='kubectx'
 alias lg='lazygit'
 alias ll='ls -alh'
 alias llr='ls -alhrt'
-alias oc='opencode'
+alias oc='opencode attach'
 alias y='cd $(yazi --cwd-file=/dev/stdout 2> /dev/null)'
 
 # completions

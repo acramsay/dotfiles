@@ -53,6 +53,7 @@ brew "pre-commit"
 
 # other
 brew "syncthing"
+brew "tailscale"
 
 # terraform
 tap "hashicorp/tap", trusted: true
@@ -66,5 +67,6 @@ brew "k9s"
 brew "kubeconform"
 brew "kubectx"
 brew "kustomize"
+brew "helm"
 brew "tilt"
 

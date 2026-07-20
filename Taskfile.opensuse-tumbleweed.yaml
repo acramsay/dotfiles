@@ -3,6 +3,7 @@ version: '3'
 tasks:
   init:
     cmds:
+      - sudo loginctl enable-linger $USER
       - |
         sudo touch /etc/sudoers.d/$USER
         sudo dd of=/etc/sudoers.d/$USER <<- EOF
