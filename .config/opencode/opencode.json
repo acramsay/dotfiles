@@ -122,7 +122,7 @@
       "gh release list *": "allow",
       "gh browse *": "allow",
       "gh search *": "allow",
-      "gh label list *": "allow",
+      "gh label list *": "allow"
     },
     "external_directory": {
       "~/git/dotfiles/**": "allow",
@@ -133,7 +133,8 @@
   "plugin": [
     "@ex-machina/opencode-anthropic-auth",
     "@tarquinen/opencode-dcp@latest",
-    "opencode-mem@2.13.0"
+    "opencode-mem@2.13.0",
+    "@cortexkit/aft-opencode@latest"
   ],
   "provider": {
     "openrouter": {
