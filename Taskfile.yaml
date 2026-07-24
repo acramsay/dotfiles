@@ -58,10 +58,10 @@ tasks:
     platforms: [darwin]
     vars:
       REALPATH:
-        sh: echo -n $(dirname $(realpath ./Taskfile.yaml))/darwin
+        sh: echo -n "$(dirname $(realpath ./Taskfile.yaml))/darwin/home"
       FILES:
         sh: >-
-          cd $(dirname $(realpath ./Taskfile.yaml))/darwin; find . -type f -o -type f
+          cd $REALPATH; find . -type f -print
     dir: '{{ .REALPATH }}'
     cmds:
       - for:
@@ -94,6 +94,31 @@ tasks:
     aliases: [clean]
     cmds:
       - find {{ .HOME }} -type l ! -exec test -e {} \; -print -delete
+
+  adopt:
+    desc: Move a HOME-relative file into the dotfiles repo, then symlink it back
+    aliases: [a]
+    summary: |
+      Usage: task adopt -- .config/foo/bar.toml
+             task adopt OS=1 -- .config/foo/bar.toml   # place under OS-specific dir
+    requires:
+      vars: [CLI_ARGS]
+    vars:
+      REALPATH:
+        sh: dirname $(realpath ./Taskfile.yaml)
+      OS_SUBDIR: '{{ if .OS }}{{ joinPath OS "home" }}{{ end }}'
+      SOURCE: '{{ joinPath .HOME .CLI_ARGS }}'
+      DESTINATION: '{{ joinPath .REALPATH .OS_SUBDIR .CLI_ARGS }}'
+    preconditions:
+      - sh: 'test -e {{ .SOURCE }}'
+        msg: 'no such file: {{ .SOURCE }}'
+    cmds:
+      - cmd: 'mkdir -p {{ dir .DESTINATION }}'
+      - cmd: 'mv {{ .SOURCE }} {{ .DESTINATION }}'
+      - task: create-symlink
+        vars:
+          SOURCE: '{{ .DESTINATION }}'
+          DESTINATION: '{{ .SOURCE }}'
 
   # Package Management
 

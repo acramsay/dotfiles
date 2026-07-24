@@ -7,23 +7,13 @@
 
 	<key>ProgramArguments</key>
 	<array>
-		<string>/opt/homebrew/bin/opencode</string>
-		<string>web</string>
-		<string>--port</string>
-		<string>4096</string>
-		<string>--hostname</string>
-		<string>127.0.0.1</string>
-		<string>--print-logs</string>
+		<string>/bin/zsh</string>
+		<string>-c</string>
+		<string>source ~/.zshrc &amp;&amp; exec /opt/homebrew/bin/opencode web --port 4096 --hostname 127.0.0.1 --print-logs</string>
 	</array>
 
 	<key>WorkingDirectory</key>
 	<string>/Users/alexramsay/git</string>
-
-	<key>EnvironmentVariables</key>
-	<dict>
-		<key>PATH</key>
-		<string>/Users/alexramsay/.dprint/bin:/Users/alexramsay/.cargo/bin:/Users/alexramsay/go/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
-	</dict>
 
 	<key>RunAtLoad</key>
 	<true/>
