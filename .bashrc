@@ -4,8 +4,12 @@
 export SHELL_NAME=${SHELL##*/}
 export XDG_CONFIG_HOME="$HOME/.config"
 
-# bash-completion
-[[ "$SHELL_NAME" == "bash" ]] && source /usr/share/bash-completion/bash_completion
+# completion systems (must run before tools register completions)
+if [[ "$SHELL_NAME" == "bash" ]]; then
+  source /usr/share/bash-completion/bash_completion
+else
+  autoload -Uz compinit && compinit
+fi
 
 if [[ $OSTYPE == 'linux' ]]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
