@@ -7,8 +7,8 @@
     "hostname": "0.0.0.0"
   },
   "formatter": {
-    "dprint": {
-      "command": ["dprint", "fmt", "--stdin", "md"],
+    "rumdl": {
+      "command": ["rumdl", "fmt", "--stdin"],
       "extensions": [".md"]
     },
     "gopls": {
