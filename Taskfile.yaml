@@ -37,6 +37,7 @@ tasks:
         sh: >-
           cd $(dirname $(realpath ./Taskfile.yaml)); find . \(
           -name ".gitignore"
+          -o -path "./AGENTS.md"
           -o -name "bootstrap.sh"
           -o -path "./.git"
           -o -path "./darwin"

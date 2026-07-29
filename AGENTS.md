@@ -1,5 +1,9 @@
 # AGENTS.md
 
+> This file is **repo-specific** guidance for the dotfiles project. It is *not* the global
+> AGENTS.md — that lives at `.config/opencode/AGENTS.md` and applies to every session. Edit here
+> only for dotfiles-specific rules; edit there for global defaults.
+
 Personal dotfiles. Config files live in the repo and are **symlinked** into `$HOME` by
 Task.
 

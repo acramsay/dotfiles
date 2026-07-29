@@ -5,7 +5,9 @@
 Simplicity is always a primary goal though never the only one. When evaluating otherwise equal
 options, complex solutions are less preferred.
 
-Adding long lived code, comments, etc is a premium cost.
+Adding long-lived code is a premium cost. Write new code only when it adds real value, and reuse or
+extend what exists first. Reserve code comments for what is genuinely important (non-obvious intent,
+a subtle constraint, a warning), and let the code speak for itself everywhere else.
 
 ## Tooling
 
