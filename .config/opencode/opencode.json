@@ -31,7 +31,6 @@
       }
     }
   },
-  "model": "xiaomi/mimo-v2.5",
   "permission": {
     "bash": {
       "*": "ask",
