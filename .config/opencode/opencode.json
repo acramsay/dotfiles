@@ -32,6 +32,7 @@
     }
   },
   "permission": {
+    "question": "deny",
     "bash": {
       "*": "ask",
       "npx ctx7 *": "allow",
