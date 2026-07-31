@@ -176,6 +176,32 @@ tasks:
       - cargo xtask steel
     ignore_error: true
 
+  # Services
+
+  opencode-restart:
+    desc: Restart the opencode web server
+    aliases: [or]
+    cmds:
+      - cmd: 'launchctl kickstart -k gui/$(id -u)/sh.opencode.web'
+        platforms: [darwin]
+      - cmd: 'systemctl --user restart opencode.service'
+        platforms: [linux]
+
+  opencode-status:
+    desc: Show the status of the opencode web server process
+    aliases: [os]
+    cmds:
+      - cmd: 'launchctl list sh.opencode.web'
+        platforms: [darwin]
+      - cmd: 'systemctl --user status opencode.service'
+        platforms: [linux]
+
+  opencode-log:
+    desc: Open the most recent opencode log in helix
+    aliases: [ol]
+    cmds:
+      - hx "$(ls -t {{ .HOME }}/.local/share/opencode/log/*.log | head -1)"
+
   # Internals
 
   create-symlink:
