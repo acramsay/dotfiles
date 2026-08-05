@@ -28,6 +28,9 @@ export PATH="$DPRINT_INSTALL/bin:$PATH"
 # go
 export PATH="$HOME/go/bin:$PATH"
 
+# opencode
+export ORT_DYLIB_PATH=$(find -L "$HOME/.local/share/cortexkit/aft/onnxruntime" -name libonnxruntime.so -type f 2>/dev/null | head -1)
+
 # rancher desktop
 export PATH="$HOME/.rd/bin:$PATH"
 if [[ $OSTYPE != 'linux' ]]; then

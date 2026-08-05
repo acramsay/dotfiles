@@ -14,6 +14,19 @@ a subtle constraint, a warning), and let the code speak for itself everywhere el
 Prefer dedicated tools over shell-outs. Reach for Read/Edit/Write/Grep/Glob before `cat`, `sed`,
 `awk`, `find`, or ad-hoc Python/Bash scripts. Only fall back to a shell when no tool fits.
 
+### AFT tools
+
+The AFT plugin provides indexed code search and analysis tools. Use them when exploring an
+unfamiliar codebase, searching by concept or symbol name, or needing a structural overview:
+
+- `aft_search` — ranked search across code (concepts, names, regex, strings, filenames)
+- `aft_outline` — structural outline of files or directories
+- `aft_zoom` — read a specific symbol or doc section with context
+- `aft_inspect` — codebase health snapshot (diagnostics, dead code, duplicates)
+
+For simple file listing or known paths, stock `glob`/`read` are fine. AFT's value is in
+search and structural navigation, not as a blanket replacement.
+
 ## Response shape
 
 Be brief. State the result, not the journey — no preamble, no recap of what just happened,
