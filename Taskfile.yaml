@@ -97,20 +97,24 @@ tasks:
       - find {{ .HOME }} -type l ! -exec test -e {} \; -print -delete
 
   adopt:
-    desc: Move a HOME-relative file into the dotfiles repo, then symlink it back
+    desc: Move a HOME-relative or in-HOME absolute file into the dotfiles repo, then symlink it back
     aliases: [a]
     summary: |
       Usage: task adopt -- .config/foo/bar.toml
-             task adopt OS=1 -- .config/foo/bar.toml   # place under OS-specific dir
-    requires:
-      vars: [CLI_ARGS]
+             task adopt -- /home/alex/.config/foo/bar.toml     # absolute, must be under $HOME
+             task adopt OS=1 -- .config/foo/bar.toml           # place under OS-specific dir
     vars:
       REALPATH:
         sh: dirname $(realpath ./Taskfile.yaml)
       OS_SUBDIR: '{{ if .OS }}{{ joinPath OS "home" }}{{ end }}'
-      SOURCE: '{{ joinPath .HOME .CLI_ARGS }}'
-      DESTINATION: '{{ joinPath .REALPATH .OS_SUBDIR .CLI_ARGS }}'
+      RELATIVE: '{{ trimPrefix .HOME .CLI_ARGS | trimPrefix "/" }}'
+      SOURCE: '{{ joinPath .HOME .RELATIVE }}'
+      DESTINATION: '{{ joinPath .REALPATH .OS_SUBDIR .RELATIVE }}'
     preconditions:
+      - sh: 'test -n "{{ .CLI_ARGS }}"'
+        msg: 'usage: task adopt -- <path>'
+      - sh: '[[ "{{ .CLI_ARGS }}" != /* || "{{ .CLI_ARGS }}" == "{{ .HOME }}"/* ]]'
+        msg: 'absolute paths must be inside {{ .HOME }}'
       - sh: 'test -e {{ .SOURCE }}'
         msg: 'no such file: {{ .SOURCE }}'
     cmds:
