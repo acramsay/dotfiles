@@ -9,7 +9,7 @@
 	<array>
 		<string>/bin/zsh</string>
 		<string>-c</string>
-		<string>source ~/.zshrc &amp;&amp; exec /opt/homebrew/bin/opencode web --port 4096 --hostname 127.0.0.1 --print-logs</string>
+		<string>source ~/.zshrc &amp;&amp; exec /opt/homebrew/bin/opencode serve --port 4096 --hostname 127.0.0.1 --print-logs</string>
 	</array>
 
 	<key>WorkingDirectory</key>

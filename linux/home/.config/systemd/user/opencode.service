@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=simple
 WorkingDirectory=/home/alex/git
-ExecStart=/home/linuxbrew/.linuxbrew/bin/opencode web
+ExecStart=/home/linuxbrew/.linuxbrew/bin/opencode serve
 Restart=on-failure
 RestartSec=2
 
