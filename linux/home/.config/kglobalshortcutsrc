@@ -9,6 +9,13 @@ Switch to Last-Used Keyboard Layout=Meta+Alt+L,Meta+Alt+L,Switch to Last-Used Ke
 Switch to Next Keyboard Layout=Meta+Alt+K,Meta+Alt+K,Switch to Next Keyboard Layout
 _k_friendly_name=Keyboard Layout Switcher
 
+[app.legcord.Legcord]
+_k_friendly_name=Legcord
+deafen=none,none,Toggle Deafen
+leave=none,none,Leave Call
+mute=none,none,Toggle Mute
+opensettings=none,none,Open Settings
+
 [kaccess]
 Toggle Screen Reader On and Off=Meta+Alt+S,Meta+Alt+S,Toggle Screen Reader On and Off
 _k_friendly_name=Accessibility
