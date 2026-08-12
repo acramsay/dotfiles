@@ -3,6 +3,7 @@
   "theme": "catppuccin-macchiato",
   "scroll_speed": 5,
   "plugin": [
-    "@cortexkit/aft-opencode@latest"
+    "@cortexkit/aft-opencode@latest",
+    "./plugins/models-md-tui.tsx"
   ]
 }

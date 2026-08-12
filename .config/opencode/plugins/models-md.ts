@@ -1,6 +1,7 @@
 import { homedir } from "node:os"
 import { basename, dirname, join } from "node:path"
 import type { Plugin } from "@opencode-ai/plugin"
+import { writePortFile } from "./lib/models-md-ports"
 
 // Model-specific instructions, analogous to AGENTS.md but scoped by provider
 // and/or model. Files live under ROOT; each path segment is a prefix matched
@@ -27,6 +28,48 @@ import type { Plugin } from "@opencode-ai/plugin"
 // Files are read per request, so edits apply without restarting opencode.
 const ROOT = join(homedir(), ".config/opencode/models-md")
 
+// Local HTTP status server so the sidebar TUI plugin (models-md-tui.tsx) can
+// poll which files are applied for the active session. Bound to loopback
+// only, on an OS-assigned port -- multiple opencode processes can run
+// concurrently, each with its own server, so there's no single fixed port.
+// The bound port is published via lib/models-md-ports.ts for the TUI to find.
+
+type StatusEntry = {
+  providerID: string
+  modelID: string
+  files: string[]
+  updatedAt: number
+  error?: string
+}
+
+const statusBySession = new Map<string, StatusEntry>()
+
+type Logger = (level: "info" | "warn" | "error", message: string, extra?: Record<string, unknown>) => Promise<void>
+
+const startStatusServer = (log: Logger) => {
+  try {
+    const server = Bun.serve({
+      port: 0,
+      hostname: "127.0.0.1",
+      fetch(req) {
+        const url = new URL(req.url)
+        if (url.pathname !== "/status") return new Response("not found", { status: 404 })
+        const sessionId = url.searchParams.get("sessionId")
+        if (!sessionId) return new Response("missing sessionId", { status: 400 })
+        const entry = statusBySession.get(sessionId)
+        if (!entry) return new Response("not found", { status: 404 })
+        return Response.json(entry)
+      },
+    })
+    writePortFile(server.port)
+    log("info", "status server listening", { port: server.port })
+  } catch (err) {
+    log("error", "failed to start status server", {
+      error: err instanceof Error ? err.message : String(err),
+    })
+  }
+}
+
 // Prefix match on hyphen boundaries.
 const hits = (prefix: string, value: string) => value === prefix || value.startsWith(prefix + "-")
 
@@ -39,11 +82,18 @@ export const ModelsMd: Plugin = async ({ client, directory }) => {
       .log({ body: { service: "models-md", level, message, extra }, query: { directory } })
       .catch(() => {})
 
+  startStatusServer(log)
+
   return {
     "experimental.chat.system.transform": async (input, output) => {
+      const providerID = input.model.providerID
+      const modelID = input.model.id
+      const setStatus = (patch: Partial<StatusEntry>) => {
+        if (!input.sessionID) return
+        statusBySession.set(input.sessionID, { providerID, modelID, files: [], updatedAt: Date.now(), ...patch })
+      }
+
       try {
-        const providerID = input.model.providerID
-        const modelID = input.model.id
         const modelLeaf = basename(modelID)
 
         const modelHits = (prefix: string) => hits(prefix, modelID) || hits(prefix, modelLeaf)
@@ -55,6 +105,7 @@ export const ModelsMd: Plugin = async ({ client, directory }) => {
 
         if (files.length === 0) {
           await log("warn", "no instruction files found under ROOT", { root: ROOT })
+          setStatus({})
           return
         }
 
@@ -75,14 +126,16 @@ export const ModelsMd: Plugin = async ({ client, directory }) => {
           })
           .sort((a, b) => breadth(a) - breadth(b) || a.length - b.length || a.localeCompare(b))
 
+        setStatus({ files: matched })
+
         for (const rel of matched) {
           output.system.push(await Bun.file(join(ROOT, rel)).text())
           await log("info", "loaded model instruction file", { file: rel, providerID, modelID })
         }
       } catch (err) {
-        await log("error", "failed to apply model instructions", {
-          error: err instanceof Error ? err.message : String(err),
-        })
+        const message = err instanceof Error ? err.message : String(err)
+        setStatus({ error: message })
+        await log("error", "failed to apply model instructions", { error: message })
       }
     },
   }

@@ -14,6 +14,8 @@ a subtle constraint, a warning), and let the code speak for itself everywhere el
 Prefer dedicated tools over shell-outs. Reach for Read/Edit/Write/Grep/Glob before `cat`, `sed`,
 `awk`, `find`, or ad-hoc Python/Bash scripts. Only fall back to a shell when no tool fits.
 
+The `question` tools is disabled.
+
 ### AFT tools
 
 The AFT plugin provides indexed code search and analysis tools. Use them when exploring an
@@ -31,13 +33,6 @@ search and structural navigation, not as a blanket replacement.
 
 Be brief. State the result, not the journey — no preamble, no recap of what just happened,
 no trailing summaries when a diff already speaks for itself.
-
-Offload bulk to files instead of pasting it inline:
-
-- Long code blocks → write to a file and reference the path.
-- Plans, analyses, or research notes → save to a file when the user asks for them; otherwise work
-  from conversation context.
-- Command output → summarize; don't echo it back wholesale.
 
 When a question genuinely needs detail, lead with the answer in one or two sentences, then expand
 only if asked.
