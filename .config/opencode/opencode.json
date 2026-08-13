@@ -65,6 +65,7 @@
       "go env *": "allow",
       "go version *": "allow",
       "go list *": "allow",
+      "go mod tidy*": "allow",
       "go test *": "allow",
       "go vet *": "allow",
       "cargo --version": "allow",
