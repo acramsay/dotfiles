@@ -123,7 +123,8 @@
       "gh release list *": "allow",
       "gh browse *": "allow",
       "gh search *": "allow",
-      "gh label list *": "allow"
+      "gh label list *": "allow",
+      "python": "deny"
     },
     "external_directory": {
       "~/git/dotfiles/**": "allow",

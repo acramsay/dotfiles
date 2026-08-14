@@ -55,6 +55,7 @@ brew "pre-commit"
 brew "syncthing"
 brew "tailscale"
 brew "chafa"
+brew "presenterm"
 
 # terraform
 tap "hashicorp/tap", trusted: true
