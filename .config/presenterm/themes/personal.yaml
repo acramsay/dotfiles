@@ -1,0 +1,15 @@
+extends: dark
+
+default:
+  margin:
+    percent: 15
+
+slide_title:
+  alignment: center
+  padding_top: 2
+  padding_bottom: 1
+
+code:
+  alignment: center
+  minimum_margin:
+    percent: 15
