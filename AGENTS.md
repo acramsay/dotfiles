@@ -41,3 +41,6 @@ The repo is built around a few consistent patterns. Match them when adding confi
   a task. `.service`/`.plist` files auto-register with systemd/launchd on `task cs`.
 - **Require config over scripting.** Reach for a tool's own config (git aliases, task definitions,
   dprint) before shell glue.
+- **Vendor agent skills.** Global agent skills live in `.config/opencode/skills/<name>/` as
+  committed copies, including ones also installable via `npx skills`. Copy upstream contents in so
+  they stay customizable; `task cs` symlinks them like any other root file.

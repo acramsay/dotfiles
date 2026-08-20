@@ -24,7 +24,6 @@ brew "yazi"
 # brew "helix", args: ["HEAD"]
 tap "sst/tap", trusted: true
 brew "sst/tap/opencode", trusted: true
-brew "ctx7"
 brew "yaml-language-server"
 brew "yamlfmt"
 brew "buildifier"
