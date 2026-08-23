@@ -1,8 +1,8 @@
 # AGENTS.md
 
-> This file is **repo-specific** guidance for the dotfiles project. It is *not* the global
-> AGENTS.md — that lives at `home/.config/opencode/AGENTS.md` and applies to every session. Edit here
-> only for dotfiles-specific rules; edit there for global defaults.
+> This file is **repo-specific** guidance for the dotfiles project. It is *not* the global AGENTS.md
+> — that lives at `home/.config/opencode/AGENTS.md` and applies to every session. Edit here only for
+> dotfiles-specific rules; edit there for global defaults.
 
 Personal dotfiles. Config files live in the repo and are **symlinked** into `$HOME` by
 Task.
@@ -19,8 +19,7 @@ relevant file is not found here. Editing the repo copy is what propagates throug
 - `Taskfile.yaml` is itself symlinked to `~/Taskfile.yaml`; tasks resolve the real repo via
   `realpath`, so `dir:` and path vars look indirect on purpose — don't "simplify" them to relative
   paths.
-- `Taskfile.opensuse-tumbleweed.yaml` and `k3d/Taskfile.k3d.yaml` are optional includes (aliases
-  `ot`, `k3d`).
+- `Taskfile.opensuse-tumbleweed.yaml` is an optional includes (aliases `ot`).
 
 ## Design principles
 

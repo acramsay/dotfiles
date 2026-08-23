@@ -7,10 +7,6 @@ version: '3'
 dotenv: ['/etc/os-release']
 
 includes:
-  k3d:
-    optional: true
-    taskfile: ~/k3d/Taskfile.k3d.yaml
-
   opensuse-tumbleweed:
     aliases: ['ot']
     optional: true
