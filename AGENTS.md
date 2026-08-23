@@ -1,7 +1,7 @@
 # AGENTS.md
 
 > This file is **repo-specific** guidance for the dotfiles project. It is *not* the global
-> AGENTS.md — that lives at `.config/opencode/AGENTS.md` and applies to every session. Edit here
+> AGENTS.md — that lives at `home/.config/opencode/AGENTS.md` and applies to every session. Edit here
 > only for dotfiles-specific rules; edit there for global defaults.
 
 Personal dotfiles. Config files live in the repo and are **symlinked** into `$HOME` by
@@ -12,8 +12,8 @@ relevant file is not found here. Editing the repo copy is what propagates throug
 
 ## Layout
 
-- Files at repo root (e.g. `.zshrc`, `.gitconfig`, `.config/**`) symlink to the same path under
-  `$HOME`.
+- Dotfiles live under `home/` (e.g. `home/.zshrc`, `home/.gitconfig`, `home/.config/**`) and are
+  symlinked to the same path under `$HOME`.
 - `darwin/home/**` and `linux/home/**` hold OS-specific files; their contents map onto `$HOME` on
   the matching platform only. Put platform-specific config here, not at the root.
 - `Taskfile.yaml` is itself symlinked to `~/Taskfile.yaml`; tasks resolve the real repo via
@@ -27,7 +27,7 @@ relevant file is not found here. Editing the repo copy is what propagates throug
 The repo is built around a few consistent patterns. Match them when adding config.
 
 - **Symlink, don't copy.** Every config is edited in the repo and symlinked into `$HOME` by
-  `task cs`. New root files are picked up automatically — there is no manifest to update.
+  `task cs`. New files under `home/` are picked up automatically — there is no manifest to update.
 - **Three-layer override chain.** Config splits into committed base → OS-specific → machine-local
   (uncommitted). Preserve this ordering when extending a file:
   - `.gitconfig` includes `~/.gitconfig.os` (from `{darwin,linux}/home/.gitconfig.os`) then
@@ -41,6 +41,6 @@ The repo is built around a few consistent patterns. Match them when adding confi
   a task. `.service`/`.plist` files auto-register with systemd/launchd on `task cs`.
 - **Require config over scripting.** Reach for a tool's own config (git aliases, task definitions,
   dprint) before shell glue.
-- **Vendor agent skills.** Global agent skills live in `.config/opencode/skills/<name>/` as
+- **Vendor agent skills.** Global agent skills live in `home/.config/opencode/skills/<name>/` as
   committed copies, including ones also installable via `npx skills`. Copy upstream contents in so
-  they stay customizable; `task cs` symlinks them like any other root file.
+  they stay customizable; `task cs` symlinks them like any other file under `home/`.

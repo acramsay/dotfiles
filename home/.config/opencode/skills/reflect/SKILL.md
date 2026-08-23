@@ -50,8 +50,8 @@ Present a short discussion: numbered proposals (what to change, the target file 
 
 Reviewers propose a routing per finding; confirm or redirect it during synthesis, and the user has final say in the discussion.
 
-- `.config/opencode/skills/<name>/SKILL.md` (or a new skill) - triggerable procedure; the common case
-- `.config/opencode/models-md/<model-or-family>.md` - a correction only one model or family needs. Filenames match the active provider/model by hyphen-boundary prefix (claude.md covers all claude-*; see plugins/models-md.ts). Reserve for behavior seen repeatedly; one bad session is weak evidence.
-- `.config/opencode/AGENTS.md` - a rule every model in every session follows
-- `.config/opencode/opencode.json` - permissions or tooling structure; prefer a setting over prose when both can enforce the behavior
+- `home/.config/opencode/skills/<name>/SKILL.md` (or a new skill) - triggerable procedure; the common case
+- `home/.config/opencode/models-md/<model-or-family>.md` - a correction only one model or family needs. Filenames match the active provider/model by hyphen-boundary prefix (claude.md covers all claude-*; see plugins/models-md.ts). Reserve for behavior seen repeatedly; one bad session is weak evidence.
+- `home/.config/opencode/AGENTS.md` - a rule every model in every session follows
+- `home/.config/opencode/opencode.json` - permissions or tooling structure; prefer a setting over prose when both can enforce the behavior
 - the session project's own `.opencode/skills/` or AGENTS.md - the learning is specific to that codebase, not global

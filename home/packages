@@ -1,0 +1,48 @@
+# OS
+
+## drivers
+
+openrazer-meta
+nvidia-userspace-meta-G06
+
+### nvidia specific list
+
+nvidia-container-toolkit | nvidia-container-toolkit-base | 1.19.0-1
+openSUSE:Factory | openSUSE-repos-Tumbleweed-NVIDIA | 20260423.1a6a0f3-2.1
+repo-non-free | nvidia-userspace-meta-G06 | 580.159.03-52.1
+repo-non-free | nvidia-settings | 595.71.05-2.6
+repo-non-free | nvidia-persistenced | 580.159.03-2.2
+repo-non-free | nvidia-modprobe | 580.159.03-26.2
+repo-non-free | nvidia-gl-G06 | 580.159.03-54.1
+repo-non-free | nvidia-driver-G06-kmp-default | 580.159.03_k7.0.7_1-54.1
+repo-oss | openSUSE-repos-Tumbleweed-NVIDIA | 20260423.1a6a0f3-2.1
+
+
+## dotfiles changes
+
+shell script with all flatpaks listed
+task u: flatpak update
+syncthing needs any managed config at all :melt
+
+## Live Notes
+
+sudo zypper install openSUSE-repos-Tumbleweed-NVIDIA
+sudo zypper install -l nvidia-userspace-meta-G06
+sudo zypper install -l nvidia-driver-G06-kmp-default
+sudo zypper ucode-amd
+
+cargo install -f cargo-update
+(still broken)
+
+sudo rpm --import https://repo.librewolf.net/pubkey.gpg
+sudo zypper ar -ef https://repo.librewolf.net librewolf
+sudo zypper ref
+sudo zypper in librewolf
+
+sudo zypper addrepo https://download.opensuse.org/repositories/home:Hoog/openSUSE_Tumbleweed/home:Hoog.repo
+sudo zypper refresh
+sudo zypper install signal-desktop
+
+sudo zypper install steam
+
+flatpak install flathub com.notesnook.Notesnook

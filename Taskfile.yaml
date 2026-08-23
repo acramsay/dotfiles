@@ -35,20 +35,15 @@ tasks:
         sh: dirname $(realpath ./Taskfile.yaml)
       FILES:
         sh: >-
-          cd $(dirname $(realpath ./Taskfile.yaml)); find . \(
-          -name ".gitignore"
-          -o -path "./AGENTS.md"
-          -o -name "bootstrap.sh"
-          -o -path "./.git"
-          -o -path "./darwin"
-          -o -path "./linux"
+          cd $(dirname $(realpath ./Taskfile.yaml))/home; find . \(
+          -path "./.git"
           \) -prune -o \( -type f -o -type l \) -print
     dir: '{{ .REALPATH }}'
     cmds:
       - for:
           var: FILES
         vars:
-          SOURCE: '{{ joinPath .REALPATH .ITEM }}'
+          SOURCE: '{{ joinPath .REALPATH "home" .ITEM }}'
           DESTINATION: '{{ joinPath .HOME .ITEM }}'
         task: create-symlink
       - task: create-symlinks-darwin
@@ -109,7 +104,7 @@ tasks:
       OS_SUBDIR: '{{ if .OS }}{{ joinPath OS "home" }}{{ end }}'
       RELATIVE: '{{ trimPrefix .HOME .CLI_ARGS | trimPrefix "/" }}'
       SOURCE: '{{ joinPath .HOME .RELATIVE }}'
-      DESTINATION: '{{ joinPath .REALPATH .OS_SUBDIR .RELATIVE }}'
+      DESTINATION: '{{ joinPath .REALPATH "home" .OS_SUBDIR .RELATIVE }}'
     preconditions:
       - sh: 'test -n "{{ .CLI_ARGS }}"'
         msg: 'usage: task adopt -- <path>'
