@@ -135,7 +135,8 @@
   "plugin": [
     "@ex-machina/opencode-anthropic-auth",
     "@tarquinen/opencode-dcp@3.1.13",
-    "@cortexkit/aft-opencode@latest"
+    "@cortexkit/aft-opencode@latest",
+    "opencode-pty"
   ],
   "provider": {
     "openrouter": {
