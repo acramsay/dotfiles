@@ -14,7 +14,12 @@ a subtle constraint, a warning), and let the code speak for itself everywhere el
 Prefer dedicated tools over shell-outs. Reach for Read/Edit/Write/Grep/Glob before `cat`, `sed`,
 `awk`, `find`, or ad-hoc Python/Bash scripts. Only fall back to a shell when no tool fits.
 
-The `question` tools is disabled.
+The `question` tool is disabled.
+
+When parsing JSON data, use `jq`.
+
+When calling the GitHub API read-only, use `gh api -X GET <endpoint>` with `-X GET` immediately
+after `api` — that shape is allow-listed; other forms prompt.
 
 ### AFT tools
 

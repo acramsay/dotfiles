@@ -36,6 +36,8 @@
     "bash": {
       "*": "ask",
       "basename *": "allow",
+      "base64": "allow",
+      "base64 *": "allow",
       "cargo --version": "allow",
       "cargo -V": "allow",
       "cargo check *": "allow",
@@ -110,9 +112,12 @@
       "nl *": "allow",
       "npx ctx7 *": "allow",
       "npx ctx7@latest *": "allow",
+      "printf *": "allow",
       "pwd": "allow",
+      "readlink *": "allow",
       "realpath *": "allow",
       "rg *": "allow",
+      "sed *": "allow",
       "sort *": "allow",
       "strings *": "allow",
       "tail *": "allow",
@@ -124,7 +129,7 @@
       "wc": "allow",
       "which *": "allow",
       "whoami": "allow",
-      "python": "deny"
+      "python*": "deny"
     },
     "external_directory": {
       "~/git/dotfiles/**": "allow",
