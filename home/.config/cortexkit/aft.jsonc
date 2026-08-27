@@ -1,5 +1,15 @@
 {
   "$schema": "https://raw.githubusercontent.com/cortexkit/aft/main/assets/aft.schema.json",
+  "format_on_edit": true,
   "search_index": true,
-  "semantic_search": true
+  "semantic_search": true,
+  "lsp": {
+    "servers": {
+      "rumdl": {
+        "extensions": [".md"],
+        "binary": "rumdl",
+        "args": ["server"]
+      }
+    }
+  }
 }

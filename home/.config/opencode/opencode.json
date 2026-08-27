@@ -8,7 +8,7 @@
   },
   "formatter": {
     "rumdl": {
-      "command": ["rumdl", "fmt", "--stdin"],
+      "command": ["rumdl", "fmt", "$FILE"],
       "extensions": [".md"]
     },
     "gopls": {
@@ -23,6 +23,10 @@
     }
   },
   "lsp": {
+    "rumdl": {
+      "command": ["rumdl", "server"],
+      "extensions": [".md"]
+    },
     "golangci-lint": {
       "command": ["golangci-lint-langserver"],
       "extensions": [".go"],
