@@ -137,7 +137,17 @@
     "external_directory": {
       "~/git/dotfiles/**": "allow",
       "~/.config/helix/**": "allow",
-      "~/.config/opencode/**": "allow"
+      "~/.config/opencode/**": "allow",
+      "~/.cache/opencode/**": "allow",
+      "~/.cache/aft/**": "allow",
+      "~/.local/share/cortexkit/**": "allow",
+      "~/.local/share/opencode/bin/**": "allow",
+      "~/.local/share/opencode/log/**": "allow",
+      "~/.local/share/opencode/project/**": "allow",
+      "~/.local/share/opencode/repos/**": "allow",
+      "~/.local/share/opencode/snapshot/**": "allow",
+      "~/.local/share/opencode/storage/**": "allow",
+      "~/.local/share/opencode/tool-output/**": "allow"
     }
   },
   "plugin": [
