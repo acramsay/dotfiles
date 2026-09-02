@@ -48,6 +48,7 @@ brew "git"
 brew "go-task"
 brew "httpie"
 brew "lazygit"
+brew "gitleaks"
 brew "pre-commit"
 
 # other
