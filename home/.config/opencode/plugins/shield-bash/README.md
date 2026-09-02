@@ -6,8 +6,8 @@ command through opencode's `tool.execute.before` hook.
 
 ## Files
 
-- `plugin.ts` — the hook, audit, cache, and failure-mode glue (`plugins/shield-bash.ts` imports this)
-- `lib.ts` — `POLICY_PROMPT`, verdict parsing, cache (TTL + size-capped), audit writer, default config
+- `plugin.ts` — the hook, cache, and failure-mode glue (`plugins/shield-bash.ts` imports this)
+- `lib.ts` — `POLICY_PROMPT`, verdict parsing, cache (TTL + size-capped), default config
 - `fixtures.json` — expected allow/deny fixture commands
 - `test.ts` — integration test against a running `opencode serve`
 - `../../shield-bash.json` — config: `providerID`, `modelID`, `failure`
@@ -21,8 +21,7 @@ Model/provider comes from `shield-bash.json` (env `SHIELD_BASH_MODEL="provider/m
 - `allow`
 - `ask` — defer to opencode's normal permission evaluation
 
-A verdict is cached for `SHIELD_BASH_TTL_HOURS` (default 24) in `~/.cache/shield-bash/verdicts.json`.
-Every judgment is appended to `~/.cache/shield-bash/audit.jsonl`.
+A verdict is cached for `SHIELD_BASH_TTL_HOURS` (default 24) in `~/.cache/shield-bash/verdicts.json`. The judge session transcript is the audit trail; denials also throw into the calling session. No separate audit log.
 
 ## Wanted features (blocked upstream)
 

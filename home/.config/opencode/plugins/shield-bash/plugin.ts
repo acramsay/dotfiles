@@ -2,15 +2,7 @@ import type { Plugin } from "@opencode-ai/plugin"
 import { mkdirSync } from "node:fs"
 import { dirname } from "node:path"
 import { fileURLToPath } from "node:url"
-import {
-  appendAudit,
-  defaultConfig,
-  parseVerdictText,
-  POLICY_PROMPT,
-  readCache,
-  saveCache,
-} from "./lib"
-import type { AuditEvent, Verdict } from "./lib"
+import { defaultConfig, parseVerdictText, POLICY_PROMPT, readCache, saveCache } from "./lib"
 
 type FailureMode = "allow" | "deny" | "ask"
 
@@ -22,35 +14,10 @@ type FailureMode = "allow" | "deny" | "ask"
 const DEFAULT_FAILURE: FailureMode = "deny"
 const MODEL_FALLBACK = { providerID: "vercel", modelID: "zai/glm-5.3-flash" }
 
-type Logger = (level: "info" | "warn" | "error", message: string, extra?: Record<string, unknown>) => Promise<void>
-
 export const ShieldBash: Plugin = async ({ client, directory }) => {
-  const log: Logger = (level, message, extra) =>
-    client.app
-      .log({ body: { service: "shield-bash", level, message, extra }, query: { directory } })
-      .then(() => {})
-
   const config = defaultConfig()
   mkdirSync(dirname(config.cachePath), { recursive: true })
-  mkdirSync(dirname(config.auditPath), { recursive: true })
   const cache = await readCache(config.cachePath, config.cacheTtlMs)
-
-  // Audit helper: one shape for every outcome, to keep the hook below linear.
-  const audit = (event: {
-    outcome: AuditEvent["outcome"]
-    command: string
-    cached: boolean
-    started: number
-    verdict?: Partial<Verdict>
-  }) =>
-    appendAudit(config.auditPath, {
-      ts: Date.now(),
-      command: event.command,
-      outcome: event.outcome,
-      cache: event.cached ? "hit" : "model",
-      verdictMs: Date.now() - event.started,
-      ...event.verdict,
-    })
 
   // Model/provider + failure mode: committed JSON first, env second, fallback third.
   let model = MODEL_FALLBACK
@@ -83,7 +50,6 @@ export const ShieldBash: Plugin = async ({ client, directory }) => {
       throw new Error(`failed to create judge session: ${JSON.stringify(judgeSession.error)}`)
     }
     judgeSessionID = judgeSession.data.id
-    await log("info", "judge session created", { judgeSessionID, model })
     return judgeSessionID
   }
 
@@ -93,7 +59,6 @@ export const ShieldBash: Plugin = async ({ client, directory }) => {
       const command = output.args.command
       if (typeof command !== "string" || command.trim() === "") return
 
-      const started = Date.now()
       const cached = cache.get(command)
       let verdict
       try {
@@ -119,21 +84,8 @@ export const ShieldBash: Plugin = async ({ client, directory }) => {
         }
       } catch (err) {
         const reason = err instanceof Error ? err.message : String(err)
-        if (failureMode === "allow") {
-          await log("warn", "judge session failed, allowing (fail-open)", { command, error: reason })
-          await audit({ outcome: "fail-open", command, cached: Boolean(cached), started, verdict: { reason } })
-          return
-        }
-        if (failureMode === "ask") {
-          await log("warn", "judge session failed, deferring to opencode config (fail-ask)", {
-            command,
-            error: reason,
-          })
-          await audit({ outcome: "fail-ask", command, cached: Boolean(cached), started, verdict: { reason } })
-          return
-        }
-        await log("error", "judge session failed, denying (fail-closed)", { command, error: reason })
-        await audit({ outcome: "fail-closed", command, cached: Boolean(cached), started, verdict: { reason } })
+        if (failureMode === "allow") return // fail-open
+        if (failureMode === "ask") return // fail-ask: defer to opencode config
         throw new Error(
           `shield-bash denied (judge unavailable, fail-closed).\nDetail: ${reason}`,
         )
@@ -145,16 +97,12 @@ export const ShieldBash: Plugin = async ({ client, directory }) => {
         await saveCache(config.cachePath, cache)
       }
       if (verdict.decision === "deny") {
-        await log("warn", "bash denied", { command, verdict, cacheHit: Boolean(cached) })
-        await audit({ outcome: "deny", command, cached: Boolean(cached), started, verdict })
         const category = verdict.category ? `\nCategory: ${verdict.category}` : ""
         const alt = verdict.alternative ? `\nAlternative: ${verdict.alternative}` : ""
         throw new Error(
           `shield-bash (session-based safety gate for unattended bash) denied.${category}\nReason: ${verdict.reason}${alt}`,
         )
       }
-      await log("info", "bash allowed", { command, verdictMs: Date.now() - started })
-      await audit({ outcome: "allow", command, cached: Boolean(cached), started })
     },
   }
 }

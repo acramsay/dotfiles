@@ -49,7 +49,6 @@ export const POLICY_PROMPT = [
 
 export type ShieldBashConfig = {
   cachePath: string
-  auditPath: string
   cacheTtlMs: number
 }
 
@@ -58,7 +57,6 @@ export const defaultConfig = (): ShieldBashConfig => {
   const cacheRoot = join(process.env.XDG_CACHE_HOME ?? join(homedir(), ".cache"), "shield-bash")
   return {
     cachePath: join(cacheRoot, "verdicts.json"),
-    auditPath: join(cacheRoot, "audit.jsonl"),
     cacheTtlMs: Number(process.env.SHIELD_BASH_TTL_HOURS ?? 24) * 3_600_000,
   }
 }
@@ -90,17 +88,6 @@ export async function saveCache(path: string, map: Map<string, CacheEntry>): Pro
   } catch {}
 }
 
-export type AuditEvent = {
-  ts: number
-  command: string
-  outcome: "allow" | "deny" | "fail-open" | "fail-closed" | "fail-ask"
-  verdictMs: number
-  cache: "hit" | "model"
-  category?: string | null
-  reason?: string | null
-  alternative?: string | null
-}
-
 export function parseVerdictText(text: string): Verdict {
   const cleaned = text.replace(/```json|```/g, "")
   const start = cleaned.indexOf("{")
@@ -121,11 +108,5 @@ export function parseVerdictText(text: string): Verdict {
   }
 }
 
-export async function appendAudit(path: string, event: AuditEvent): Promise<void> {
-  try {
-    const { appendFile } = await import("node:fs/promises")
-    await appendFile(path, JSON.stringify(event) + "\n")
-  } catch {}
-}
 
 
