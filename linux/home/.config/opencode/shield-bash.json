@@ -1,0 +1,5 @@
+{
+  "providerID": "openrouter",
+  "modelID": "z-ai/glm-5.3-flash",
+  "failure": "deny"
+}

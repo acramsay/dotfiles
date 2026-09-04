@@ -1,7 +1,6 @@
 import type { Plugin } from "@opencode-ai/plugin"
 import { mkdirSync } from "node:fs"
-import { dirname } from "node:path"
-import { fileURLToPath } from "node:url"
+import { dirname, join } from "node:path"
 import { defaultConfig, parseVerdictText, POLICY_PROMPT, readCache, saveCache } from "./lib"
 
 type FailureMode = "allow" | "deny" | "ask"
@@ -19,23 +18,35 @@ export const ShieldBash: Plugin = async ({ client, directory }) => {
   mkdirSync(dirname(config.cachePath), { recursive: true })
   const cache = await readCache(config.cachePath, config.cacheTtlMs)
 
-  // Model/provider + failure mode: committed JSON first, env second, fallback third.
+  // Model/provider + failure mode: config JSON first, env second, fallback third.
+  // Loaded lazily on first bash — client calls during plugin init deadlock startup
+  // (the server can't serve requests until bootstrap, which awaits plugin init).
   let model = MODEL_FALLBACK
   let failureMode: FailureMode = DEFAULT_FAILURE
-  try {
-    const file = fileURLToPath(new URL("../../../shield-bash.json", import.meta.url))
-    const json = (await Bun.file(file).json()) as {
-      providerID?: string
-      modelID?: string
-      failure?: string
-    }
-    if (json.providerID && json.modelID) model = json as typeof model
-    if (json.failure === "allow" || json.failure === "deny" || json.failure === "ask") {
-      failureMode = json.failure
-    }
-  } catch {}
-  const envOverride = process.env.SHIELD_BASH_MODEL?.split("/")
-  if (envOverride?.length === 2) model = { providerID: envOverride[0], modelID: envOverride[1] }
+  let configLoaded: Promise<void> | null = null
+  const loadConfig = () => {
+    if (configLoaded) return configLoaded
+    configLoaded = (async () => {
+      try {
+        const path = await client.path.get({ query: { directory } })
+        if (path.data?.config) {
+          const file = join(path.data.config, "shield-bash.json")
+          const json = (await Bun.file(file).json()) as {
+            providerID?: string
+            modelID?: string
+            failure?: string
+          }
+          if (json.providerID && json.modelID) model = json as typeof model
+          if (json.failure === "allow" || json.failure === "deny" || json.failure === "ask") {
+            failureMode = json.failure
+          }
+        }
+      } catch {}
+      const envOverride = process.env.SHIELD_BASH_MODEL?.split("/")
+      if (envOverride?.length === 2) model = { providerID: envOverride[0], modelID: envOverride[1] }
+    })()
+    return configLoaded
+  }
 
   let judgeSessionID: string | null = null
   const ensureJudgeSession = async (parentSessionID: string) => {
@@ -58,6 +69,7 @@ export const ShieldBash: Plugin = async ({ client, directory }) => {
       if (input.tool !== "bash") return
       const command = output.args.command
       if (typeof command !== "string" || command.trim() === "") return
+      await loadConfig()
 
       const cached = cache.get(command)
       let verdict
