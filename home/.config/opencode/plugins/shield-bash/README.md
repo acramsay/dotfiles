@@ -1,8 +1,12 @@
 # shield-bash
 
-Second-session gate for bash tool calls. A dedicated opencode "judge" session is created at
-first command and judges every bash via `session.prompt`; the verdict allows or denies the
-command through opencode's `tool.execute.before` hook.
+Second-session gate for bash tool calls. A judge session titled "Shield Bash" is created on
+first bash as a child of the calling session, and judges every command via `session.prompt`; the
+verdict allows or denies it through opencode's `tool.execute.before` hook.
+
+The parent link matters: the judge is reachable with the TUI's built-in child-session
+navigation (right / left / up), stays out of the roots-only session list, is deleted with its
+parent, and is never auto-shared.
 
 ## Files
 

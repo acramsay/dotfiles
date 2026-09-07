@@ -5,22 +5,18 @@ import { defaultConfig, parseVerdictText, POLICY_PROMPT, readCache, saveCache } 
 
 type FailureMode = "allow" | "deny" | "ask"
 
-// Second-session gate for bash tool calls — a dedicated opencode session is
-// created at first command and judges every bash via `session.prompt`.
-// Model/provider comes from shield-bash.json; env SHIELD_BASH_MODEL overrides.
-// `failure` in shield-bash.json decides what a judge error does:
-//   "deny" (default) / "allow" / "ask" = defer to opencode's config
 const DEFAULT_FAILURE: FailureMode = "deny"
 const MODEL_FALLBACK = { providerID: "vercel", modelID: "zai/glm-5.3-flash" }
 
+// Gates every bash command by prompting a second opencode session with the
+// policy in lib.ts.
 export const ShieldBash: Plugin = async ({ client, directory }) => {
   const config = defaultConfig()
   mkdirSync(dirname(config.cachePath), { recursive: true })
   const cache = await readCache(config.cachePath, config.cacheTtlMs)
 
-  // Model/provider + failure mode: config JSON first, env second, fallback third.
-  // Loaded lazily on first bash — client calls during plugin init deadlock startup
-  // (the server can't serve requests until bootstrap, which awaits plugin init).
+  // Loaded lazily. The server serves no requests until plugin init returns,
+  // so a client call at init time would deadlock.
   let model = MODEL_FALLBACK
   let failureMode: FailureMode = DEFAULT_FAILURE
   let configLoaded: Promise<void> | null = null
@@ -51,10 +47,10 @@ export const ShieldBash: Plugin = async ({ client, directory }) => {
   let judgeSessionID: string | null = null
   const ensureJudgeSession = async (parentSessionID: string) => {
     if (judgeSessionID) return judgeSessionID
-    const parent = await client.session.get({ path: { id: parentSessionID }, query: { directory } })
-    const parentTitle = parent.data?.title ?? "session"
+    // A child of the caller, so the TUI's child-session nav reaches it and it
+    // stays out of the session list and tied to the parent's lifecycle.
     const judgeSession = await client.session.create({
-      body: { title: `(bash) ${parentTitle}` },
+      body: { parentID: parentSessionID, title: "Shield Bash" },
       query: { directory },
     })
     if (judgeSession.error || !judgeSession.data) {
@@ -96,14 +92,14 @@ export const ShieldBash: Plugin = async ({ client, directory }) => {
         }
       } catch (err) {
         const reason = err instanceof Error ? err.message : String(err)
-        if (failureMode === "allow") return // fail-open
-        if (failureMode === "ask") return // fail-ask: defer to opencode config
+        if (failureMode === "allow") return
+        // The permission.ask hook never fires upstream, so ask defers to config.
+        if (failureMode === "ask") return
         throw new Error(
           `shield-bash denied (judge unavailable, fail-closed).\nDetail: ${reason}`,
         )
       }
 
-      // Cache every verdict (both allow and deny) so repeat commands skip the model.
       if (!cached) {
         cache.set(command, { verdict, ts: Date.now() })
         await saveCache(config.cachePath, cache)
