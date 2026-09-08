@@ -61,7 +61,9 @@
     "@ex-machina/opencode-anthropic-auth",
     "@tarquinen/opencode-dcp@3.1.13",
     "@cortexkit/aft-opencode@latest",
-    "opencode-pty"
+    "opencode-pty",
+    "@acramsay/opencode-veil",
+    "@acramsay/opencode-shield-bash"
   ],
   "provider": {
     "openrouter": {
