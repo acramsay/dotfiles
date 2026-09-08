@@ -11,13 +11,12 @@ Issues and PRs I'm following the progress of.
 
 | Item        | Tool     | Description                         | Status | Last checked |
 | ----------- | -------- | ----------------------------------- | ------ | ------------ |
-| [PR #8675]  | helix    | Steel plugin system                 | open   | 2026-09-04   |
-| [#13096]    | helix    | Word splitting for %sh{} expansions | open   | 2026-09-04   |
-| [PR #15549] | helix    | `--list` flag for `:open`           | open   | 2026-09-04   |
-| [#15549]    | helix    | `--list` flag for `:open`           | open   | 2026-09-04   |
-| [#5950]     | helix    | Debugging overhaul                  | open   | 2026-09-04   |
-| [DCP #585]  | dcp      | Plugin silently fails to load       | open   | 2026-09-04   |
-| [#36279]    | opencode | Publish v2 through Homebrew         | open   | 2026-09-04   |
+| [PR #8675]  | helix    | Steel plugin system                 | open   | 2026-09-07   |
+| [#13096]    | helix    | Word splitting for %sh{} expansions | open   | 2026-09-07   |
+| [PR #15549] | helix    | `--list` flag for `:open`           | open   | 2026-09-07   |
+| [#5950]     | helix    | Debugging overhaul                  | open   | 2026-09-07   |
+| [DCP #585]  | dcp      | Plugin silently fails to load       | open   | 2026-09-07   |
+| [#36279]    | opencode | Publish v2 through Homebrew         | open   | 2026-09-07   |
 
 ## Tools of interest
 
@@ -49,7 +48,6 @@ Unresolved.
 
 ## Ideas / next up
 
-- Migrate veil and shield bash to new repos and publish as npm packages
 - Create TUI plugin for shield bash to switch between sessions
 - Migrate to opencode2
 - Update personal website with these plugins listed on the projects page
