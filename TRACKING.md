@@ -9,14 +9,16 @@ alternatives, etc.
 
 Issues and PRs I'm following the progress of.
 
-| Item        | Tool     | Description                         | Status | Last checked |
-| ----------- | -------- | ----------------------------------- | ------ | ------------ |
-| [PR #8675]  | helix    | Steel plugin system                 | open   | 2026-09-07   |
-| [#13096]    | helix    | Word splitting for %sh{} expansions | open   | 2026-09-07   |
-| [PR #15549] | helix    | `--list` flag for `:open`           | open   | 2026-09-07   |
-| [#5950]     | helix    | Debugging overhaul                  | open   | 2026-09-07   |
-| [DCP #585]  | dcp      | Plugin silently fails to load       | open   | 2026-09-07   |
-| [#36279]    | opencode | Publish v2 through Homebrew         | open   | 2026-09-07   |
+| Item        | Tool     | Description                                  | Status | Last checked |
+| ----------- | -------- | -------------------------------------------- | ------ | ------------ |
+| [PR #8675]  | helix    | Steel plugin system                          | open   | 2026-09-07   |
+| [#13096]    | helix    | Word splitting for %sh{} expansions          | open   | 2026-09-07   |
+| [#15059]    | helix    | Open interactive TUI apps (yazi/lazygit)     | open   | 2026-09-08   |
+| [PR #15549] | helix    | `--list` flag for `:open`                    | open   | 2026-09-07   |
+| [#5950]     | helix    | Debugging overhaul                           | open   | 2026-09-07   |
+| [DCP #585]  | dcp      | Plugin silently fails to load                | open   | 2026-09-07   |
+| [#36279]    | opencode | Publish v2 through Homebrew                  | open   | 2026-09-07   |
+| [AFT #305]  | aft      | Custom LSP servers never deliver diagnostics | open   | 2026-09-08   |
 
 ## Tools of interest
 
@@ -54,11 +56,12 @@ Unresolved.
 
 [PR #8675]: https://github.com/helix-editor/helix/pull/8675
 [#13096]: https://github.com/helix-editor/helix/issues/13096
+[#15059]: https://github.com/helix-editor/helix/issues/15059
 [PR #15549]: https://github.com/helix-editor/helix/pull/15549
-[#15549]: https://github.com/helix-editor/helix/issues/15549
 [#5950]: https://github.com/helix-editor/helix/issues/5950
 [DCP #585]: https://github.com/Opencode-DCP/opencode-dynamic-context-pruning/issues/585
 [#36279]: https://github.com/anomalyco/opencode/issues/36279
+[AFT #305]: https://github.com/cortexkit/aft/issues/305
 [smith.hx]: https://github.com/kn66/smith.hx
 [serpl]: https://github.com/yassinebridi/serpl
 [brow6el]: https://tangled.org/janantos.tngl.sh/brow6el

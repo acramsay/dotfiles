@@ -4,11 +4,15 @@
   "search_index": true,
   "semantic_search": true,
   "lsp": {
+    // Enable to inline diagnostics after each edit. Off until AFT #305 is fixed;
+    // while on, every markdown edit reports "did not respond in time: rumdl".
+    // "diagnostics_on_edit": true,
     "servers": {
       "rumdl": {
-        "extensions": [".md"],
+        "extensions": ["md"],
         "binary": "rumdl",
-        "args": ["server"]
+        "args": ["server"],
+        "root_markers": [".git", ".rumdl.toml"]
       }
     }
   }
