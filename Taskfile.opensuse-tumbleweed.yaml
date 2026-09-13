@@ -10,6 +10,19 @@ tasks:
         $USER ALL=(ALL) NOPASSWD: /usr/bin/zypper dup -ly --allow-vendor-change --replacefiles
         EOF
 
+  clean-packages:
+    desc: List orphaned/unneeded zypper packages that can be removed without breaking deps
+    vars:
+      CANDIDATES:
+        sh: zypper -q packages --orphaned --unneeded | grep '^i' | cut -d'|' -f3 | tr -d ' ' | sort -u
+      REMOVE: '{{.REMOVE | default "false"}}'
+    cmds:
+      - for:
+          var: CANDIDATES
+          as: PKG
+        cmd: '{{if eq .REMOVE "true"}}sudo zypper rm -y{{else}}echo{{end}} {{.PKG}}'
+        if: test -z "$(rpm -e --test {{.PKG}} 2>&1)"
+
   restart-kde:
     desc: Restart the KDE Plasma desktop environment
     aliases:
@@ -27,18 +40,20 @@ tasks:
   update:
     desc: Update OpenSuse via Zypper
     cmds:
-      - task: update-legcord
+      - task: update-flatpak
       - sudo zypper dup -ly --allow-vendor-change --replacefiles
 
-  update-legcord:
-    desc: Update Legcord if newer version is available
+  update-flatpak:
+    desc: Install flatpaks listed in FLATPAKS (skips already-installed)
     vars:
-      LEGCORD_LATEST_TAG:
-        sh: "curl -s https://api.github.com/repos/Legcord/Legcord/releases/latest | jq -r '.tag_name'"
-      LEGCORD_LATEST_VERSION:
-        sh: "echo '{{.LEGCORD_LATEST_TAG}}' | sed 's/^v//'"
-      INSTALLED_VERSION:
-        sh: "rpm -q legcord --queryformat '%{VERSION}' 2>/dev/null || echo '0'"
+      FLATPAKS:
+        - app.legcord.Legcord
+        - com.notesnook.Notesnook
+        - org.signal.Signal
     cmds:
-      - cmd: sudo zypper install --allow-vendor-change --allow-unsigned-rpm -y "https://github.com/Legcord/Legcord/releases/download/{{.LEGCORD_LATEST_TAG}}/Legcord-{{.LEGCORD_LATEST_VERSION}}-linux-x86_64.rpm"
-        if: '{{ne .INSTALLED_VERSION .LEGCORD_LATEST_VERSION}}'
+      - flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+      - for:
+          var: FLATPAKS
+          as: PKG
+        cmd: flatpak install --or-update --user -y flathub {{.PKG}}
+      - flatpak uninstall --unused -y
