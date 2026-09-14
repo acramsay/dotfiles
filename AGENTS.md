@@ -20,6 +20,8 @@ relevant file is not found here. Editing the repo copy is what propagates throug
   `realpath`, so `dir:` and path vars look indirect on purpose — don't "simplify" them to relative
   paths.
 - `Taskfile.opensuse-tumbleweed.yaml` is an optional includes (aliases `ot`).
+- `.opencode/**` is repo-scoped opencode config (project skills). It lives outside `home/`
+  on purpose so `task cs` never symlinks it — repo-only, not global.
 
 ## Design principles
 
