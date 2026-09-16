@@ -11,16 +11,19 @@ Issues and PRs I'm following the progress of.
 
 | Item        | Tool     | Description                                  | Status | Last checked |
 | ----------- | -------- | -------------------------------------------- | ------ | ------------ |
-| [PR #8675]  | helix    | Steel plugin system                          | open   | 2026-09-07   |
-| [#13096]    | helix    | Word splitting for %sh{} expansions          | open   | 2026-09-07   |
-| [#15059]    | helix    | Open interactive TUI apps (yazi/lazygit)     | open   | 2026-09-08   |
-| [PR #15549] | helix    | `--list` flag for `:open`                    | open   | 2026-09-07   |
-| [#5950]     | helix    | Debugging overhaul                           | open   | 2026-09-07   |
-| [DCP #585]  | dcp      | Plugin silently fails to load                | open   | 2026-09-07   |
-| [#36279]    | opencode | Publish v2 through Homebrew                  | open   | 2026-09-07   |
-| [#6330]     | opencode | Plugin-driven generic UI intent channel     | open   | 2026-09-09   |
-| [#7006]     | opencode | `permission.ask` hook never triggers        | open   | 2026-09-09   |
-| [AFT #305]  | aft      | Custom LSP servers never deliver diagnostics | open   | 2026-09-08   |
+| [PR #8675]  | helix    | Steel plugin system                          | open   | 2026-09-14   |
+| [#13096]    | helix    | Word splitting for %sh{} expansions          | open   | 2026-09-14   |
+| [#15059]    | helix    | Open interactive TUI apps (yazi/lazygit)     | open   | 2026-09-14   |
+| [PR #15549] | helix    | `--list` flag for `:open`                    | open   | 2026-09-14   |
+| [#5950]     | helix    | Debugging overhaul                           | open   | 2026-09-14   |
+| [DCP #585]  | dcp      | Plugin silently fails to load                | open   | 2026-09-14   |
+| [#36279]    | opencode | Publish v2 through Homebrew                  | open   | 2026-09-14   |
+| [#6330]     | opencode | Plugin-driven generic UI intent channel     | open   | 2026-09-14   |
+| [#7006]     | opencode | `permission.ask` hook never triggers        | open   | 2026-09-14   |
+| [AFT #305]  | aft      | Custom LSP servers never deliver diagnostics | **fixed on main** | 2026-09-14   |
+| [PR #48745] | opencode | Add shield-bash to ecosystem plugins list    | open   | 2026-09-14   |
+| [awesome #707] | awesome-opencode | Add shield-bash to awesome-opencode plugins | open | 2026-09-14 |
+| [cafe #16] | opencode.cafe | Add shield-bash to opencode.cafe plugin list | open | 2026-09-14 |
 
 ## Tools of interest
 
@@ -39,6 +42,8 @@ Not yet implemented.
 | executor    | [executor]    | OpenAPI/MCP integration layer for agents |
 | codexbar    | [codexbar]    | AI usage limits in the macOS menu bar   |
 | LLMLingua   | [LLMLingua]   | Prompt compression for LLM inference    |
+| serena      | [serena]      | LSP-backed MCP code search/edit server  |
+| repowise    | [repowise]    | Local codebase index/graph over MCP     |
 
 ## Reference pages
 
@@ -54,6 +59,8 @@ Unresolved.
 - Copy/paste shortcuts are inconsistent between linux/macos. Tried adjusting in
   linux, but global shortcuts don't propagate to many apps
 - Using Proton VPN (wireguard) breaks WebRTC connections in LibreWolf
+- NVIDIA drivers on a temporary locally-built install (repo broken server-side);
+  pending official k7.2.4 KMP — see [NVIDIA-RECOVERY.md](NVIDIA-RECOVERY.md)
 
 ## Ideas / next up
 
@@ -82,4 +89,9 @@ Unresolved.
 [executor]: https://github.com/UsefulSoftwareCo/executor
 [codexbar]: https://codexbar.app/
 [LLMLingua]: https://github.com/microsoft/LLMLingua
+[serena]: https://github.com/oraios/serena
+[repowise]: https://github.com/repowise-dev/repowise
+[PR #48745]: https://github.com/anomalyco/opencode/pull/48745
+[awesome #707]: https://github.com/awesome-opencode/awesome-opencode/pull/707
+[cafe #16]: https://github.com/R44VC0RP/opencode.cafe/pull/16
 [Helix wiki: Language Server Configurations]: https://github.com/helix-editor/helix/wiki/Language-Server-Configurations

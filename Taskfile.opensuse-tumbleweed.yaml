@@ -56,4 +56,4 @@ tasks:
           var: FLATPAKS
           as: PKG
         cmd: flatpak install --or-update --user -y flathub {{.PKG}}
-      - flatpak uninstall --unused -y
+      - flatpak uninstall --unused -y --user
