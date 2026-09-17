@@ -82,10 +82,21 @@ tasks:
         task: create-symlink
 
   clean-symlinks:
-    desc: Find and delete broken symlinks from $HOME
+    desc: Find and delete broken symlinks from $HOME that point into this dotfiles repo
     aliases: [clean]
+    vars:
+      REALPATH:
+        sh: dirname $(realpath ./Taskfile.yaml)
+      BROKEN_SYMLINKS:
+        sh: >-
+          find "$HOME"
+          \( -path "$HOME/.local/share/flatpak" -o -path "$HOME/.var" -o -path "$HOME/.cache" \) -prune
+          -o -xtype l -print
     cmds:
-      - find {{ .HOME }} -type l ! -exec test -e {} \; -print -delete
+      - for:
+          var: BROKEN_SYMLINKS
+        cmd: rm -v "{{ .ITEM }}"
+        if: readlink -m "{{ .ITEM }}" | grep -qE "^{{ .REALPATH }}(/|$)"
 
   adopt:
     desc: Move a HOME-relative or in-HOME absolute file into the dotfiles repo, then symlink it back
