@@ -11,17 +11,17 @@ Issues and PRs I'm following the progress of.
 
 | Item        | Tool     | Description                                  | Status | Last checked |
 | ----------- | -------- | -------------------------------------------- | ------ | ------------ |
-| [PR #8675]  | helix    | Steel plugin system                          | open   | 2026-09-14   |
-| [#13096]    | helix    | Word splitting for %sh{} expansions          | open   | 2026-09-14   |
-| [#15059]    | helix    | Open interactive TUI apps (yazi/lazygit)     | open   | 2026-09-14   |
-| [PR #15549] | helix    | `--list` flag for `:open`                    | open   | 2026-09-14   |
-| [#5950]     | helix    | Debugging overhaul                           | open   | 2026-09-14   |
-| [DCP #585]  | dcp      | Plugin silently fails to load                | open   | 2026-09-14   |
-| [#36279]    | opencode | Publish v2 through Homebrew                  | open   | 2026-09-14   |
-| [#6330]     | opencode | Plugin-driven generic UI intent channel     | open   | 2026-09-14   |
-| [#7006]     | opencode | `permission.ask` hook never triggers        | open   | 2026-09-14   |
-| [AFT #305]  | aft      | Custom LSP servers never deliver diagnostics | **fixed on main** | 2026-09-14   |
-| [PR #48745] | opencode | Add shield-bash to ecosystem plugins list    | open   | 2026-09-14   |
+| [PR #8675]  | helix    | Steel plugin system                          | open   | 2026-09-18   |
+| [#13096]    | helix    | Word splitting for %sh{} expansions          | open   | 2026-09-18   |
+| [#15059]    | helix    | Open interactive TUI apps (yazi/lazygit)     | open   | 2026-09-18   |
+| [PR #15549] | helix    | `--list` flag for `:open`                    | open   | 2026-09-18   |
+| [#5950]     | helix    | Debugging overhaul                           | open   | 2026-09-18   |
+| [DCP #585]  | dcp      | Plugin silently fails to load                | open   | 2026-09-18   |
+| [#36279]    | opencode | Publish v2 through Homebrew                  | open   | 2026-09-18   |
+| [#6330]     | opencode | Plugin-driven generic UI intent channel     | open   | 2026-09-18   |
+| [#7006]     | opencode | `permission.ask` hook never triggers        | open   | 2026-09-18   |
+| [AFT #305]  | aft      | Custom LSP servers never deliver diagnostics | **closed (fixed)** | 2026-09-18   |
+| [PR #48745] | opencode | Add shield-bash to ecosystem plugins list    | open   | 2026-09-18   |
 | [awesome #707] | awesome-opencode | Add shield-bash to awesome-opencode plugins | open | 2026-09-14 |
 | [cafe #16] | opencode.cafe | Add shield-bash to opencode.cafe plugin list | open | 2026-09-14 |
 
