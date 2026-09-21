@@ -41,6 +41,7 @@ brew "rust"
 brew "rustup"
 brew "superhtml"
 brew "typescript-language-server"
+brew "uv"
 
 # dev tools
 brew "gh"

@@ -21,6 +21,9 @@ fi
 # cargo
 export PATH="$HOME/.cargo/bin:$PATH"
 
+# uv tools
+export PATH="$HOME/.local/bin:$PATH"
+
 # dprint
 export DPRINT_INSTALL="$HOME/.dprint"
 export PATH="$DPRINT_INSTALL/bin:$PATH"
@@ -30,6 +33,7 @@ export PATH="$HOME/go/bin:$PATH"
 
 # opencode
 export ORT_DYLIB_PATH=$(find -L "$HOME/.local/share/cortexkit/aft/onnxruntime" -name libonnxruntime.so -type f 2>/dev/null | head -1)
+export OPENCODE_EXPERIMENTAL_LSP_TOOL=1
 
 # rancher desktop
 export PATH="$HOME/.rd/bin:$PATH"

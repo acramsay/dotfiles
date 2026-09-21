@@ -4,6 +4,7 @@ After=network.target
 
 [Service]
 Type=simple
+Environment=OPENCODE_EXPERIMENTAL_LSP_TOOL=1
 WorkingDirectory=/home/alex/git
 ExecStart=/home/linuxbrew/.linuxbrew/bin/opencode serve
 Restart=on-failure
