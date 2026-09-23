@@ -59,8 +59,6 @@ Unresolved.
 - Copy/paste shortcuts are inconsistent between linux/macos. Tried adjusting in
   linux, but global shortcuts don't propagate to many apps
 - Using Proton VPN (wireguard) breaks WebRTC connections in LibreWolf
-- NVIDIA drivers on a temporary locally-built install (repo broken server-side);
-  pending official k7.2.4 KMP — see [NVIDIA-RECOVERY.md](NVIDIA-RECOVERY.md)
 
 ## Ideas / next up
 

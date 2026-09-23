@@ -36,12 +36,26 @@ types=1
 wmclass=librewolf
 wmclassmatch=1
 
+[802a6d47-5e1c-4e2e-8951-38b351111247]
+Description=Window settings for Obsidian
+desktops=d7c985fd-5fb4-4452-969f-b05b43e64095
+desktopsrule=3
+position=1280,697
+positionrule=3
+size=1280,697
+sizerule=3
+title=Chores - Notes - Obsidian 1.13.7
+types=1
+wmclass=\smd.obsidian.Obsidian
+wmclasscomplete=true
+wmclassmatch=1
+
 [General]
 count=6
-rules=db0a49fc-1261-4d79-9d82-f6bc91a14b8e,be6a763a-edcb-422e-94b9-ca30184b95c3,cfa265a6-c40d-47c9-9f99-31a69e69f162,42aaf3e6-e067-4421-80c8-cbb616fdce2c,120e9c1f-09b2-4a16-b3e3-cf67572f03bb,22936693-b501-4186-9e22-d47e696a949e
+rules=802a6d47-5e1c-4e2e-8951-38b351111247,be6a763a-edcb-422e-94b9-ca30184b95c3,cfa265a6-c40d-47c9-9f99-31a69e69f162,42aaf3e6-e067-4421-80c8-cbb616fdce2c,120e9c1f-09b2-4a16-b3e3-cf67572f03bb,22936693-b501-4186-9e22-d47e696a949e
 
 [be6a763a-edcb-422e-94b9-ca30184b95c3]
-Description=Window settings for org.signal.Signal
+Description=Window settings for Signal
 desktops=d7c985fd-5fb4-4452-969f-b05b43e64095
 desktopsrule=3
 position=1280,0
@@ -64,18 +78,4 @@ size=1280,697
 sizerule=3
 types=1
 wmclass=legcord
-wmclassmatch=1
-
-[db0a49fc-1261-4d79-9d82-f6bc91a14b8e]
-Description=Window settings for Notesnook
-desktops=d7c985fd-5fb4-4452-969f-b05b43e64095
-desktopsrule=3
-position=1280,697
-positionrule=3
-size=1280,697
-sizerule=3
-title=Quick Notes - Notesnook
-types=1
-wmclass=\sNotesnook
-wmclasscomplete=true
 wmclassmatch=1
