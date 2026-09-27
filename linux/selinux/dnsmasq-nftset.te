@@ -1,0 +1,10 @@
+# Allow dnsmasq_t to use netfilter netlink (needed for dnsmasq's nftset= config).
+# Built and installed by `ot:init`; do not regenerate with audit2allow.
+module dnsmasq-nftset 1.0;
+
+require {
+    type dnsmasq_t;
+    class netlink_netfilter_socket { create getattr read write setopt };
+}
+
+allow dnsmasq_t self:netlink_netfilter_socket { create getattr read write setopt };

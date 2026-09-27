@@ -1,0 +1,8 @@
+[Unit]
+Description=Refresh dnsmasq upstream servers and Tailscale MagicDNS hosts
+After=network-online.target tailscaled.service dnsmasq.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/bash /etc/tailscale/vpn-dns-refresh.sh

@@ -1,0 +1,10 @@
+[Unit]
+Description=Periodically refresh dnsmasq upstreams and Tailscale MagicDNS hosts
+
+[Timer]
+OnBootSec=30s
+OnUnitActiveSec=10min
+Persistent=true
+
+[Install]
+WantedBy=timers.target

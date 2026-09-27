@@ -20,6 +20,8 @@ relevant file is not found here. Editing the repo copy is what propagates throug
   `realpath`, so `dir:` and path vars look indirect on purpose — don't "simplify" them to relative
   paths.
 - `Taskfile.opensuse-tumbleweed.yaml` is an optional includes (aliases `ot`).
+- `docs/vpn.md` documents the Proton VPN + split-DNS stack (tunnel, bypass
+  whitelist, MagicDNS materialization).
 
 ## Design principles
 

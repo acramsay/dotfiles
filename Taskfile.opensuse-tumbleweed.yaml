@@ -3,12 +3,129 @@ version: '3'
 tasks:
   init:
     cmds:
+      - task: packages
+      - task: deploy-etc
+      # dnsmasq's nftset= needs netlink_netfilter_socket, which SELinux denies to
+      # dnsmasq_t. Compile+install the repo module (not audit2allow) before enabling.
+      - |
+        if ! sudo semodule -l | grep -q '^dnsmasq-nftset'; then
+          cd {{ .REALPATH }}/linux/selinux
+          checkmodule -M -m -o dnsmasq-nftset.mod dnsmasq-nftset.te
+          semodule_package -o dnsmasq-nftset.pp -m dnsmasq-nftset.mod
+          sudo semodule -i dnsmasq-nftset.pp
+        fi
+      # Drop the abandoned fragment design's leftover (points at a dead upstream).
+      - sudo rm -f /etc/dnsmasq.d/vpn-upstream.conf
+      # Generate the servers-file + MagicDNS hosts before dnsmasq starts.
+      - sudo systemctl daemon-reload
+      - sudo systemctl start vpn-dns.service
+      - sudo systemctl enable --now dnsmasq.service
+      - sudo systemctl enable --now vpn-dns.timer
       - sudo loginctl enable-linger $USER
+      - flatpak override --user --talk-name=org.freedesktop.Flatpak md.obsidian.Obsidian
       - |
         sudo touch /etc/sudoers.d/$USER
         sudo dd of=/etc/sudoers.d/$USER <<- EOF
         $USER ALL=(ALL) NOPASSWD: /usr/bin/zypper dup -ly --allow-vendor-change --replacefiles
         EOF
+
+  packages:
+    desc: Install declared system packages via zypper (already-installed are skipped by zypper)
+    vars:
+      PACKAGES:
+        - wireguard-tools
+        - openresolv
+        - dnsmasq
+        - docker
+        - tailscale
+        - librewolf
+        - steam
+        - OpenRGB
+        - OpenRGB-udev-rules
+        - gcc-c++
+        - libgit2-devel
+        - libwebkit2gtk-4_1-0
+        - nvidia-driver-G06-kmp-default
+        - nvidia-userspace-meta-G06
+        - openSUSE-repos-Tumbleweed-NVIDIA
+        - ucode-amd
+        - policycoreutils-python-utils
+        - checkpolicy
+    cmds:
+      - sudo zypper --non-interactive install {{ .PACKAGES | join " " }}
+
+  deploy-etc:
+    desc: Deploy everything under linux/etc/** into /etc
+    aliases: [de]
+    vars:
+      REALPATH_ETC: '{{ joinPath .REALPATH "linux" "etc" }}'
+      COPY_FILES:
+        map:
+          # Confined daemons (dnsmasq_t, NetworkManager_t, systemd init_t) can't
+          # read symlinks into $HOME, so these are copies. See docs/vpn.md.
+          dnsmasq.d/vpn-bypass.conf: 'true'
+          resolv.conf: 'true'
+          NetworkManager/conf.d/90-dns.conf: 'true'
+          systemd/system/vpn-dns.service: 'true'
+          systemd/system/vpn-dns.timer: 'true'
+      FILES:
+        sh: find {{ .REALPATH_ETC }} -type f -printf "%P\n"
+    cmds:
+      - for:
+          var: FILES
+        vars:
+          SOURCE: '{{ joinPath .REALPATH_ETC .ITEM }}'
+          DESTINATION: '{{ joinPath "/etc" .ITEM }}'
+          SUDO: 'true'
+          COPY: '{{ index .COPY_FILES .ITEM | default "" }}'
+        task: :deploy-file
+
+  vpn-import:
+    desc: Switch the active Proton tunnel to a downloaded WireGuard config
+    aliases: [vi]
+    summary: |
+      Usage: task ot:vpn-import -- <path-to-downloaded.conf>
+      Copies Address/PublicKey/Endpoint into the repo's proton.conf (hooks and
+      comments preserved), writes the PrivateKey to /etc/wireguard/proton.key,
+      and restarts the tunnel if it is up. Previous files are kept as *.prev.
+    vars:
+      PROTON_SCRIPT: '{{ joinPath .REALPATH "linux" "scripts" "vpn-import.sh" }}'
+      PROTON_CONF: '{{ joinPath .REALPATH "linux" "etc" "wireguard" "proton.conf" }}'
+    preconditions:
+      - sh: 'test -n "{{ .CLI_ARGS }}"'
+        msg: 'usage: task ot:vpn-import -- <path-to-downloaded.conf>'
+    cmds:
+      - 'bash {{ .PROTON_SCRIPT }} {{ .PROTON_CONF }} "{{ .CLI_ARGS }}"'
+
+  vpn-up:
+    desc: Bring up the Proton WireGuard tunnel (also enables tailscale exit-node chaining through it)
+    preconditions:
+      - sh: sudo test -s /etc/wireguard/proton.key
+        msg: '/etc/wireguard/proton.key is missing or empty — add your Proton private key first'
+    cmds:
+      - sudo wg-quick up proton
+
+  vpn-down:
+    desc: Tear down the Proton WireGuard tunnel
+    cmds:
+      - sudo wg-quick down proton
+
+  vpn-status:
+    desc: Show WireGuard tunnel state, bypass set, routing rules, dnsmasq upstreams
+    cmds:
+      - sudo wg show proton
+      - sudo nft list set ip vpn_bypass bypass
+      # - sudo nft list set ip6 vpn_bypass bypass6
+      - ip rule show
+      - ip route show table main | head -5
+      - sudo cat /etc/dnsmasq.d/dnsmasq.servers
+      - sudo cat /etc/dnsmasq.d/hosts.d/tailscale.hosts
+      - systemctl status vpn-dns.timer --no-pager | head -4
+
+  vpn-dns-refresh:
+    desc: Regenerate dnsmasq upstreams (Proton/gateway) and Tailscale MagicDNS hosts
+    cmds:
+      - sudo systemctl start vpn-dns.service
 
   clean-packages:
     desc: List orphaned/unneeded zypper packages that can be removed without breaking deps

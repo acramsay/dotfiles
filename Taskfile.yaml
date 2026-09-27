@@ -1,8 +1,8 @@
 version: '3'
 
-# vars:
-#   DISTRO:
-#     sh: cat /etc/os-release
+vars:
+  REALPATH:
+    sh: dirname $(realpath ./Taskfile.yaml)
 
 dotenv: ['/etc/os-release']
 
@@ -26,9 +26,6 @@ tasks:
     aliases:
       - cs
     vars:
-      # This is needed because this taskfile is symlinked to ~
-      REALPATH:
-        sh: dirname $(realpath ./Taskfile.yaml)
       FILES:
         sh: >-
           cd $(dirname $(realpath ./Taskfile.yaml))/home; find . \(
@@ -41,7 +38,7 @@ tasks:
         vars:
           SOURCE: '{{ joinPath .REALPATH "home" .ITEM }}'
           DESTINATION: '{{ joinPath .HOME .ITEM }}'
-        task: create-symlink
+        task: deploy-file
       - task: create-symlinks-darwin
       - task: create-symlinks-linux
 
@@ -49,44 +46,38 @@ tasks:
     aliases: [csd]
     platforms: [darwin]
     vars:
-      REALPATH:
-        sh: echo -n "$(dirname $(realpath ./Taskfile.yaml))/darwin/home"
+      REALPATH_DARWIN: '{{ joinPath .REALPATH "darwin" "home" }}'
       FILES:
-        sh: >-
-          cd $REALPATH; find . -type f -print
-    dir: '{{ .REALPATH }}'
+        sh: find {{ .REALPATH_DARWIN }} -type f -printf "%P\n"
+    dir: '{{ .REALPATH_DARWIN }}'
     cmds:
       - for:
           var: FILES
         vars:
-          SOURCE: '{{ joinPath .REALPATH .ITEM }}'
+          SOURCE: '{{ joinPath .REALPATH_DARWIN .ITEM }}'
           DESTINATION: '{{ joinPath .HOME .ITEM }}'
-        task: create-symlink
+        task: deploy-file
 
   create-symlinks-linux:
     aliases: [csl]
     platforms: [linux]
     vars:
-      REALPATH:
-        sh: echo -n "$(dirname $(realpath ./Taskfile.yaml))/linux/home"
+      REALPATH_LINUX: '{{ joinPath .REALPATH "linux" "home" }}'
       FILES:
-        sh: >-
-          cd $REALPATH; find . -type f -print
-    dir: '{{ .REALPATH }}'
+        sh: find {{ .REALPATH_LINUX }} -type f -printf "%P\n"
+    dir: '{{ .REALPATH_LINUX }}'
     cmds:
       - for:
           var: FILES
         vars:
-          SOURCE: '{{ joinPath .REALPATH .ITEM }}'
+          SOURCE: '{{ joinPath .REALPATH_LINUX .ITEM }}'
           DESTINATION: '{{ joinPath .HOME .ITEM }}'
-        task: create-symlink
+        task: deploy-file
 
   clean-symlinks:
     desc: Find and delete broken symlinks from $HOME that point into this dotfiles repo
     aliases: [clean]
     vars:
-      REALPATH:
-        sh: dirname $(realpath ./Taskfile.yaml)
       BROKEN_SYMLINKS:
         sh: >-
           find "$HOME"
@@ -106,8 +97,6 @@ tasks:
              task adopt -- /home/alex/.config/foo/bar.toml     # absolute, must be under $HOME
              task adopt OS=1 -- .config/foo/bar.toml           # place under OS-specific dir
     vars:
-      REALPATH:
-        sh: dirname $(realpath ./Taskfile.yaml)
       OS_SUBDIR: '{{ if .OS }}{{ joinPath OS "home" }}{{ end }}'
       RELATIVE: '{{ trimPrefix .HOME .CLI_ARGS | trimPrefix "/" }}'
       SOURCE: '{{ joinPath .HOME .RELATIVE }}'
@@ -122,7 +111,7 @@ tasks:
     cmds:
       - cmd: 'mkdir -p {{ dir .DESTINATION }}'
       - cmd: 'mv {{ .SOURCE }} {{ .DESTINATION }}'
-      - task: create-symlink
+      - task: deploy-file
         vars:
           SOURCE: '{{ .DESTINATION }}'
           DESTINATION: '{{ .SOURCE }}'
@@ -210,16 +199,23 @@ tasks:
 
   # Internals
 
-  create-symlink:
+  deploy-file:
     internal: true
     requires:
       vars:
         - SOURCE
         - DESTINATION
+    vars:
+      CP_CMD: 'cp -f --preserve=mode,timestamps'
+      LN_CMD: 'ln -fns'
+      SUDO_CMD: '{{ if eq "true" (.SUDO | default "false") }}sudo {{ end }}'
+      DEPLOY_CMD: '{{ if eq "true" (.COPY | default "false") }}{{ .CP_CMD }}{{ else }}{{ .LN_CMD }}{{ end }}'
     cmds:
-      - cmd: 'mkdir -p {{ dir .DESTINATION }}'
-      - cmd: 'ln -fns {{ .SOURCE }} {{ .DESTINATION }}'
+      - cmd: '{{.SUDO_CMD}}mkdir -p {{ dir .DESTINATION }}'
+      - cmd: '{{.SUDO_CMD}}{{.DEPLOY_CMD}} {{ .SOURCE }} {{ .DESTINATION }}'
+      - cmd: '{{.SUDO_CMD}}systemctl daemon-reload'
+        if: '{{ and (eq OS "linux") (hasSuffix ".service" .DESTINATION) (eq "true" (.SUDO | default "false")) }}'
       - cmd: 'systemctl --user daemon-reload && systemctl --user enable --now $(basename {{ .DESTINATION }})'
-        if: '{{ and (eq OS "linux") (hasSuffix ".service" .DESTINATION) }}'
+        if: '{{ and (eq OS "linux") (hasSuffix ".service" .DESTINATION) (not (eq "true" (.SUDO | default "false"))) }}'
       - cmd: 'launchctl bootout gui/$(id -u) {{ .DESTINATION }} 2>/dev/null || true; launchctl bootstrap gui/$(id -u) {{ .DESTINATION }}'
         if: '{{ and (eq OS "darwin") (hasSuffix ".plist" .DESTINATION) }}'
