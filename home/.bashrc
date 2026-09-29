@@ -33,7 +33,6 @@ export PATH="$HOME/go/bin:$PATH"
 
 # opencode
 export ORT_DYLIB_PATH=$(find -L "$HOME/.local/share/cortexkit/aft/onnxruntime" -name libonnxruntime.so -type f 2>/dev/null | head -1)
-export OPENCODE_EXPERIMENTAL_LSP_TOOL=1
 
 # rancher desktop
 export PATH="$HOME/.rd/bin:$PATH"
@@ -44,7 +43,6 @@ fi
 export EDITOR='hx'
 export VISUAL='hx'
 export LESS='-FIMRX'
-export OPENCODE_DISABLE_TERMINAL_TITLE=1
 
 # alias ?='echo $?'
 alias k='kubectl'
@@ -52,7 +50,7 @@ alias kc='kubectx'
 alias lg='lazygit'
 alias ll='ls -alh'
 alias llr='ls -alhrt'
-alias oc='opencode attach http://localhost:4096 --dir "$PWD"'
+alias oc='opencode --server http://localhost:4096 "$PWD"'
 alias y='cd $(yazi --cwd-file=/dev/stdout 2> /dev/null)'
 
 # completions

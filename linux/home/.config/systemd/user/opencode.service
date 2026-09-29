@@ -1,12 +1,11 @@
 [Unit]
-Description=OpenCode Web Server
+Description=OpenCode Background Server
 After=network.target
 
 [Service]
 Type=simple
-Environment=OPENCODE_EXPERIMENTAL_LSP_TOOL=1
 WorkingDirectory=/home/alex/git
-ExecStart=/home/linuxbrew/.linuxbrew/bin/opencode serve
+ExecStart=/home/linuxbrew/.linuxbrew/bin/opencode serve --service --hostname 0.0.0.0 --port 4096
 Restart=on-failure
 RestartSec=2
 
