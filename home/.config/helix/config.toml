@@ -40,6 +40,9 @@ mode.normal = "NORMAL"
 mode.insert = "INSERT"
 mode.select = "SELECT"
 
+[keys.insert]
+S-tab = "unindent"
+
 [keys.normal]
 D = "delete_char_backward"
 C-h = "goto_previous_buffer"

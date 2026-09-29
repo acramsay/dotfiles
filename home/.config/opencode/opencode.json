@@ -65,8 +65,7 @@
     }
   },
   "plugin": [
-    "@ex-machina/opencode-anthropic-auth",
-    "@tarquinen/opencode-dcp@3.1.13",
+    "@tarquinen/opencode-dcp",
     "@cortexkit/aft-opencode",
     "opencode-pty",
     "@acramsay/opencode-veil",
