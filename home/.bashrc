@@ -50,7 +50,7 @@ alias kc='kubectx'
 alias lg='lazygit'
 alias ll='ls -alh'
 alias llr='ls -alhrt'
-alias oc='opencode --server http://localhost:4096 "$PWD"'
+alias oc='opencode "$PWD"'
 alias y='cd $(yazi --cwd-file=/dev/stdout 2> /dev/null)'
 
 # completions

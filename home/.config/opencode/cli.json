@@ -4,8 +4,7 @@
     "name": "catppuccin-macchiato"
   },
   "plugins": [
-    "@cortexkit/aft-opencode",
-    "./plugins/models-md-tui.tsx"
+    "@cortexkit/aft-opencode"
   ],
   "scroll": {
     "speed": 5

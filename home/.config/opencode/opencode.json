@@ -46,6 +46,7 @@
     "@cortexkit/aft-opencode",
     "opencode-pty",
     "@acramsay/opencode-veil",
-    "@acramsay/opencode-shield-bash"
+    "@acramsay/opencode-shield-bash",
+    "@acramsay/opencode-models-md"
   ]
 }
