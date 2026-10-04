@@ -5,22 +5,29 @@ tasks:
     cmds:
       - task: packages
       - task: deploy-etc
-      # dnsmasq's nftset= needs netlink_netfilter_socket, which SELinux denies to
-      # dnsmasq_t. Compile+install the repo module (not audit2allow) before enabling.
-      - |
-        if ! sudo semodule -l | grep -q '^dnsmasq-nftset'; then
+      - sudo systemctl restart systemd-sysctl
+      - if: '[ "$(firewall-cmd --get-zone-of-interface=tailscale0)" != trusted ]'
+        cmd: sudo firewall-cmd --zone=trusted --add-interface=tailscale0
+      - if: '[ "$(firewall-cmd --permanent --zone=trusted --query-interface=tailscale0)" != yes ]'
+        cmd: sudo firewall-cmd --permanent --zone=trusted --add-interface=tailscale0
+      # nftset= needs netlink_netfilter_socket; compile the repo module, never audit2allow.
+      - if: "! sudo semodule -l | grep -q '^dnsmasq-nftset'"
+        cmd: |
           cd {{ .REALPATH }}/linux/selinux
           checkmodule -M -m -o dnsmasq-nftset.mod dnsmasq-nftset.te
           semodule_package -o dnsmasq-nftset.pp -m dnsmasq-nftset.mod
           sudo semodule -i dnsmasq-nftset.pp
-        fi
-      # Drop the abandoned fragment design's leftover (points at a dead upstream).
+      # Leftover from the abandoned fragment design.
       - sudo rm -f /etc/dnsmasq.d/vpn-upstream.conf
-      # Generate the servers-file + MagicDNS hosts before dnsmasq starts.
+      # Generate dnsmasq's servers-file before it starts.
       - sudo systemctl daemon-reload
       - sudo systemctl start vpn-dns.service
       - sudo systemctl enable --now dnsmasq.service
+      # enable --now won't restart; the deployed conf lists interfaces.
+      - sudo systemctl restart dnsmasq.service
       - sudo systemctl enable --now vpn-dns.timer
+      # Enable only: a fresh machine has no key, so starting now would fail.
+      - sudo systemctl enable wg-quick@proton.service
       - sudo loginctl enable-linger $USER
       - flatpak override --user --talk-name=org.freedesktop.Flatpak md.obsidian.Obsidian
       - |
@@ -61,9 +68,13 @@ tasks:
       REALPATH_ETC: '{{ joinPath .REALPATH "linux" "etc" }}'
       COPY_FILES:
         map:
-          # Confined daemons (dnsmasq_t, NetworkManager_t, systemd init_t) can't
-          # read symlinks into $HOME, so these are copies. See docs/vpn.md.
+          # Confined daemons (dnsmasq_t, NetworkManager_t, systemd init_t, and
+          # wireguard_t for wg-quick@proton) can't read symlinks into $HOME, so
+          # these are copies. See docs/vpn.md.
           dnsmasq.d/vpn-bypass.conf: 'true'
+          sysctl.d/99-vpn-forwarding.conf: 'true'
+          wireguard/proton.conf: 'true'
+          wireguard/vpn-bypass.nft: 'true'
           resolv.conf: 'true'
           NetworkManager/conf.d/90-dns.conf: 'true'
           systemd/system/vpn-dns.service: 'true'
@@ -103,20 +114,60 @@ tasks:
       - sh: sudo test -s /etc/wireguard/proton.key
         msg: '/etc/wireguard/proton.key is missing or empty — add your Proton private key first'
     cmds:
-      - sudo wg-quick up proton
+      - sudo systemctl start wg-quick@proton.service
+      # wg-quick's hooks can't signal dnsmasq (wireguard_t confinement).
+      - sudo systemctl start vpn-dns.service
 
   vpn-down:
     desc: Tear down the Proton WireGuard tunnel
     cmds:
-      - sudo wg-quick down proton
+      - sudo systemctl stop wg-quick@proton.service
+      - sudo systemctl start vpn-dns.service
+
+  vpn-rescue:
+    desc: Emergency rollback — tear down the tunnel and restore LAN-only networking
+    summary: |
+      Idempotent, offline-usable. Stops the tunnel service (and any directly
+      started tunnel), removes the vpn_bypass table and all policy rules it may
+      have left, flushes tables 200/201, regenerates dnsmasq upstreams, and
+      points /etc/resolv.conf at the LAN gateway. Leaves dnsmasq and Tailscale
+      running; re-enter the managed state with `task ot:de` + restart dnsmasq,
+      and `task ot:vpn-up` for the tunnel.
+    cmds:
+      - sudo systemctl stop wg-quick@proton.service 2>/dev/null || true
+      - sudo wg-quick down proton 2>/dev/null || true
+      # Clear leftovers from an interrupted teardown.
+      - |
+        while ip rule show | grep -q 'lookup 51820'; do sudo ip rule del table 51820; done
+        while ip rule show | grep -q 'suppress_prefixlength 0'; do sudo ip rule del table main suppress_prefixlength 0; done
+        while ip -6 rule show | grep -q 'lookup 51820'; do sudo ip -6 rule del table 51820; done
+        while ip -6 rule show | grep -q 'suppress_prefixlength 0'; do sudo ip -6 rule del table main suppress_prefixlength 0; done
+      - |
+        sudo nft delete table ip vpn_bypass 2>/dev/null || true
+        while ip rule show | grep -q 'fwmark 0x100/0x100 lookup 200'; do sudo ip rule del fwmark 0x100/0x100 table 200; done
+        while ip rule show | grep -q 'fwmark 0x200 lookup 200'; do sudo ip rule del fwmark 0x200 table 200; done
+        while ip rule show | grep -q 'to 100.64.0.0/10 lookup 52'; do sudo ip rule del to 100.64.0.0/10 lookup 52; done
+        sudo ip -6 rule del to fd7a:115c:a1e0::/48 lookup 52 2>/dev/null || true
+        sudo ip -6 rule del fwmark 0x201 table 201 2>/dev/null || true
+      - sudo ip route flush table 200 || true
+      - sudo ip -6 route flush table 201 || true
+      - sudo systemctl start vpn-dns.service || true
+      - |
+        gw=$(ip route show default | awk '/^default/ {print $3; exit}')
+        [ -n "$gw" ] || gw=192.168.40.1
+        printf 'nameserver %s\nsearch lan\n' "$gw" | sudo tee /etc/resolv.conf >/dev/null
+        echo "resolv.conf -> $gw; to return: task ot:de && sudo systemctl restart dnsmasq && task ot:vpn-up"
 
   vpn-status:
     desc: Show WireGuard tunnel state, bypass set, routing rules, dnsmasq upstreams
     cmds:
+      - systemctl status wg-quick@proton.service --no-pager | head -5 || true
       - sudo wg show proton
       - sudo nft list set ip vpn_bypass bypass
-      # - sudo nft list set ip6 vpn_bypass bypass6
       - ip rule show
+      - ip -6 rule show
+      - cat /proc/sys/net/ipv4/ip_forward /proc/sys/net/ipv6/conf/all/forwarding
+      - firewall-cmd --get-zone-of-interface=tailscale0
       - ip route show table main | head -5
       - sudo cat /etc/dnsmasq.d/dnsmasq.servers
       - sudo cat /etc/dnsmasq.d/hosts.d/tailscale.hosts

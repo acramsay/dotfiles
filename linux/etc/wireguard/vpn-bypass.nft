@@ -1,26 +1,18 @@
+# Bypass routing for the Proton tunnel; see docs/vpn.md ("Bypass mechanism").
 table ip vpn_bypass {
     set bypass {
         type ipv4_addr
     }
-    # set bypass6 {
-    #     type ipv6_addr
-    # }
     chain prerouting_mark {
-        type filter hook prerouting priority mangle; policy accept;
-        ip daddr @bypass meta mark set 0x200
-        # ip6 daddr @bypass6 meta mark set 0x201
+        type filter hook prerouting priority mangle + 1; policy accept;
+        ip daddr @bypass meta mark set meta mark | 0x100
     }
-    # Must be type "route": a filter output hook runs after the routing decision
-    # and cannot re-route on a mark change. v6 would need the inet family, which
-    # has no route chain type.
     chain output_mark {
         type route hook output priority mangle; policy accept;
-        ip daddr @bypass meta mark set 0x200
-        # ip6 daddr @bypass6 meta mark set 0x201
+        ip daddr @bypass meta mark set meta mark | 0x100
     }
-    # Rerouting keeps the first packet's tunnel source; SNAT to the egress address.
     chain postrouting_snat {
         type nat hook postrouting priority srcnat; policy accept;
-        ip daddr @bypass meta mark 0x200 masquerade
+        ip daddr @bypass meta mark & 0x100 == 0x100 masquerade
     }
 }

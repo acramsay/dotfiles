@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Import a WireGuard config downloaded from account.protonvpn.com as the active
-# Proton tunnel: updates Address/PublicKey/Endpoint in the repo proton.conf and the
-# PrivateKey in /etc/wireguard/proton.key. Apply with ot:vpn-down/up. See docs/vpn.md.
+# Import a downloaded Proton WireGuard config; run via `task ot:vpn-import`. See docs/vpn.md.
 
 target=${1:-}
 source=${2:-}
@@ -46,11 +44,16 @@ if [ "${#missing[@]}" -gt 0 ]; then
 fi
 
 case "$address" in
-  10.[0-9]*.0.2/32) : ;;
-  *) echo "warning: unexpected Address '$address' — Proton single-tunnel default is 10.N.0.2/32" >&2 ;;
+  *10.[0-9]*.0.2/32*) : ;;
+  *) echo "warning: unexpected IPv4 Address in '$address' — Proton single-tunnel default is 10.N.0.2/32" >&2 ;;
 esac
 case "$address" in
-  *", "*) echo "warning: multiple Address values — this setup assumes IPv4-only" >&2 ;;
+  *:*) : ;;
+  *)
+    echo "error: '$address' has no IPv6 address. This setup advertises ::/0, so a" >&2
+    echo "v4-only server would black-hole client v6 traffic. Pick an IPv6-capable server." >&2
+    exit 1
+    ;;
 esac
 
 new_conf=$(mktemp "$(dirname "$target")/.vpn-import.XXXXXX")
@@ -74,6 +77,8 @@ if sudo test -s /etc/wireguard/proton.key; then
 fi
 sudo install -o root -g root -m 600 "$key_tmp" /etc/wireguard/proton.key
 mv -f "$new_conf" "$target"
+sudo rm -f /etc/wireguard/proton.conf
+sudo install -o root -g root -m 644 "$target" /etc/wireguard/proton.conf
 
 echo "Active config: $source"
 echo "  Address  = $address"

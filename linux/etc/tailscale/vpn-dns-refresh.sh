@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Refresh dnsmasq's Tailscale MagicDNS hosts and ordered upstream servers.
-# Called by vpn-dns.timer and the WireGuard hooks; see docs/vpn.md.
+# Invoked by vpn-dns.service (timer + ot:vpn-up/ot:vpn-down); see docs/vpn.md.
 set -euo pipefail
 
 TAILSCALE=/usr/bin/tailscale

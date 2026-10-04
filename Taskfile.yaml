@@ -206,7 +206,8 @@ tasks:
         - SOURCE
         - DESTINATION
     vars:
-      CP_CMD: 'cp -f --preserve=mode,timestamps'
+      # --remove-destination: replace an earlier deploy's symlink, don't write through it.
+      CP_CMD: 'cp -f --remove-destination --preserve=mode,timestamps'
       LN_CMD: 'ln -fns'
       SUDO_CMD: '{{ if eq "true" (.SUDO | default "false") }}sudo {{ end }}'
       DEPLOY_CMD: '{{ if eq "true" (.COPY | default "false") }}{{ .CP_CMD }}{{ else }}{{ .LN_CMD }}{{ end }}'
