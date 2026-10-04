@@ -6,6 +6,14 @@
   "plugins": [
     "@cortexkit/aft-opencode"
   ],
+  "keybinds": {
+    "session.tab.next": "ctrl+l",
+    "session.tab.previous": "ctrl+h",
+    "session.message.next": "ctrl+j",
+    "session.message.previous": "ctrl+k",
+    "input.newline": "shift+return,ctrl+return,alt+return",
+    "input.delete.to.line.end": "none"
+  },
   "scroll": {
     "speed": 5
   },

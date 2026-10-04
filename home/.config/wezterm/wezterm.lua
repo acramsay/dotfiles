@@ -28,6 +28,11 @@ config.font_size = 13
 config.line_height = 1.2
 config.warn_about_missing_glyphs = false
 
+-- Honor kitty keyboard protocol requests. Without this, wezterm sends the
+-- legacy encoding where ctrl+h is byte 0x08, which TUI apps like OpenCode
+-- read as backspace (deleting a character) instead of a ctrl+h keybind.
+config.enable_kitty_keyboard = true
+
 wezterm.on('toggle-background', function(window)
   local overrides = window:get_config_overrides() or {}
   if overrides.background then
