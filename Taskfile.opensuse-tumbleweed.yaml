@@ -161,17 +161,17 @@ tasks:
   vpn-status:
     desc: Show WireGuard tunnel state, bypass set, routing rules, dnsmasq upstreams
     cmds:
-      - systemctl status wg-quick@proton.service --no-pager | head -5 || true
+      - systemctl status wg-quick@proton.service --no-pager
       - sudo wg show proton
       - sudo nft list set ip vpn_bypass bypass
       - ip rule show
       - ip -6 rule show
       - cat /proc/sys/net/ipv4/ip_forward /proc/sys/net/ipv6/conf/all/forwarding
       - firewall-cmd --get-zone-of-interface=tailscale0
-      - ip route show table main | head -5
+      - ip route show table main
       - sudo cat /etc/dnsmasq.d/dnsmasq.servers
       - sudo cat /etc/dnsmasq.d/hosts.d/tailscale.hosts
-      - systemctl status vpn-dns.timer --no-pager | head -4
+      - systemctl status vpn-dns.timer --no-pager
 
   vpn-dns-refresh:
     desc: Regenerate dnsmasq upstreams (Proton/gateway) and Tailscale MagicDNS hosts
