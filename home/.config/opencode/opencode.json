@@ -45,7 +45,30 @@
     "@tarquinen/opencode-dcp",
     "@cortexkit/aft-opencode",
     "@acramsay/opencode-veil",
-    "@acramsay/opencode-shield-bash",
+    {
+      "package": "@acramsay/opencode-shield-bash",
+      "options": {
+        "providerID": "openrouter",
+        "modelID": "z-ai/glm-5.3-flash",
+        "failure": "deny"
+      }
+    },
     "@acramsay/opencode-models-md"
-  ]
+  ],
+  "providers": {
+    "openrouter": {
+      "body": {
+        "provider": {
+          "sort": "price",
+          "quantizations": ["fp8", "fp16", "bf16", "unknown"],
+          "preferred_min_throughput": { "p50": 70 },
+          "preferred_max_latency": { "p75": 2 },
+          "max_price": {
+            "prompt": 0.3,
+            "completion": 1
+          }
+        }
+      }
+    }
+  }
 }
