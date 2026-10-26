@@ -58,6 +58,9 @@ brew "tailscale"
 brew "chafa"
 brew "presenterm"
 
+# weather & astronomy
+uv "kosmorro"
+
 # terraform
 tap "hashicorp/tap", trusted: true
 brew "hashicorp/tap/terraform", trusted: true

@@ -1,5 +1,5 @@
 ---
-description: Use when the user says "morning", "good morning", "start my day", or asks for a daily kickoff or orientation on the day's work. A conversation that organizes the day — sets up today's Obsidian daily note, discusses carryover and new tasks, then on-demand dives into tracked items and the GitHub work queue.
+description: Use when the user says "morning", "good morning", "start my day", or asks for a daily kickoff or orientation on the day's work. A conversation that organizes the day — opens with a weather and sky briefing, surfaces the day's tasks, then on-demand dives into tracked items and the GitHub work queue.
 name: morning
 ---
 
@@ -10,18 +10,22 @@ the user's Obsidian vault — the skill reads it, writes new tasks where they
 belong, and keeps the conversation on what changed, never on the routine. The
 deeper stuff (tracked items, GitHub) takes real time to gather, so it's offered
 as dives they choose, never assumed. After every dive, check in on what's next.
+The weather and sky briefing runs the same way: one subagent does the fetching
+and judgment, and its finished block is relayed right after the greeting.
 
 This skill is a deliberate exception to the usual terse house style. Write like a colleague giving a
 morning briefing: conversational, plainspoken, still grounded and specific. The "Good Morning 🌅"
 greeting is the one flourish — after that, skip the hollow stuff: exclamation marks, further emoji,
 "hope this finds you well".
 
-## Step 1: Set up the daily note
+## Step 1: Read the task files
 
 The vault is the opencode project root — this skill runs from there, and vault
 files are referenced relative to it: `To Do/Routines.md`, `To Do/Tasks.md`,
-`To Do/Goals.md`, `To Do/TRACKING.md`, `Daily/YYYY-MM-DD.md`. Compute today's
-date first — everything below needs it.
+`To Do/TRACKING.md`. Compute today's date first — everything below needs it.
+
+Tasks live in `To Do/` and surface in `Dashboard.md`'s query blocks; nothing is
+written per day. Task conventions and Tasks-query guidance live in AGENTS.md.
 
 - `To Do/Routines.md` — recurring tasks, one per line. Each carries `🔁 <rule>` and a
   `🛫 YYYY-MM-DD` scheduled date; the Tasks plugin creates the next occurrence
@@ -30,24 +34,21 @@ date first — everything below needs it.
 - `To Do/Tasks.md` — one-time tasks, grouped by area headings. `⏫` marks urgent
   items that must surface every day. `📅 YYYY-MM-DD` is a due date. Indented
   non-checkbox lines under a task are notes, not tasks.
-- `To Do/Goals.md` — the longer arc. Read for context; never recite it in
-  conversation.
-- `Daily/YYYY-MM-DD.md` — daily notes, one per day, created from the Obsidian
-  template `Templates/Daily note.md` (wired up in `.obsidian/daily-notes.json`).
-  If today's note doesn't exist, create it from that template right away,
-  before talking — if the session dies, the note exists. If it does exist,
-  leave it alone. Task conventions and Tasks-query guidance live in AGENTS.md.
 
 ## Step 2: Open the conversation
 
-Open with "Good Morning 🌅" and a single plain line — day and date. Then run
-carryover: scan `To Do/Tasks.md` for unchecked tasks whose `📅` date is before today.
-Present each briefly and ask whether to do it today, keep it (set `📅` to
-today), or drop it. If none, skip silently.
+Open with "Good Morning 🌅" and a single plain line — day and date. Then fetch
+the weather: launch one `task` call with `subagent_type: general` using the
+prompt in `.opencode/skills/morning/weather.md`, filling in today's date where
+marked. It returns a finished block — present it verbatim, right after the
+greeting and before anything else. Don't summarize or reword it; it is written
+to be read as-is. If it takes a beat, a short line that you're pulling it is fine.
 
-Then ask what else is on today's list. First surface anything dated: tasks in `To Do/Tasks.md` with a `📅`
-due within the next 14 days, with countdowns ("due Friday", "3 days left", "overdue 2 days")
-computed against today. Then fold their answers into the vault as they're agreed, not at the end:
+Don't recite what's already overdue — `Dashboard.md`'s `happens on or before
+today` query surfaces those. Ask what's on today's list, and first surface
+anything dated: tasks in `To Do/Tasks.md` with a `📅` due within the next 14 days,
+with countdowns ("due Friday", "3 days left") computed against today. Then fold
+their answers into the vault as they're agreed, not at the end:
 
 - **Recurring** (they state a cadence) — append to `To Do/Routines.md`:
   `- [ ] {text} 🔁 {rule} 🛫 {next occurrence}`. Rules: `every day`,
@@ -83,30 +84,49 @@ the day's list, or done.
 ### Subagent A: tracked items
 
 ```text
-Read `To Do/TRACKING.md` in the Obsidian vault at the project root. Check every
-row in the "Following" table —
-skip the other sections. Resolve each row's link from the reference definitions at
-the bottom of the file, get its current state with `gh` (gh issue view / gh pr view
-as appropriate) or a web fetch, and compare against the row's Status column.
+Read `To Do/TRACKING.md` in the Obsidian vault at the project root. Work every
+row in the "Following" table — skip the other sections. Resolve each row's link
+from the reference definitions at the bottom of the file. For each row:
 
-Then edit `To Do/TRACKING.md`: update Status where the state changed, and set Last checked
-to {DATE} on every row you checked, changed or not. Preserve the table format.
+1. Get its current state with `gh` (gh issue view / gh pr view as appropriate)
+   or a web fetch: open/closed, title, labels, and review decision.
+2. Gather activity newer than the row's Last checked date. An explicit status
+   rarely moves, so this is where the real updates are: comments, reviews,
+   commits, and label changes.
+   - comments: `gh api repos/{owner}/{repo}/issues/{number}/comments` and, for
+     PRs, `.../pulls/{number}/comments` (review comments)
+   - reviews: `gh api repos/{owner}/{repo}/pulls/{number}/reviews`
+   - commits on a PR: `gh pr view {number} --json commits`
+   - label/state changes: the fields from step 1
+   Filter to entries timestamped after Last checked. For a non-GitHub link,
+   fetch the page and note anything that reads as new since then.
+   Run all of these `gh` calls in one batched step (parallel), not one model
+   turn per row.
+3. Edit `To Do/TRACKING.md`: update Status where the current state changed, and
+   set Last checked to {DATE} on every row you checked, changed or not. Preserve
+   the table format.
 
-Return in your final message, for every row: the item ID, the Description verbatim
-from the table, whether its state changed, what changed if so, and its URL. Flag
-anything you couldn't check, with the reason.
+Return in your final message, for every row: the item ID, the Description
+verbatim from the table, the current status, whether the state changed, and the
+new activity since Last checked — who did what, with a one-line gist and a count
+("3 new comments since Oct 2, latest from @alice: 'pushed a fix'"; "1 approval,
+1 new commit"). Say "no change" only when there is genuinely nothing new.
+Include the URL. Flag anything you couldn't check, with the reason.
 ```
 
 Present every tracked item as a row in a Markdown table: the item (ID and
-description), its current status, and a short note on what changed — "no change"
-where nothing moved. Keep URLs out of the table. Below the table, list the links
-for the items that warrant attention today — the ones that moved or need a
-decision. If nothing moved anywhere, say so plainly.
+description), its current status, and a short note on what's new — comments,
+reviews, commits, or state changes; "no change" only when nothing moved at all.
+Keep URLs out of the table. Below the table, list the links for the items that
+warrant attention today — the ones with new activity or a decision needed. If
+nothing moved anywhere, say so plainly.
 
 ### Subagent B: GitHub work queue
 
 ```text
 Assemble the user's GitHub work queue, scoped to @me across orgs. Two parts.
+Batch independent `gh` calls in parallel — a model turn per query is what makes
+this slow.
 
 Assigned issues: open issues assigned to the user, via `gh search issues
 --assignee:@me --state:open`. Group by repo, return title and URL for each.
@@ -133,17 +153,9 @@ list with links — category 4 as a one-line count per org.
 ## Step 5: Close with a recommendation
 
 When the user is done diving, close with a real recommendation: given the
-day's list, whatever the dives surfaced, and the goals in `To Do/Goals.md`, the one or
-two things worth starting with today, and why. One or two sentences, honest. If
+day's list and whatever the dives surfaced, the one or two things worth starting
+with today, and why. One or two sentences, honest. If
 nothing needs attention, say the day is clear and mean it.
 
-Then write it all into today's daily note — the only conversation outputs that
-go there:
-
-- **From the discussion** — the important points from the conversation as short
-  bullets (2–6; things worth remembering later, not a transcript)
-- **Recommendation** — the closing recommendation verbatim
-
-If the note already has these sections filled from an earlier run today, merge
-rather than duplicate. If a subagent came back empty or partial, say so plainly
-rather than papering over the gap.
+If a subagent came back empty or partial, say so plainly rather than papering
+over the gap.
