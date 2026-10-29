@@ -18,22 +18,34 @@ MAP="$OUTDIR/map.txt"
 DCP="$OUTDIR/dcp.json"
 DCP_STATE="$HOME/.local/share/opencode/storage/plugin/dcp/${SESSION_ID}.json"
 
-opencode export "$SESSION_ID" 2>/dev/null > "$EXPORT" || true
+opencode session export "$SESSION_ID" 2>/dev/null > "$EXPORT" || true
 if [[ ! -s "$EXPORT" ]] || ! jq -e '.messages | length > 0' "$EXPORT" >/dev/null 2>&1; then
   echo "error: export failed for session $SESSION_ID" >&2
   exit 1
 fi
 
-# One line per message: id, role, part inventory with short previews.
+# One line per message: id, type, part inventory with short previews.
+# opencode2 export schema: { info, messages: [ {id, type, time, ...} ] }.
+#   user      -> .text
+#   assistant -> .content[] parts, each with .type (text | tool | reasoning)
+#   idle      -> .outcome
 jq -r '
   .messages[] |
-  "[" + .info.id + "] " + .info.role +
-  ([.parts[] | select(.type != "step-start" and .type != "step-finish") |
-    if .type == "tool" then "tool:" + .tool + "(" + (.state.status // "") + ") " + ((.state.title // "") | gsub("\n"; " ") | .[0:80])
-    elif .type == "text" then "text:" + ((.text // "") | gsub("\n"; " ") | .[0:120])
-    else .type
-    end
-  ] as $parts | if ($parts | length) > 0 then " | " + ($parts | join(" | ")) else "" end)
+  "[" + .id + "] " + .type +
+  (if .type == "user" then
+     " | text:" + ((.text // "") | gsub("\n"; " ") | .[0:120])
+   elif .type == "assistant" then
+     ([.content[]? |
+        if .type == "tool" then
+          "tool:" + .name + "(" + (.state.status // "") + ") " +
+          (((.state.input // {}) | tostring) | gsub("\n"; " ") | .[0:80])
+        elif .type == "text" then
+          "text:" + ((.text // "") | gsub("\n"; " ") | .[0:120])
+        else .type
+        end
+      ] as $parts |
+      if ($parts | length) > 0 then " | " + ($parts | join(" | ")) else "" end)
+   else "" end)
 ' "$EXPORT" > "$MAP"
 
 if [[ -f "$DCP_STATE" ]]; then
