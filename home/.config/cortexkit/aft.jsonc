@@ -1,8 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/cortexkit/aft/main/assets/aft.schema.json",
   "format_on_edit": true,
-  "search_index": true,
-  "semantic_search": true,
   "lsp": {
     // Enable to inline diagnostics after each edit. Off until AFT #305 is fixed;
     // while on, every markdown edit reports "did not respond in time: rumdl".
@@ -15,5 +13,9 @@
         "root_markers": [".git", ".rumdl.toml"]
       }
     }
+  },
+  "indexes": {
+    "trigram": true,
+    "semantic": true
   }
 }
