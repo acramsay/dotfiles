@@ -30,6 +30,7 @@ tasks:
       - sudo systemctl enable wg-quick@proton.service
       - sudo loginctl enable-linger $USER
       - flatpak override --user --talk-name=org.freedesktop.Flatpak md.obsidian.Obsidian
+      - systemctl --user enable --now update-user-flatpaks.timer
       - |
         sudo touch /etc/sudoers.d/$USER
         sudo dd of=/etc/sudoers.d/$USER <<- EOF

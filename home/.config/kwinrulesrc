@@ -51,7 +51,7 @@ wmclasscomplete=true
 wmclassmatch=1
 
 [General]
-Order=steam,802a6d47-5e1c-4e2e-8951-38b351111247,be6a763a-edcb-422e-94b9-ca30184b95c3,cfa265a6-c40d-47c9-9f99-31a69e69f162,42aaf3e6-e067-4421-80c8-cbb616fdce2c,120e9c1f-09b2-4a16-b3e3-cf67572f03bb,22936693-b501-4186-9e22-d47e696a949e
+Order=802a6d47-5e1c-4e2e-8951-38b351111247,be6a763a-edcb-422e-94b9-ca30184b95c3,cfa265a6-c40d-47c9-9f99-31a69e69f162,42aaf3e6-e067-4421-80c8-cbb616fdce2c,120e9c1f-09b2-4a16-b3e3-cf67572f03bb,22936693-b501-4186-9e22-d47e696a949e
 
 [be6a763a-edcb-422e-94b9-ca30184b95c3]
 Description=Window settings for Signal
@@ -76,5 +76,5 @@ positionrule=3
 size=1280,697
 sizerule=3
 types=1
-wmclass=legcord
+wmclass=app.legcord.Legcord
 wmclassmatch=1
