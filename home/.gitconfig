@@ -11,6 +11,8 @@
 	sort = -committerdate
 [credential "https://github.com"]
 	username = acramsay
+	helper =
+	helper = !gh auth git-credential
 [diff]
 	algorithm = histogram
 	colorMoved = plain
